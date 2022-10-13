@@ -10,12 +10,11 @@ class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
   AuthenticationBloc() : super(AuthenticationInitial()) {
     on<AuthenticationEvent>((event, emit) async {
-      const String OAUTH_CLIENT_ID =
-          '363088523272-rlre479rohbbo4ti8p7sdmshm9bq9f5h.apps.googleusercontent.com';
-      GoogleSignIn _googleSignIn = GoogleSignIn(
+      const String oAuthClientId = '363088523272-orkcfiqub7hshaq29pisji796or7ohpq.apps.googleusercontent.com';
+      final GoogleSignIn googleSignIn = GoogleSignIn(
         // Optional clientId
         // serverClientId: '500990447063-tclvi1rdaaugi424hsnkt5kmdj0vfhhg.apps.googleusercontent.com',
-        serverClientId: OAUTH_CLIENT_ID,
+        serverClientId: oAuthClientId,
         scopes: <String>[
           'email',
           'profile',
@@ -28,14 +27,14 @@ class AuthenticationBloc
         GoogleSignInAccount? _currentUser;
         String _contactText = '';
 
-        _googleSignIn.onCurrentUserChanged
+        googleSignIn.onCurrentUserChanged
             .listen((GoogleSignInAccount? account) {
           _currentUser = account;
         });
-        _googleSignIn.signInSilently();
+        googleSignIn.signInSilently();
 
         try {
-          final googleUser = await _googleSignIn.signIn();
+          final googleUser = await googleSignIn.signIn();
           final googleAuth = await googleUser!.authentication;
           print(googleAuth.accessToken);
         } catch (e) {
@@ -44,7 +43,7 @@ class AuthenticationBloc
           debugPrint(e.toString());
         }
       } else if (event is AuthenticationLogOut) {
-        _googleSignIn.disconnect();
+        googleSignIn.disconnect();
       }
     });
   }
