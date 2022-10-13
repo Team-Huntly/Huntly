@@ -58,7 +58,7 @@ class _ProfilePageState extends State<ProfilePage> {
             // Text feild for user description with complete border and max 150 characters
             Container(
               margin: const EdgeInsets.all(20),
-              child: TextField(
+              child: const TextField(
                 maxLines: 5,
                 maxLength: 150,
                 decoration: InputDecoration(

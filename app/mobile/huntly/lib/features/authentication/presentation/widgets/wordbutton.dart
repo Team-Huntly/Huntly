@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../common/constants.dart';
+import '../../../../core/theme/theme.dart';
 
 // class WordButton extends StatelessWidget {
 //   final Interests word;
@@ -77,10 +78,11 @@ class _WordButtonState extends State<WordButton> {
       },
       child: UnconstrainedBox(
           child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 4),
               margin: const EdgeInsets.all(5.0),
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: Colors.blue,
+                  color: darkTheme.highlightColor,
                 ),
                 borderRadius: BorderRadius.circular(10.0),
               ),

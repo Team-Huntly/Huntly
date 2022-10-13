@@ -25,7 +25,9 @@ class BoxRenderer extends StatelessWidget {
           ),
         ),
         Container(
-          decoration: BoxDecoration(),
+          decoration: BoxDecoration(
+            // color: Back
+          ),
           child: Wrap(
             // children: phrases.map((element) => WordButton(word: element)).toList(),
             children: interestsList

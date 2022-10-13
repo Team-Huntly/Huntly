@@ -16,7 +16,6 @@ void main() {
 class Huntly extends StatelessWidget {
   const Huntly({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -30,7 +29,7 @@ class Huntly extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: HomePage(),
+        home: const HomePage(),
       ),
     );
   }

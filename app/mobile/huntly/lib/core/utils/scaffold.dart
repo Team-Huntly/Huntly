@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/material.dart';
-import 'package:iconify_flutter/iconify_flutter.dart';
+import 'package:huntly/features/authentication/presentation/pages/profile_page.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/carbon.dart';
 import 'package:iconify_flutter/icons/ic.dart';
-import 'package:iconify_flutter/icons/ion.dart';
 import 'package:iconify_flutter/icons/ri.dart';
 import 'package:iconify_flutter/icons/healthicons.dart';
 import 'package:iconify_flutter/icons/mdi.dart';
@@ -83,7 +79,9 @@ class HuntlyScaffold extends StatelessWidget {
           ),
           DrawerListItem(
             icon: Healthicons.ui_user_profile,
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ProfilePage()));
+            },
             title: 'Profile'
           ),
           DrawerListItem(
