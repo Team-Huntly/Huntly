@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:huntly/features/authentication/presentation/bloc/authentication_bloc.dart';
+import 'package:huntly/features/authentication/presentation/pages/profile_page.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:colorful_iconify_flutter/icons/logos.dart';
 
@@ -15,7 +18,6 @@ class AuthenticationPage extends StatefulWidget {
 }
 
 class _AuthenticationPageState extends State<AuthenticationPage> {
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,20 +27,19 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
         child: Column(
           children: [
             const SizedBox(height: 10),
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                Image.asset('assets/images/map.png'),
-                Positioned(
-                  top: 350,
-                  child: Text(
-                    'Huntly'.toUpperCase(),
-                    style: darkTheme.textTheme.headline1,
-                  ),
+            Stack(alignment: Alignment.center, children: [
+              Image.asset('assets/images/map.png'),
+              Positioned(
+                top: 300,
+                child: Text(
+                  'Huntly'.toUpperCase(),
+                  style: darkTheme.textTheme.headline1,
                 ),
-              ]
+              ),
+            ]),
+            const SizedBox(
+              height: 45,
             ),
-            const SizedBox(height: 45,),
             Container(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -52,23 +53,30 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
             ),
             const SizedBox(height: 30),
             ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(darkTheme.colorScheme.onBackground),
-                fixedSize: MaterialStateProperty.all<Size>(const Size.fromWidth(250)),
-                padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.symmetric(horizontal: 40)),
-              ),
-              child: Row(
-                children: [
-                  const Iconify(Logos.google_icon),
-                  const SizedBox(width: 15),
-                  Text(
-                    'Sign-In with Google',
-                    style: darkTheme.textTheme.button,
-                  )
-                ],
-              ),
-              onPressed: () async{}
-            )
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      darkTheme.colorScheme.onBackground),
+                  fixedSize: MaterialStateProperty.all<Size>(
+                      const Size.fromWidth(250)),
+                  padding: MaterialStateProperty.all<EdgeInsets>(
+                      const EdgeInsets.symmetric(horizontal: 40)),
+                ),
+                child: Row(
+                  children: [
+                    const Iconify(Logos.google_icon),
+                    const SizedBox(width: 15),
+                    Text(
+                      'Sign-In with Google',
+                      style: darkTheme.textTheme.button,
+                    )
+                  ],
+                ),
+                onPressed: () async {
+                  BlocProvider.of<AuthenticationBloc>(context)
+                      .add(AuthenticationStarted());
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const ProfilePage()));
+                })
           ],
         ),
       ),
