@@ -33,15 +33,15 @@ class DrawerListItem extends StatelessWidget {
     return ListTile(
       leading: Iconify(
         icon,
-        size: 35,
+        size: 30,
         color: darkTheme.colorScheme.secondary
       ),
       title: Text(
         title.toUpperCase(),
         style: TextStyle(
           color: darkTheme.colorScheme.secondary,
-          fontSize: 28,
-          fontWeight: FontWeight.w600
+          fontSize: 20,
+          fontWeight: FontWeight.w400
         ),
       ),
       onTap: onTap
