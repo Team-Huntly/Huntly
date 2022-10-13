@@ -9,14 +9,15 @@ User = get_user_model()
 # Create your models here.
 class TreasureHunt(models.Model):
     name =  models.CharField(max_length = 256)
-    created_at = models.DateField(auto_now_add = True)
-    started_at = models.DateField()
-    ended_at = models.DateField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    started_at = models.DateTimeField()
+    ended_at = models.DateTimeField()
     location_latitude = models.CharField(max_length = 30)
     location_longitude = models.CharField(max_length = 30)
     total_seats = models.IntegerField()
     team_size = models.IntegerField()
     theme = models.ForeignKey('Theme', blank=False, null=False, on_delete = models.CASCADE)
+    participants = models.ManyToManyField(User)
 
     def _str_(self):
         return self.name
@@ -25,7 +26,7 @@ class Clue(models.Model):
     treasure_hunt = models.ForeignKey(TreasureHunt, blank=False, null = False, on_delete=models.CASCADE)
     step_no = models.IntegerField()
     description = models.TextField(blank=True, null=True)
-    created_at = models.DateField(auto_now_add = True)
+    created_at = models.DateTimeField(auto_now_add = True)
     answer_description = models.TextField(blank=True, null=True)
     answer_latitude = models.CharField(max_length = 30)
     answer_longitude = models.CharField(max_length = 30)
@@ -53,7 +54,7 @@ class Team(models.Model):
 
 class TeamProgress(models.Model):
     clue = models.ForeignKey(Clue, blank=False, null = False, on_delete=models.CASCADE)
-    solved_at = models.DateField(auto_now_add = True)
+    solved_at = models.DateTimeField(auto_now_add = True)
     team = models.ForeignKey(TreasureHunt, blank= False, null = False, on_delete=models.CASCADE)
 
     def _str_(self):

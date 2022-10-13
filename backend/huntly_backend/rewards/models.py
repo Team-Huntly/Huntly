@@ -9,7 +9,7 @@ User = get_user_model()
 class Brand(models.Model):
     name = models.CharField(max_length = 256)
     logo = models.ImageField(upload_to='brand_logos', blank=True, null=True)
-    added_at = models.DateField(auto_now_add = True)
+    added_at = models.DateTimeField(auto_now_add = True)
 
     def _str_(self):
         return self.name
@@ -28,8 +28,8 @@ class Coupon(models.Model):
     code = models.CharField(max_length = 256)
     treasure_hunt = models.ForeignKey(TreasureHunt, blank=True, null = True, on_delete=models.CASCADE)
     user = models.ForeignKey(User, blank=True, null = True, on_delete=models.CASCADE)
-    created_at = models.DateField(auto_now_add = True)
-    expiry_date = models.DateField()
+    created_at = models.DateTimeField(auto_now_add = True)
+    expiry_date = models.DateTimeField()
 
     def _str_(self):
         return self.code
