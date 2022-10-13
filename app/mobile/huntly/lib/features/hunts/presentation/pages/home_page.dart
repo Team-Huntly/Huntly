@@ -5,6 +5,7 @@ import 'package:huntly/features/hunts/presentation/widgets/hunt_card.dart';
 import 'package:huntly/core/utils/scaffold.dart';
 
 import '../../../../core/theme/theme.dart';
+import '../../../../core/utils/scaffold.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

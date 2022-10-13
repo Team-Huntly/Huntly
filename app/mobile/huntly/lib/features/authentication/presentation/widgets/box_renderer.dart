@@ -14,19 +14,15 @@ class BoxRenderer extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Interests> interestsList = interests.values.expand((i) => i).toList();
     String category = interests.keys.first;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          category,
-          style: darkTheme.textTheme.headline4,
-        ),
-        Container(
-          decoration: BoxDecoration(
-              // color: Back
-              ),
-          child: Wrap(
-            alignment: WrapAlignment.start,
+    return IntrinsicWidth(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            category,
+            style: darkTheme.textTheme.headline4,
+          ),
+          Wrap(
             children: interestsList
                 .map((element) => WordButton(
                     word: element,
@@ -34,8 +30,8 @@ class BoxRenderer extends StatelessWidget {
                     selectedWords: selectedWords))
                 .toList(),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

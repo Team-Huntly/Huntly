@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 ThemeData darkTheme = ThemeData(
     highlightColor: const Color(0xffee6c4d),
     indicatorColor: const Color(0xff52cf29),
+    disabledColor: Colors.grey,
     colorScheme: ColorScheme.fromSwatch().copyWith(
       background: const Color(0xff293241),
       primary: const Color(0xff3d5a80),
