@@ -8,7 +8,10 @@ from sklearn.cluster import KMeans
 from sklearn.feature_extraction.text import TfidfVectorizer
 nltk.download('stopwords') 
 nltk.download('punkt')
+
+
 def process_text(text, stem=True):
+    """ Tokenize text and stem words removing punctuation """
 
     text = text.translate(str.maketrans('','',string.punctuation))
     tokens = word_tokenize(text)
