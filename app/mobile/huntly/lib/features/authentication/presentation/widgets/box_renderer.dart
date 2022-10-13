@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:huntly/common/constants.dart';
-import 'package:huntly/features/authentication/presentation/widgets/wordbutton.dart';
+import 'package:huntly/features/authentication/presentation/widgets/word_button.dart';
 
 import '../../../../core/theme/theme.dart';
 
@@ -23,8 +23,8 @@ class BoxRenderer extends StatelessWidget {
         ),
         Container(
           decoration: BoxDecoration(
-            // color: Back
-          ),
+              // color: Back
+              ),
           child: Wrap(
             alignment: WrapAlignment.start,
             children: interestsList

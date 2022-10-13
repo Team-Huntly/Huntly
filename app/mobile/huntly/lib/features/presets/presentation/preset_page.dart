@@ -2,21 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:huntly/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:huntly/features/authentication/presentation/widgets/box_renderer.dart';
+import 'package:huntly/features/presets/widgets/preset_card.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 
 import '../../../../common/constants.dart';
 import '../../../../core/theme/theme.dart';
+import '../../../core/utils/scaffold.dart';
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+class PresetPage extends StatefulWidget {
+  const PresetPage({Key? key}) : super(key: key);
 
   @override
-  State<ProfilePage> createState() => _ProfilePageState();
+  State<PresetPage> createState() => _PresetPage();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _PresetPage extends State<PresetPage> {
+  TextEditingController _controller = TextEditingController();
   @override
   void initState() {
     setState(() {});
@@ -26,55 +30,45 @@ class _ProfilePageState extends State<ProfilePage> {
   ValueNotifier<List<Interests>> selectedWords = ValueNotifier([]);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        title: const Text('USER NAME'),
-        elevation: 0,
-        backgroundColor: darkTheme.colorScheme.background,
-      ),
-      backgroundColor: darkTheme.colorScheme.background,
+    return HuntlyScaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              height: 200,
-              width: 200,
-              decoration: const BoxDecoration(
-                  shape: BoxShape.circle, color: Colors.red),
-            ),
-            Center(
-              child: Text(
-                'John Doe'.toUpperCase(),
-                style: darkTheme.textTheme.headline1,
-              ),
-            ),
-            Center(
-              child: Text(
-                'jhondoe@gmail.com',
-                style: darkTheme.textTheme.headline2,
-              ),
-            ),
-            // Text feild for user description with complete border and max 150 characters
+            // Create a search bar with a search icon
             Container(
               margin: const EdgeInsets.all(20),
               child: TextField(
-                maxLines: 5,
-                maxLength: 150,
+                controller: _controller,
+                style: GoogleFonts.poppins(
+                    fontSize: 16, fontWeight: FontWeight.w500),
                 decoration: InputDecoration(
-                  // bprder color white
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
+                  filled: true,
+                  hintText: 'SEARCH',
+                  suffixIcon: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: const [
+                        Icon(Icons.search),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Icon(Icons.filter_list),
+                      ],
+                    ),
                   ),
-                  border: OutlineInputBorder(),
-                  hintText: 'Description',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  fillColor: Colors.white,
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewInsets.bottom),
-            ),
+
+            // Create a list of presets
+            PresetCard(presetName: "Running", noTHunts: "8"),
+            PresetCard(presetName: "Dancing", noTHunts: "8"),
+            PresetCard(presetName: "Yoga", noTHunts: "8"),
           ],
         ),
       ),

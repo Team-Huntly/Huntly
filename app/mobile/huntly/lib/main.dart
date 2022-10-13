@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:huntly/features/hunts/presentation/pages/home_page.dart';
+import 'package:huntly/features/presets/presentation/preset_page.dart';
 
 import 'features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'features/authentication/presentation/pages/authentication_page.dart';
@@ -29,7 +30,7 @@ class Huntly extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const HomePage(),
+        home: const PresetPage(),
       ),
     );
   }
@@ -121,7 +122,7 @@ class _MainPage2State extends State<MainPage2> {
             if (snapshot.data == false) {
               return AuthenticationPage();
             } else {
-              return const ProfilePage();
+              return const PresetPage();
             }
           } else {
             return const CircularProgressIndicator();
