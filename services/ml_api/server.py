@@ -6,4 +6,6 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return 'Hello World'
+    return 'endpoint is at /service'
+
+
