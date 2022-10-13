@@ -88,7 +88,10 @@ class TreasureHuntSerializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data):
-        return TreasureHunt.objects.create(**validated_data)
+        participants = validated_data.pop('participants')
+        treasure_hunt = TreasureHunt.objects.create(**validated_data)
+        treasure_hunt.participants.set(participants)
+        return treasure_hunt
 
     def update(self, instance, validated_data):
         instance.name = validated_data.get('name', instance.name)
@@ -99,7 +102,7 @@ class TreasureHuntSerializer(serializers.ModelSerializer):
         instance.total_seats = validated_data.get('total_seats', instance.total_seats)
         instance.team_size = validated_data.get('team_size', instance.team_size)
         instance.theme = validated_data.get('theme', instance.theme)
-        instance.participants = validated_data.get('participants', instance.participants)
+        instance.participants.set(validated_data.get('participants', instance.participants))
         instance.save()
         return instance
 

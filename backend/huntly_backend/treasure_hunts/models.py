@@ -16,8 +16,8 @@ class TreasureHunt(models.Model):
     location_longitude = models.CharField(max_length = 30)
     total_seats = models.IntegerField()
     team_size = models.IntegerField()
-    theme = models.ForeignKey('Theme', blank=False, null=False, on_delete = models.CASCADE)
-    participants = models.ManyToManyField(User)
+    theme = models.ForeignKey('Theme', blank=True, null=True, on_delete = models.CASCADE)
+    participants = models.ManyToManyField(User, blank=True, null=True)
 
     def _str_(self):
         return self.name
