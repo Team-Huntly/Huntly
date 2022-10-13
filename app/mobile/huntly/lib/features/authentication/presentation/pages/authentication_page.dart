@@ -26,19 +26,17 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
         padding: const EdgeInsets.symmetric(horizontal: 30),
         child: Column(
           children: [
-            const SizedBox(height: 10),
-            Stack(alignment: Alignment.center, children: [
-              Image.asset('assets/images/map.png'),
-              Positioned(
-                top: 300,
-                child: Text(
-                  'Huntly'.toUpperCase(),
-                  style: darkTheme.textTheme.headline1,
-                ),
+            const SizedBox(height: 30),
+            Image.asset('assets/images/map.png'),
+            Positioned(
+              top: 350,
+              child: Text(
+                'Huntly'.toUpperCase(),
+                style: darkTheme.textTheme.headline1,
               ),
-            ]),
+            ),
             const SizedBox(
-              height: 45,
+              height: 30,
             ),
             Container(
               alignment: Alignment.centerLeft,
