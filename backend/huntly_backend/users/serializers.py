@@ -4,12 +4,6 @@ from django.contrib.auth import authenticate
 
 User = get_user_model()
 
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ('id', 'email', 'gender', 'date_of_birth',)
-
-
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
@@ -27,28 +21,22 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = User.objects.create_user(
             validated_data['email'],
-            # bio =validated_data['bio'],
-            # phone_no =validated_data['phone_no'],
-            # date_of_birth =validated_data['date_of_birth'],
-            # gender = validated_data['gender'],
-            # profile_pic = validated_data['profile_pic'],
             password=validated_data['password']
         )
         return user
 
 
 class UpdateUserSerializer(serializers.ModelSerializer):
-    class Meta(UserSerializer.Meta):
-        model: User
-        fields = ('bio', 'phone_no', 'gender', 'date_of_birth', 'profile_pic')
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'gender', 'date_of_birth', 'phone_no', 'bio', 'profile_pic')
     # TODO: Add phone number regex validation
 
 
 class UserViewSerializer(serializers.ModelSerializer):
-    class Meta(UserSerializer.Meta):
+    class Meta:
         model = User
-        fields = ('first_name', 'bio')
-
+        fields = ('id', 'first_name', 'last_name', 'email', 'gender', 'date_of_birth', 'phone_no', 'bio', 'profile_pic')
 
     
 class UserLoginSerializer(serializers.Serializer):
@@ -60,3 +48,22 @@ class UserLoginSerializer(serializers.Serializer):
         if user and user.is_active:
             return user
         raise serializers.ValidationError("Incorrect Credentials")
+
+class ChangePasswordSerializer(serializers.Serializer):
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
+
+    class Meta:
+        model = User
+        fields = ('old_password', 'new_password')
+
+    def validate(self, data):
+        user = self.context['request'].user
+        if not user.check_password(data['old_password']):
+            raise serializers.ValidationError("Incorrect Old Password")
+        return data
+
+    def save(self):
+        user = self.context['request'].user
+        user.set_password(self.validated_data['new_password'])
+        user.save()

@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from social_django.utils import psa
 from rest_framework import generics, status
 from django.contrib.auth import get_user_model
-from .serializers import UpdateUserSerializer, UserRegistrationSerializer, UserLoginSerializer
+from .serializers import UpdateUserSerializer, UserRegistrationSerializer, UserLoginSerializer, UserViewSerializer, ChangePasswordSerializer
 
 
 #Google Auth Registration for Huntly app
@@ -36,7 +36,7 @@ def register_by_access_token(request, backend):
 
 
 #Normal User Registration & Login for Huntly app
-class register(generics.CreateAPIView):
+class RegisterUserAPIView(generics.CreateAPIView):
     queryset = get_user_model().objects.all()
     serializer_class = UserRegistrationSerializer
     permission_classes = (AllowAny,)
@@ -49,7 +49,8 @@ class register(generics.CreateAPIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
-class login(generics.GenericAPIView):
+# User Login API
+class LoginUserAPIView(generics.GenericAPIView):
     queryset = get_user_model().objects.all()
     serializer_class = UserLoginSerializer
     permission_classes = (AllowAny,)
@@ -78,10 +79,10 @@ class login(generics.GenericAPIView):
 
 
 #Update User Profile
-class update(generics.UpdateAPIView):
+class UpdateUserAPIView(generics.UpdateAPIView):
     queryset = get_user_model().objects.all()
     serializer_class = UpdateUserSerializer
-    
+
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)
         instance = request.user
@@ -93,3 +94,32 @@ class update(generics.UpdateAPIView):
             instance._prefetched_objects_cache = {}
 
         return Response(serializer.data)
+
+
+# Fetch User Profile
+class FetchProfileAPIView(generics.RetrieveAPIView):
+    queryset = get_user_model().objects.all()
+    serializer_class = UserViewSerializer
+
+    def get_object(self, **kwargs):
+        if self.kwargs.get('user_id'):
+            return get_user_model().objects.get(id=self.kwargs.get('user_id'))
+        return self.request.user
+
+
+# Change Password
+class ChangePasswordAPIView(generics.GenericAPIView):
+    queryset = get_user_model().objects.all()
+    serializer_class = ChangePasswordSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        # use save method from serializer
+        serializer.save()
+        return Response(
+            {
+                'message': 'Password updated successfully',
+            },
+            status=status.HTTP_200_OK
+        )
