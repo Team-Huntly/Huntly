@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:huntly/features/hunts/presentation/pages/home_page.dart';
 
-//pages
 import 'features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'features/authentication/presentation/pages/authentication_page.dart';
 import 'features/authentication/presentation/pages/profile_page.dart';
@@ -16,7 +16,6 @@ void main() {
 class Huntly extends StatelessWidget {
   const Huntly({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -30,7 +29,7 @@ class Huntly extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const MyHomePage(title: 'Huntly'),
+        home: const HomePage(),
       ),
     );
   }

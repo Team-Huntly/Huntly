@@ -22,7 +22,9 @@ class BoxRenderer extends StatelessWidget {
           style: darkTheme.textTheme.headline4,
         ),
         Container(
-          decoration: BoxDecoration(),
+          decoration: BoxDecoration(
+            // color: Back
+          ),
           child: Wrap(
             alignment: WrapAlignment.start,
             children: interestsList
