@@ -13,6 +13,14 @@ void main() {
   runApp(const Huntly());
 }
 
+class MyCustomScrollBehavior extends MaterialScrollBehavior {
+
+  @override
+  Widget buildOverscrollIndicator(BuildContext context, Widget child, ScrollableDetails details) {
+    return child;
+  }
+}
+
 class Huntly extends StatelessWidget {
   const Huntly({Key? key}) : super(key: key);
 
@@ -25,6 +33,7 @@ class Huntly extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
+        scrollBehavior: MyCustomScrollBehavior(),
         title: 'Huntly',
         theme: ThemeData(
           primarySwatch: Colors.blue,

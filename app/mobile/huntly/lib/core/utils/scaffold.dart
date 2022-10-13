@@ -11,6 +11,7 @@ import 'package:iconify_flutter/icons/bx.dart';
 import 'package:iconify_flutter/icons/uiw.dart';
 
 import '../../core/theme/theme.dart';
+import '../../features/hunts/presentation/pages/home_page.dart';
 
 class DrawerListItem extends StatelessWidget {
   final String icon;
@@ -74,7 +75,9 @@ class HuntlyScaffold extends StatelessWidget {
           ),
           DrawerListItem(
             icon: Ri.home_2_line,
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => const HomePage()));
+            },
             title: 'Home'
           ),
           DrawerListItem(
@@ -127,7 +130,10 @@ class HuntlyScaffold extends StatelessWidget {
         ],
       ),
     ),
-      body: body,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 30),
+        child: body,
+      )
     );
   }
 }

@@ -63,7 +63,8 @@ class _WordButtonState extends State<WordButton> {
                   Center(
                     child: Text(widget.word.interest,
                         textAlign: TextAlign.center,
-                        style: GoogleFonts.poppins(color: Colors.white)),
+                        style: GoogleFonts.poppins(color: Colors.white,
+                        letterSpacing: 2)),
                   ),
                 ],
               ))),
