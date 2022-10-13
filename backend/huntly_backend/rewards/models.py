@@ -27,7 +27,7 @@ class Coupon(models.Model):
     description = models.ForeignKey(CouponDescription, blank=False, null = False, on_delete=models.CASCADE, related_name='coupons_description')
     code = models.CharField(max_length = 256)
     treasure_hunt = models.ForeignKey(TreasureHunt, blank=True, null = True, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, blank=True, null = True, on_delete=models.CASCADE, related_name='coupons_user')
+    user = models.ForeignKey(User, blank=True, null = True, on_delete=models.CASCADE, )
     created_at = models.DateTimeField(auto_now_add = True)
     expiry_date = models.DateTimeField()
 

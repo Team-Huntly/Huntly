@@ -64,7 +64,7 @@ class TreasureHuntSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TreasureHunt
-        fields = ('name', 'started_at', 'ended_at', 'location_latitude', 'location_longitude', 'total_seats', 'team_size', 'theme', 'participants')
+        fields = ('name', 'started_at', 'ended_at', 'location_latitude', 'location_longitude', 'total_seats', 'team_size', 'theme', 'is_locked')
 
     def to_representation(self, instance):
         clues = Clue.objects.filter(treasure_hunt=instance)
@@ -85,15 +85,13 @@ class TreasureHuntSerializer(serializers.ModelSerializer):
             'theme': ThemeSerializer(instance.theme).data,
             'clues': clues,
             'teams': teams,
-            'participants': UserViewSerializer(instance.participants, many=True).data
+            'participants': UserViewSerializer(instance.participants, many=True).data,
+            'is_locked': instance.is_locked
         }
 
     def create(self, validated_data):
-        participants = validated_data.pop('participants')
-        treasure_hunt = TreasureHunt.objects.create(**validated_data)
-        treasure_hunt.created_by = self.context.get('request').user
-        treasure_hunt.participants.set(participants)
-        return treasure_hunt
+        validated_data['created_by'] = self.context.get('request').user
+        return TreasureHunt.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
         instance.name = validated_data.get('name', instance.name)
@@ -104,8 +102,34 @@ class TreasureHuntSerializer(serializers.ModelSerializer):
         instance.total_seats = validated_data.get('total_seats', instance.total_seats)
         instance.team_size = validated_data.get('team_size', instance.team_size)
         instance.theme = validated_data.get('theme', instance.theme)
-        instance.participants.set(validated_data.get('participants', instance.participants))
-        instance.created_by = self.context.get('request').user
         instance.save()
         return instance
+
+class TreasureHuntParticipantsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TreasureHunt
+        fields = ()
+
+    def register_participant(self, instance):
+        user = self.context.get('request').user
+        if user is not None:
+            treasure_hunt = instance
+            if treasure_hunt.participants.filter(id=user.id).exists():
+                raise serializers.ValidationError('User is already registered')
+            treasure_hunt.participants.add(user)
+            treasure_hunt.save()
+            return treasure_hunt
+        raise serializers.ValidationError('User not found')
+
+    def unregister_participant(self, instance):
+        user = self.context.get('request').user
+        if user is not None:
+            treasure_hunt = instance
+            if not treasure_hunt.participants.filter(id=user.id).exists():
+                raise serializers.ValidationError('User is not registered')
+            treasure_hunt.participants.remove(user)
+            treasure_hunt.save()
+            return treasure_hunt
+        raise serializers.ValidationError('User not found')
+        
 

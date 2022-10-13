@@ -20,6 +20,7 @@ class TreasureHunt(models.Model):
     theme = models.ForeignKey('Theme', blank=True, null=True, on_delete = models.CASCADE, related_name='treasure_hunts_theme')
     participants = models.ManyToManyField(User, blank=True)
     created_by = models.ForeignKey(User, on_delete = models.CASCADE, blank=True, null=True, related_name='treasure_hunts_created_by')
+    is_locked = models.BooleanField(default=False)
 
     def _str_(self):
         return self.name
