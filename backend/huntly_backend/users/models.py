@@ -38,6 +38,7 @@ class CustomUser(AbstractUser):
     date_of_birth = models.DateField(blank=True,null=True)
     phone_no = models.CharField(max_length=15, blank=True, null=True)
     bio = models.TextField(blank=True, null=True)
+    interests = models.TextField(blank=True, null=True)
     profile_pic = models.ImageField(upload_to='profile_pics', blank=True, null=True)
     is_superuser = models.BooleanField(default=False)
     USERNAME_FIELD = 'email'

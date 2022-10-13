@@ -29,14 +29,14 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 class UpdateUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'gender', 'date_of_birth', 'phone_no', 'bio', 'profile_pic')
+        fields = ('first_name', 'last_name', 'gender', 'date_of_birth', 'phone_no', 'bio', 'interests', 'profile_pic')
     # TODO: Add phone number regex validation
 
 
 class UserViewSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'first_name', 'last_name', 'email', 'gender', 'date_of_birth', 'phone_no', 'bio', 'profile_pic')
+        fields = ('id', 'first_name', 'last_name', 'email', 'gender', 'date_of_birth', 'phone_no', 'bio', 'interests', 'profile_pic')
 
     
 class UserLoginSerializer(serializers.Serializer):
