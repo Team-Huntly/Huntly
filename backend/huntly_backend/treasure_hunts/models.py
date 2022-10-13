@@ -9,13 +9,13 @@ User = get_user_model()
 # Create your models here.
 class TreasureHunt(models.Model):
     name =  models.CharField(max_length = 256)
-    started_at = models.DateField(auto_now_add = True)
-    ended_at = models.DateField(auto_now_add = True)
+    created_at = models.DateField(auto_now_add = True)
+    started_at = models.DateField()
+    ended_at = models.DateField()
     location_latitude = models.CharField(max_length = 30)
     location_longitude = models.CharField(max_length = 30)
     total_seats = models.IntegerField()
     team_size = models.IntegerField()
-    no_of_clues = models.IntegerField()
     theme = models.ForeignKey('Theme', blank=False, null=False, on_delete = models.CASCADE)
 
     def _str_(self):
