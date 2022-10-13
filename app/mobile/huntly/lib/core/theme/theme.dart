@@ -14,15 +14,28 @@ ThemeData darkTheme = ThemeData(
     onBackground: Colors.white
   ),
   textTheme: TextTheme(
-    titleLarge: GoogleFonts.poppins(
+    headline1: GoogleFonts.poppins(
       color: Colors.white,
       fontSize: 42,
       fontWeight: FontWeight.w800,
     ),
-    labelMedium: GoogleFonts.poppins(
+    headline4: GoogleFonts.poppins(
       color: Colors.white,
       fontSize: 22,
-      fontWeight: FontWeight.w700
+      fontWeight: FontWeight.w700,
+      fontStyle: FontStyle.italic
+    ),
+    button: GoogleFonts.poppins(
+      color: const Color(0xff293241),
+      fontSize: 12,
+      fontWeight: FontWeight.w400
+    ),
+    bodyText2: GoogleFonts.poppins(
+      color: Colors.white,
+      fontSize: 18,
+      fontWeight: FontWeight.w300,
+      fontStyle: FontStyle.italic,
+      height: 1.2,
     )
   )
 );

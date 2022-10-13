@@ -18,41 +18,59 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
   
   @override
   Widget build(BuildContext context) {
-      const String oAuthClientId = '363088523272-orkcfiqub7hshaq29pisji796or7ohpq.apps.googleusercontent.com';
-    
-    final GoogleSignIn googleSignIn = GoogleSignIn(
-        // Optional clientId
-        // serverClientId: '500990447063-tclvi1rdaaugi424hsnkt5kmdj0vfhhg.apps.googleusercontent.com',
-        serverClientId: oAuthClientId,
-        scopes: <String>[
-          'email',
-          'profile',
-        ],
-      );
     return Scaffold(
       backgroundColor: darkTheme.colorScheme.background,
-      body: Column(
-        children: [
-          Text(
-            'Huntly'.toUpperCase(),
-            style: darkTheme.textTheme.titleLarge,
-          ),
-          Text(
-            'Welcome to Huntly!',
-            style: darkTheme.textTheme.labelMedium,
-          ),
-          FloatingActionButton(
-            child: Row(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 30),
+        child: Column(
+          children: [
+            const SizedBox(height: 10),
+            Stack(
+              alignment: Alignment.center,
               children: [
-                Iconify(Logos.google_icon),
-                
-              ],
+                Image.asset('assets/images/map.png'),
+                Positioned(
+                  top: 350,
+                  child: Text(
+                    'Huntly'.toUpperCase(),
+                    style: darkTheme.textTheme.headline1,
+                  ),
+                ),
+              ]
             ),
-            onPressed: () async{
-              final googleUser = await googleSignIn.signIn();
-            }
-          )
-        ],
+            const SizedBox(height: 45,),
+            Container(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Welcome to Huntly!",
+                style: darkTheme.textTheme.headline4,
+              ),
+            ),
+            Text(
+              "Your one stop destination for making connections and memories you’ll treasure forever.",
+              style: darkTheme.textTheme.bodyText2,
+            ),
+            const SizedBox(height: 30),
+            ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(darkTheme.colorScheme.onBackground),
+                fixedSize: MaterialStateProperty.all<Size>(const Size.fromWidth(250)),
+                padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.symmetric(horizontal: 40)),
+              ),
+              child: Row(
+                children: [
+                  const Iconify(Logos.google_icon),
+                  const SizedBox(width: 15),
+                  Text(
+                    'Sign-In with Google',
+                    style: darkTheme.textTheme.button,
+                  )
+                ],
+              ),
+              onPressed: () async{}
+            )
+          ],
+        ),
       ),
     );
   }
