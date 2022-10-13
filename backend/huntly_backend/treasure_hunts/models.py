@@ -55,7 +55,7 @@ class Team(models.Model):
 class TeamProgress(models.Model):
     clue = models.ForeignKey(Clue, blank=False, null = False, on_delete=models.CASCADE)
     solved_at = models.DateField(auto_now_add = True)
-    team = models.ForeignKey(TreasueHunt, blank= False, null = False, on_delete=models.CASCADE)
+    team = models.ForeignKey(TreasureHunt, blank= False, null = False, on_delete=models.CASCADE)
 
     def _str_(self):
         return self.clue.id + ' ' + self.team.name

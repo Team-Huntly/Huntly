@@ -1,4 +1,9 @@
+import imp
 from django.db import models
+from treasure_hunts.models import TreasureHunt
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 # Create your models here.
 class Brand(models.Model):
