@@ -74,6 +74,7 @@ class TreasureHuntSerializer(serializers.ModelSerializer):
         return {
             'id': instance.id,
             'name': instance.name,
+            'created_by': UserViewSerializer(instance.created_by).data,
             'created_at': instance.created_at,
             'started_at': instance.started_at,
             'ended_at': instance.ended_at,
@@ -90,6 +91,7 @@ class TreasureHuntSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         participants = validated_data.pop('participants')
         treasure_hunt = TreasureHunt.objects.create(**validated_data)
+        treasure_hunt.created_by = self.context.get('request').user
         treasure_hunt.participants.set(participants)
         return treasure_hunt
 
@@ -103,6 +105,7 @@ class TreasureHuntSerializer(serializers.ModelSerializer):
         instance.team_size = validated_data.get('team_size', instance.team_size)
         instance.theme = validated_data.get('theme', instance.theme)
         instance.participants.set(validated_data.get('participants', instance.participants))
+        instance.created_by = self.context.get('request').user
         instance.save()
         return instance
 

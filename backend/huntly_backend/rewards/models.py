@@ -15,7 +15,7 @@ class Brand(models.Model):
         return self.name
 
 class CouponDescription(models.Model):
-    brand = models.ForeignKey(Brand, blank=False, null = False, on_delete=models.CASCADE)
+    brand = models.ForeignKey(Brand, blank=False, null = False, on_delete=models.CASCADE, related_name='coupon_descriptions_brand')
     terms_and_conditions = models.TextField(blank=True, null=True)
     title = models.CharField(max_length = 256)
     description = models.TextField(blank=True, null=True)
@@ -24,10 +24,10 @@ class CouponDescription(models.Model):
         return self.title
 
 class Coupon(models.Model):
-    coupon = models.ForeignKey(CouponDescription, blank=False, null = False, on_delete=models.CASCADE)
+    description = models.ForeignKey(CouponDescription, blank=False, null = False, on_delete=models.CASCADE, related_name='coupons_description')
     code = models.CharField(max_length = 256)
     treasure_hunt = models.ForeignKey(TreasureHunt, blank=True, null = True, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, blank=True, null = True, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, blank=True, null = True, on_delete=models.CASCADE, related_name='coupons_user')
     created_at = models.DateTimeField(auto_now_add = True)
     expiry_date = models.DateTimeField()
 

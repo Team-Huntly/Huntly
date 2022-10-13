@@ -29,8 +29,8 @@ class TreasureHuntListAPIView(generics.ListAPIView):
         return distance
 
     def get(self, request, *args, **kwargs):
-        lat = float(request.query_params.get('latitude', None))
-        lon = float(request.query_params.get('longitude', None))
+        lat = request.query_params.get('latitude', None)
+        lon = request.query_params.get('longitude', None)
         if lat and lon:
             queryset = self.get_queryset()
             for hunt in queryset:

@@ -1,6 +1,6 @@
 from django.urls import path, re_path
 
-from .views import register_by_access_token, RegisterUserAPIView, LoginUserAPIView, UpdateUserAPIView, FetchProfileAPIView, ChangePasswordAPIView
+from .views import register_by_access_token, RegisterUserAPIView, LoginUserAPIView, UpdateUserAPIView, FetchProfileAPIView, ChangePasswordAPIView, FetchUserHuntsAPIView
 
 app_name = 'users'
 
@@ -12,4 +12,5 @@ urlpatterns = [
     path('change-password/', ChangePasswordAPIView.as_view()),
     path('profile/', FetchProfileAPIView.as_view()),
     path('<int:user_id>/profile/', FetchProfileAPIView.as_view()),
+    path('hunts/', FetchUserHuntsAPIView.as_view()),
 ]

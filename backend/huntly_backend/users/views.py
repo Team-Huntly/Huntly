@@ -7,7 +7,8 @@ from social_django.utils import psa
 from rest_framework import generics, status
 from django.contrib.auth import get_user_model
 from .serializers import UpdateUserSerializer, UserRegistrationSerializer, UserLoginSerializer, UserViewSerializer, ChangePasswordSerializer
-
+from treasure_hunts.serializers import TreasureHuntSerializer
+from treasure_hunts.models import TreasureHunt
 
 #Google Auth Registration for Huntly app
 @api_view(['POST'])
@@ -123,3 +124,10 @@ class ChangePasswordAPIView(generics.GenericAPIView):
             },
             status=status.HTTP_200_OK
         )
+
+class FetchUserHuntsAPIView(generics.ListAPIView):
+    serializer_class = TreasureHuntSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return TreasureHunt.objects.filter(participants__id=user.id)
