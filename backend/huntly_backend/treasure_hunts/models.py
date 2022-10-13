@@ -59,3 +59,10 @@ class TeamProgress(models.Model):
 
     def _str_(self):
         return self.clue.id + ' ' + self.team.name
+
+
+class Preset(models.Model):
+    treasure_hunt = models.ForeignKey(TreasureHunt, blank=False, null = False, on_delete=models.CASCADE)
+
+    def _str_(self):
+        return self.treasure_hunt.name
