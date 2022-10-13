@@ -17,17 +17,14 @@ class BoxRenderer extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 0.0),
-          child: Text(
-            category,
-            style: darkTheme.textTheme.headline4,
-          ),
+        Text(
+          category,
+          style: darkTheme.textTheme.headline4,
         ),
         Container(
           decoration: BoxDecoration(),
           child: Wrap(
-            // children: phrases.map((element) => WordButton(word: element)).toList(),
+            alignment: WrapAlignment.start,
             children: interestsList
                 .map((element) => WordButton(
                     word: element,

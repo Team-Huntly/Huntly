@@ -20,7 +20,7 @@ ThemeData darkTheme = ThemeData(
           fontWeight: FontWeight.w800,
         ),
         headline2: GoogleFonts.poppins(
-            color: Colors.white, fontSize: 54, fontWeight: FontWeight.w500),
+            color: Colors.white, fontSize: 24, fontWeight: FontWeight.w500),
         headline3: GoogleFonts.poppins(
             color: Colors.white,
             fontSize: 20,
