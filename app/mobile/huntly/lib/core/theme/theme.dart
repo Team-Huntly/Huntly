@@ -32,6 +32,16 @@ ThemeData darkTheme = ThemeData(
             fontSize: 22,
             fontWeight: FontWeight.w700,
             fontStyle: FontStyle.italic),
+          headline5: GoogleFonts.poppins(
+            color: const Color(0xff98c1d9),
+            fontSize: 17,
+            fontWeight: FontWeight.w500
+          ),
+          headline6: GoogleFonts.poppins(
+            color: Colors.white,
+            fontSize: 16,
+            fontWeight: FontWeight.w600
+          ),
         button: GoogleFonts.poppins(
             color: Colors.white,
             fontSize: 18,

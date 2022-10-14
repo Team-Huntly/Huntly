@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:huntly/core/utils/scaffold.dart';
+import 'package:huntly/core/utils/text_field.dart';
 import 'package:huntly/features/authentication/presentation/widgets/box_renderer.dart';
 import 'package:huntly/features/hunts/presentation/pages/home_page.dart';
 import '../../../../common/constants.dart';
@@ -54,19 +55,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 maxLines: 5,
                 maxLength: 150,
                 style: darkTheme.textTheme.bodyText2,
-                decoration: InputDecoration(
-                  enabledBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                  ),
-                  border: const OutlineInputBorder(),
-                  hintText: 'What would you like others to know about you...',
-                  hintStyle: darkTheme.textTheme.bodyText2!.copyWith(
-                    color: darkTheme.disabledColor
-                  ),
-                  counterStyle: darkTheme.textTheme.bodyText2!.copyWith(
-                    color: darkTheme.disabledColor
-                  )
-                ),
+                decoration: inputDecoration('What would you like others to know about you?')
               ),
             ),
             Padding(

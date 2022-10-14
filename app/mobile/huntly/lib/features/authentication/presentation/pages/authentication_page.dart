@@ -41,8 +41,9 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(height: 30),
+              // const SizedBox(height: 30),
               Image.asset('assets/images/map.png'),
               Positioned(
                 top: 350,
@@ -65,7 +66,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                 "Your one stop destination for making connections and memories you’ll treasure forever.",
                 style: darkTheme.textTheme.bodyText2,
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 35),
               ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
@@ -73,15 +74,19 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                     fixedSize: MaterialStateProperty.all<Size>(
                         const Size.fromWidth(250)),
                     padding: MaterialStateProperty.all<EdgeInsets>(
-                        const EdgeInsets.symmetric(horizontal: 40)),
+                        const EdgeInsets.symmetric(horizontal: 15, vertical: 10)),
                   ),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Iconify(Logos.google_icon),
                       const SizedBox(width: 15),
                       Text(
                         'Sign-In with Google',
-                        style: darkTheme.textTheme.button,
+                        style: darkTheme.textTheme.button!.copyWith(
+                          color: darkTheme.colorScheme.background,
+                          fontSize: 16
+                        ),
                       )
                     ],
                   ),

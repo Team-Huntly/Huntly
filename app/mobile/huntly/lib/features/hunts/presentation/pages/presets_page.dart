@@ -5,21 +5,22 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:huntly/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:huntly/features/authentication/presentation/widgets/box_renderer.dart';
-import 'package:huntly/features/presets/widgets/preset_card.dart';
+import 'package:huntly/features/hunts/presentation/pages/presets_page.dart';
+import 'package:huntly/features/hunts/presentation/widgets/preset_card.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 
-import '../../../../common/constants.dart';
-import '../../../../core/theme/theme.dart';
-import '../../../core/utils/scaffold.dart';
+import '../../../../../common/constants.dart';
+import '../../../../../core/theme/theme.dart';
+import '../../../../core/utils/scaffold.dart';
 
-class PresetPage extends StatefulWidget {
-  const PresetPage({Key? key}) : super(key: key);
+class PresetsPage extends StatefulWidget {
+  const PresetsPage({Key? key}) : super(key: key);
 
   @override
-  State<PresetPage> createState() => _PresetPage();
+  State<PresetsPage> createState() => _PresetsPage();
 }
 
-class _PresetPage extends State<PresetPage> {
+class _PresetsPage extends State<PresetsPage> {
   TextEditingController _controller = TextEditingController();
   @override
   void initState() {
@@ -37,7 +38,6 @@ class _PresetPage extends State<PresetPage> {
           children: [
             // Create a search bar with a search icon
             Container(
-              margin: const EdgeInsets.all(20),
               child: TextField(
                 controller: _controller,
                 style: GoogleFonts.poppins(
@@ -65,11 +65,10 @@ class _PresetPage extends State<PresetPage> {
                 ),
               ),
             ),
-
-            // Create a list of presets
-            PresetCard(presetName: "Running", noTHunts: "8"),
-            PresetCard(presetName: "Dancing", noTHunts: "8"),
-            PresetCard(presetName: "Yoga", noTHunts: "8"),
+            SizedBox(height: 40,),
+            const PresetCard(presetName: "Running", numberOfHunts: 8),
+            const PresetCard(presetName: "Dancing", numberOfHunts: 7,),
+            const PresetCard(presetName: "Yoga", numberOfHunts: 5),
           ],
         ),
       ),

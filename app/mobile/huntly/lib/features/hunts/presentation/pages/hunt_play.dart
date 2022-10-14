@@ -3,25 +3,26 @@ import 'package:huntly/core/theme/theme.dart';
 import 'package:huntly/core/utils/action_button.dart';
 import 'package:huntly/core/utils/scaffold.dart';
 import 'package:huntly/features/hunts/presentation/pages/clue_create_page.dart';
+import 'package:huntly/features/hunts/presentation/pages/clue_page.dart';
 import 'package:huntly/features/hunts/presentation/pages/hunt_edit_page.dart';
 import 'package:huntly/features/hunts/presentation/widgets/tab.dart';
 import 'package:iconify_flutter/icons/ic.dart';
 
-class HuntCreate extends StatefulWidget {
-  const HuntCreate({Key? key}) : super(key: key);
+class HuntPlay extends StatefulWidget {
+  const HuntPlay({Key? key}) : super(key: key);
 
   @override
-  State<HuntCreate> createState() => _HuntCreateState();
+  State<HuntPlay> createState() => _HuntPlayState();
 }
 
-class _HuntCreateState extends State<HuntCreate> with TickerProviderStateMixin {
+class _HuntPlayState extends State<HuntPlay> with TickerProviderStateMixin {
   late TabController _tabController;
 
   final List<Widget> _tab = [
     HuntTab(color: darkTheme.colorScheme.secondary)
   ];
   final List<Widget> _tabMenu = [
-    const HuntEditPage(),
+    const CluePage(),
   ];
 
   @override
@@ -51,28 +52,6 @@ class _HuntCreateState extends State<HuntCreate> with TickerProviderStateMixin {
             child: TabBarView(
               controller: _tabController,
               children: _tabMenu.map((e) => e).toList(),
-            ),
-          ),
-          Align(
-            alignment: Alignment.bottomRight,
-            child: ActionButton(
-              alignment: Alignment.bottomRight,
-              // text: 'Add clue',
-              leading: Ic.baseline_plus,
-              onTap: () {
-                setState(() {
-                  _tab.add(
-                    HuntTab(
-                      color: darkTheme.colorScheme.primary
-                    )
-                  );
-                  _tabMenu.add(
-                    const ClueCreatePage(),
-                  );
-                  _tabController =
-                      TabController(length: _tab.length, vsync: this);
-                });
-              },
             ),
           ),
           const SizedBox(height: 100)
