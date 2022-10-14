@@ -12,6 +12,8 @@ from rewards.serializers import CouponSerializer
 from treasure_hunts.models import TreasureHunt
 from rewards.models import Coupon
 from datetime import datetime
+from treasure_hunts.serializers import MemoryThreadListSerializer
+from treasure_hunts.models import TreasureHunt
 
 
 #Google Auth Registration for Huntly app
@@ -200,4 +202,15 @@ class FetchUserRewardsAPIView(generics.ListAPIView):
     def get_queryset(self):
         user = self.request.user
         return Coupon.objects.filter(user=user)
+
+class UserMemoriesListAPIView(generics.ListAPIView):
+    """
+    Fetch logged in user's memories
+    """
+    serializer_class = MemoryThreadListSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return TreasureHunt.objects.filter(participants__id=user.id, ended_at__lte=datetime.now())
+
         
