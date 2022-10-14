@@ -16,6 +16,13 @@ class FindHuntPage extends StatefulWidget {
 }
 
 class _FindHuntPageState extends State<FindHuntPage> {
+  @override
+  void initState() {
+    BlocProvider.of<TreasureHuntBloc>(context)
+                      .add(GetTreasureHunts());
+    super.initState();
+  }
+
   TextEditingController _controller = TextEditingController();
 
   @override
@@ -63,9 +70,12 @@ class _FindHuntPageState extends State<FindHuntPage> {
               },
               builder: (context, state) {
                 if (state is Loading) {
-                  return const Center(
-                    child: CircularProgressIndicator(
-                      color: Colors.white,
+                  return const Padding(
+                    padding: EdgeInsets.only(top: 40),
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
                     ),
                   );
                 } else if (state is Loaded) {

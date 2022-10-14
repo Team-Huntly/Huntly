@@ -12,6 +12,8 @@ import 'features/authentication/presentation/pages/profile_page.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'features/memories/presentation/bloc/memories_bloc.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // final prefs = await SharedPreferences.getInstance();
@@ -54,6 +56,9 @@ class Huntly extends StatelessWidget {
         ),
         BlocProvider<RewardsBloc>(
           create: (context) => RewardsBloc()
+        ),
+        BlocProvider<MemoriesBloc>(
+          create: (context) => MemoriesBloc()
         )
       ],
       child: MaterialApp(

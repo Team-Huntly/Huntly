@@ -25,7 +25,7 @@ class HuntInfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      width: 150,
+      width: 140,
       decoration: BoxDecoration(
           color: darkTheme.colorScheme.background,
           borderRadius: const BorderRadius.all(Radius.circular(15)),

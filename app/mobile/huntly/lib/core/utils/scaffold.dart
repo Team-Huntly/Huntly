@@ -114,7 +114,10 @@ class HuntlyScaffold extends StatelessWidget {
                   },
                   title: 'Profile'),
               DrawerListItem(
-                  icon: Mdi.file_find_outline, onTap: () {}, title: 'Find'),
+                  icon: Mdi.file_find_outline, onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const FindHuntPage()));
+                  }, title: 'Find'),
               DrawerListItem(
                   icon: Carbon.recently_viewed, onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
