@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:huntly/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:huntly/features/authentication/presentation/pages/profile_page.dart';
 import 'package:huntly/features/hunts/presentation/pages/my_hunts_page.dart';
+import 'package:huntly/features/memories/presentation/pages/memories_menu_page.dart';
 import 'package:huntly/features/rewards/presentation/pages/rewards_page.dart';
 import 'package:huntly/main.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
@@ -101,7 +102,10 @@ class HuntlyScaffold extends StatelessWidget {
                   },
                   title: 'Rewards'),
               DrawerListItem(
-                  icon: Bx.photo_album, onTap: () {}, title: 'Memories'),
+                  icon: Bx.photo_album, onTap: () {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => const MemoriesMenuPage()));
+                  }, title: 'Memories'),
               DrawerListItem(
                   icon: Ic.round_mail_outline, onTap: () {}, title: 'Invites'),
               Expanded(
