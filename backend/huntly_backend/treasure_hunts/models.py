@@ -16,6 +16,7 @@ class TreasureHunt(models.Model):
     ended_at = models.DateTimeField()
     location_latitude = models.CharField(max_length = 30)
     location_longitude = models.CharField(max_length = 30)
+    location_name = models.CharField(max_length = 256, blank=True, null=True)
     total_seats = models.IntegerField(validators=[MinValueValidator(1)])
     team_size = models.IntegerField(validators=[MinValueValidator(1)])
     theme = models.ForeignKey('Theme', blank=True, null=True, on_delete = models.CASCADE, related_name='treasure_hunts_theme')

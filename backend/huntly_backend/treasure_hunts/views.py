@@ -5,6 +5,7 @@ from .serializers import TreasureHuntSerializer, ThemeSerializer, ClueSerializer
     TeamProgressSerializer, LeaderboardSerializer, TeamSerializer
 from .models import TreasureHunt, Theme, Clue, TeamProgress, Team
 from .utils import calc_distance
+from datetime import datetime
 
 RADIUS = 10
 
@@ -15,6 +16,9 @@ class TreasureHuntListAPIView(generics.ListAPIView):
     """
     serializer_class = TreasureHuntSerializer
     queryset = TreasureHunt.objects.all()
+
+    def get_queryset(self):
+        return TreasureHunt.objects.filter(started_at__gte=datetime.now()).order_by('started_at')
 
     def get(self, request, *args, **kwargs):
         lat = request.query_params.get('latitude', None)

@@ -84,7 +84,7 @@ class TreasureHuntSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TreasureHunt
-        fields = ('name', 'started_at', 'ended_at', 'location_latitude', 'location_longitude', 'total_seats', 'team_size', 'theme', 'is_locked')
+        fields = ('name', 'started_at', 'ended_at', 'location_latitude', 'location_longitude', 'location_name', 'total_seats', 'team_size', 'theme', 'is_locked')
 
     # Function to change the way the object is displayed
     def to_representation(self, instance):
@@ -101,6 +101,7 @@ class TreasureHuntSerializer(serializers.ModelSerializer):
             'ended_at': instance.ended_at,
             'location_latitude': instance.location_latitude,
             'location_longitude': instance.location_longitude,
+            'location_name': instance.location_name,
             'total_seats': instance.total_seats,
             'team_size': instance.team_size,
             'theme': ThemeSerializer(instance.theme).data,
@@ -122,6 +123,7 @@ class TreasureHuntSerializer(serializers.ModelSerializer):
         instance.ended_at = validated_data.get('ended_at', instance.ended_at)
         instance.location_latitude = validated_data.get('location_latitude', instance.location_latitude)
         instance.location_longitude = validated_data.get('location_longitude', instance.location_longitude)
+        instance.location_name = validated_data.get('location_name', instance.location_name)
         instance.total_seats = validated_data.get('total_seats', instance.total_seats)
         instance.team_size = validated_data.get('team_size', instance.team_size)
         instance.theme = validated_data.get('theme', instance.theme)
@@ -131,7 +133,9 @@ class TreasureHuntSerializer(serializers.ModelSerializer):
             bios =[]
             userids =[]
             for participant in instance.participants.all():
-                interests = json.loads(participant.interests)
+                interests={}
+                if (participant.interests):
+                    interests = json.loads(participant.interests)
                 interests_string = ''
                 for i in interests:
                     interests_string += interests[i] + ' '
