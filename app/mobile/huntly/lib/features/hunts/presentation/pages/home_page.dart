@@ -18,20 +18,25 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return HuntlyScaffold(
-        body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text(
-            "Hello!",
-            style: darkTheme.textTheme.overline,
-          ),
-          Text(
-            'John Doe',
-            style: darkTheme.textTheme.headline2,
-          ),
-          HuntCard(
-              title: "Manipal Institute of Technology Hunt!",
-              location: "MIT Udupi",
-              seatsLeft: 5,
-              start: DateTime(2022, 9, 5, 17, 30))
-        ]));
+        outerContext: context,
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text(
+              "Hello!",
+              style: darkTheme.textTheme.overline,
+            ),
+            Text(
+              'John Doe',
+              style: darkTheme.textTheme.headline2,
+            ),
+            HuntCard(
+                title: "Manipal Institute of Technology Hunt!",
+                location: "MIT Udupi",
+                seatsLeft: 5,
+                start: DateTime(2022, 9, 5, 17, 30))
+          ]),
+        ));
   }
 }

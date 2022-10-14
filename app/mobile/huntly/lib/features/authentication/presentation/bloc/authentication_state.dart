@@ -16,3 +16,7 @@ class AuthenticationFailure extends AuthenticationState {}
 class AuthenticationLoading extends AuthenticationState {}
 
 class AuthenticationLogout extends AuthenticationState {}
+
+class Loading extends AuthenticationState {}
+
+class ProfileAdded extends AuthenticationState {}

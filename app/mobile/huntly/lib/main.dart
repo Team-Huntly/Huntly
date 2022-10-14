@@ -12,14 +12,21 @@ import 'features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'features/authentication/presentation/pages/authentication_page.dart';
 import 'features/authentication/presentation/pages/profile_page.dart';
 
-void main() {
+import 'package:shared_preferences/shared_preferences.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = await SharedPreferences.getInstance();
+  if (!prefs.containsKey("profile")) {
+    prefs.setInt("profile", 0);
+  }
   runApp(const Huntly());
 }
 
 class MyCustomScrollBehavior extends MaterialScrollBehavior {
-
   @override
-  Widget buildOverscrollIndicator(BuildContext context, Widget child, ScrollableDetails details) {
+  Widget buildOverscrollIndicator(
+      BuildContext context, Widget child, ScrollableDetails details) {
     return child;
   }
 }
@@ -124,16 +131,28 @@ class _MainPage2State extends State<MainPage2> {
     return FutureBuilder(
         future: _googleSignIn.isSignedIn(),
         builder: (context, snapshot) {
-          print(snapshot.data);
-          print(snapshot.connectionState);
-
           if (snapshot.hasError) {
             return const Text('Error');
           } else if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.data == false) {
               return AuthenticationPage();
             } else {
-              return const PresetPage();
+              return FutureBuilder(
+                  future: SharedPreferences.getInstance(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      print((snapshot.data as SharedPreferences)
+                          .getInt("profile"));
+                      if ((snapshot.data as SharedPreferences)
+                              .getInt("profile") ==
+                          0) {
+                        return ProfilePage();
+                      } else {
+                        return HomePage();
+                      }
+                    }
+                    return Center(child: CircularProgressIndicator());
+                  });
             }
           } else {
             return const CircularProgressIndicator();

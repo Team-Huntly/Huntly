@@ -12,3 +12,12 @@ class AuthenticationStarted extends AuthenticationEvent {}
 class AuthenticationLoggedIn extends AuthenticationEvent {}
 
 class AuthenticationLogOut extends AuthenticationEvent {}
+
+class AddProfileEvent extends AuthenticationEvent {
+  String bio;
+  List<Interests> interests;
+  AddProfileEvent({required this.bio, required this.interests});
+
+  @override
+  List<Object> get props => [bio, interests];
+}
