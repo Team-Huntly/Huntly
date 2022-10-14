@@ -5,6 +5,7 @@ import 'package:huntly/core/utils/service.dart';
 import 'package:huntly/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:huntly/features/authentication/presentation/pages/profile_page.dart';
 import 'package:huntly/features/hunts/presentation/pages/my_hunts_page.dart';
+import 'package:huntly/features/hunts/presentation/pages/recents_page.dart';
 import 'package:huntly/features/memories/presentation/pages/memories_menu_page.dart';
 import 'package:huntly/features/rewards/presentation/pages/rewards_page.dart';
 import 'package:huntly/main.dart';
@@ -84,19 +85,19 @@ class HuntlyScaffold extends StatelessWidget {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ClipRRect(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(100)),
-                        child: Image.network(
-                          photoUrl_,
-                          width: 80,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      Text(
-                        username_,
-                        style: darkTheme.textTheme.headline2,
-                      )
+                      // ClipRRect(
+                      //   borderRadius:
+                      //       const BorderRadius.all(Radius.circular(100)),
+                      //   child: Image.network(
+                      //     photoUrl_,
+                      //     width: 80,
+                      //   ),
+                      // ),
+                      // const SizedBox(height: 10),
+                      // Text(
+                      //   username_,
+                      //   style: darkTheme.textTheme.headline2,
+                      // )
                     ]),
               ),
               DrawerListItem(
@@ -114,9 +115,15 @@ class HuntlyScaffold extends StatelessWidget {
                   },
                   title: 'Profile'),
               DrawerListItem(
-                  icon: Mdi.file_find_outline, onTap: () {}, title: 'Find'),
+                  icon: Mdi.file_find_outline, onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const FindHuntPage()));
+                  }, title: 'Find'),
               DrawerListItem(
-                  icon: Carbon.recently_viewed, onTap: () {}, title: 'Recent'),
+                  icon: Carbon.recently_viewed, onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const RecentsPage()));
+                  }, title: 'Recent'),
               DrawerListItem(
                   icon: Ic.outline_diamond,
                   onTap: () {

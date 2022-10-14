@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/src/foundation/key.dart';
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:huntly/features/hunts/presentation/widgets/hunt_card.dart';
-import 'package:huntly/core/utils/scaffold.dart';
 
 import '../../../../core/theme/theme.dart';
 import '../../../../core/utils/scaffold.dart';
 import '../bloc/treasurehunt_bloc.dart';
+import '../widgets/hunt_card.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class RecentsPage extends StatefulWidget {
+  const RecentsPage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<RecentsPage> createState() => _RecentsPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _RecentsPageState extends State<RecentsPage> {
   @override
   void initState() {
     BlocProvider.of<TreasureHuntBloc>(context)
-                  .add(GetTreasureHunts());
+                  .add(GetRecentTreasureHunts());
     super.initState();
   }
-  
   @override
   Widget build(BuildContext context) {
     return HuntlyScaffold(
@@ -39,14 +39,6 @@ class _HomePageState extends State<HomePage> {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Hello!",
-                          style: darkTheme.textTheme.overline,
-                        ),
-                      ]),
                   const SizedBox(height: 30),
                   ListView.builder(
                     shrinkWrap: true,
@@ -58,9 +50,10 @@ class _HomePageState extends State<HomePage> {
                 ],
               );
             } else if (state is TreasureHuntInitial) {
+              print("hellldodsjkf");
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 BlocProvider.of<TreasureHuntBloc>(context)
-                    .add(GetTreasureHunts());
+                    .add(GetRecentTreasureHunts());
               });
               return const Center(
                 child: CircularProgressIndicator(

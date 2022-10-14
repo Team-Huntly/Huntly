@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:huntly/features/authentication/data/models/user_model.dart';
 
 import '../../../../core/theme/theme.dart';
-import '../../data/models/team_model.dart';
 
 class UserCard extends StatelessWidget {
   UserModel user;
@@ -11,7 +10,8 @@ class UserCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.8,
+      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      width: MediaQuery.of(context).size.width * 0.6,
       padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
       decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(10)),
@@ -23,8 +23,8 @@ class UserCard extends StatelessWidget {
         ClipRRect(
           borderRadius: const BorderRadius.all(Radius.circular(100)),
           child: SizedBox(
-            width: 80,
-            height: 80,
+            width: 60,
+            height: 60,
             child: Image.asset(
               'assets/images/1.jpg',
               fit: BoxFit.fill,
@@ -32,7 +32,7 @@ class UserCard extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 15),
+          padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,

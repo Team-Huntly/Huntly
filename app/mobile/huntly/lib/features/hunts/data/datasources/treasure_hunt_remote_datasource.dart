@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:huntly/common/constants.dart';
 import 'package:huntly/core/utils/get_headers.dart';
+import 'package:huntly/features/hunts/data/models/leaderboard_model.dart';
 
 import '../../../../core/error/exceptions.dart';
 import '../models/team_model.dart';
@@ -11,6 +12,8 @@ abstract class TreasureHuntRemoteDataSource {
   Future<List<TreasureHuntModel>> fetchTreasureHunts(
       {required String latitude, required String longitude});
 
+  Future<List<TreasureHuntModel>> fetchRecentTreasureHunts();
+
   Future<List<TreasureHuntModel>> fetchUserTreasureHunts({required int userId});
 
   Future<void> registerUser({required int treasureHuntId});
@@ -19,7 +22,7 @@ abstract class TreasureHuntRemoteDataSource {
 
   Future<TeamModel> getTeammates({required int treasureHuntId});
 
-  // Future<TeamModel> getUserHunts();
+  Future<LeaderboardModel> getLeaderboard({required int treasureHuntId});
 }
 
 class TreasureHuntRemoteDataSourceImpl implements TreasureHuntRemoteDataSource {
@@ -53,6 +56,26 @@ class TreasureHuntRemoteDataSourceImpl implements TreasureHuntRemoteDataSource {
       Dio dio = Dio();
       var response = await dio.get("${url}user/treasure-hunts/upcoming",
           options: await getHeaders());
+      if (response.statusCode == 200) {
+        List<TreasureHuntModel> treasureHunts = response.data
+            .map<TreasureHuntModel>((m) => TreasureHuntModel.fromJson(m))
+            .toList();
+        return treasureHunts;
+      } else {
+        throw ServerException();
+      }
+    } catch (e) {
+      debugPrint("error: $e");
+      throw NetworkException();
+    }
+  }
+
+  @override
+  Future<List<TreasureHuntModel>> fetchRecentTreasureHunts() async {
+    try {
+      Dio dio = Dio();
+      var response =
+          await dio.get("${url}user/hunts/past", options: await getHeaders());
       if (response.statusCode == 200) {
         List<TreasureHuntModel> treasureHunts = response.data
             .map<TreasureHuntModel>((m) => TreasureHuntModel.fromJson(m))
@@ -114,7 +137,26 @@ class TreasureHuntRemoteDataSourceImpl implements TreasureHuntRemoteDataSource {
         throw ServerException();
       }
     } catch (e) {
-      debugPrint("Datasource error: $e");
+      debugPrint("error: $e");
+      throw NetworkException();
+    }
+  }
+
+  @override
+  Future<LeaderboardModel> getLeaderboard({required int treasureHuntId}) async {
+    try {
+      Dio dio = Dio();
+      final response = await dio.get(
+          "${url}treasure-hunts/$treasureHuntId/leaderboard/",
+          options: await getHeaders());
+      if (response.statusCode == 200) {
+        print(response.data);
+        return LeaderboardModel.fromJson(response.data);
+      } else {
+        throw ServerException();
+      }
+    } catch (e) {
+      debugPrint("error: $e");
       throw NetworkException();
     }
   }

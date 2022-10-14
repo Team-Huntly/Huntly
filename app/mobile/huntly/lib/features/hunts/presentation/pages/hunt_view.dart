@@ -45,7 +45,9 @@ class _HuntViewState extends State<HuntView> {
                 TeamPage(
                   treasureHuntId: widget.treasureHunt.id,
                 ),
-                LeaderboardPage(),
+                LeaderboardPage(
+                  treasureHunt: widget.treasureHunt,
+                ),
               ],
             ),
           ),

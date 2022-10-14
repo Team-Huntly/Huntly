@@ -28,3 +28,11 @@ class GetTeamMates extends TreasureHuntEvent {
 }
 
 class GetUserHunts extends TreasureHuntEvent {}
+
+class GetLeaderboard extends TreasureHuntEvent {
+  final int treasureHuntId;
+
+  const GetLeaderboard(this.treasureHuntId);
+}
+
+class GetRecentTreasureHunts extends TreasureHuntEvent {}
