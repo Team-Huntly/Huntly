@@ -2,8 +2,10 @@ from rest_framework import generics, status
 from rest_framework.response import Response
 from uritemplate import partial
 from .serializers import TreasureHuntSerializer, ThemeSerializer, ClueSerializer, TreasureHuntParticipantsSerializer, \
-    TeamProgressSerializer, LeaderboardSerializer, TeamSerializer
+    TeamProgressSerializer, LeaderboardSerializer, TeamSerializer, MemoryThreadSerializer, MemoryThreadListSerializer
+from memories.serializers import MemorySerializer
 from .models import TreasureHunt, Theme, Clue, TeamProgress, Team
+from memories.models import Memory
 from .utils import calc_distance
 from datetime import datetime
 
@@ -126,6 +128,22 @@ class ClueCreateAPIView(generics.CreateAPIView):
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data, context={'request': request, 'treasure_hunt': kwargs['treasure_hunt']})
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+
+class ClueListCreateAPIView(generics.ListCreateAPIView):
+    """
+    Create a list of clues for a treasure hunt
+    """
+    queryset = Clue.objects.all()
+    serializer_class = ClueSerializer
+    http_method_names = ['post']
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data, context={'request': request, 'treasure_hunt': kwargs['treasure_hunt']}, many=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         headers = self.get_success_headers(serializer.data)
@@ -276,3 +294,23 @@ class RetrieveTreashureHuntRewardsAPIView(generics.RetrieveAPIView):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
         return Response(serializer.get_rewards(instance))
+
+class MemoryThreadRetrieveAPIView(generics.RetrieveAPIView):
+    """
+    List all memories of a treasure hunt as a thread
+    """
+    queryset = TreasureHunt.objects.all()
+    serializer_class = MemoryThreadSerializer
+    lookup_field = 'id'
+
+
+class MemoryThreadListAPIView(generics.ListAPIView):
+    """
+    List all memory threads of a user
+    """
+    queryset = TreasureHunt.objects.all()
+    serializer_class = MemoryThreadListSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return TreasureHunt.objects.filter(participants__id=user.id)

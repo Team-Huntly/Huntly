@@ -9,6 +9,7 @@ cryptography==38.0.1
 defusedxml==0.7.1
 Django==4.1.2
 django-cors-headers==3.13.0
+django-cron==0.6.0
 django-rest-swagger==2.2.0
 djangorestframework==3.14.0
 drf-yasg==1.21.4
