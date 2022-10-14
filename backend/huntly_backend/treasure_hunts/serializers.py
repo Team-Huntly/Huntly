@@ -7,13 +7,10 @@ from rewards.serializers import CouponSerializer
 from memories.serializers import MemorySerializer
 from .utils import calc_distance
 from django.contrib.auth import get_user_model
-import requests
-import json
 
 User = get_user_model()
 
 DIST_BUFFER = 0.1
-ML_API = 'https://huntlymlapi.mixedbag.repl.co/service'
 
 
 # Serializer for Treasure Hunt Model
@@ -129,36 +126,6 @@ class TreasureHuntSerializer(serializers.ModelSerializer):
         instance.team_size = validated_data.get('team_size', instance.team_size)
         instance.theme = validated_data.get('theme', instance.theme)
         instance.save()
-        # if validated_data.get('is_locked') and not instance.is_locked and len(instance.participants.all()) >= 2*instance.team_size:
-        #     bios =[]
-        #     userids =[]
-        #     for participant in instance.participants.all():
-        #         interests={}
-        #         if (participant.interests):
-        #             interests = json.loads(participant.interests)
-        #         interests_string = ''
-        #         for i in interests:
-        #             interests_string += interests[i] + ' '
-        #         bios.append(participant.bio+' '+ interests_string)
-        #         userids.append(participant.id)
-        #     response = requests.post(ML_API, json={
-        #     'team_size': instance.team_size,
-        #      'bios': bios })
-        #     if response.status_code == 200:
-        #         instance.is_locked = locked
-        #         instance.save()
-        #         data = response.json()
-        #         for i in data:
-        #             team = Team.objects.create(name='Team'+str(i), treasure_hunt=instance)
-        #             for j in data[i]:
-        #                 team.team_members.add(User.objects.get(id=userids[j]))
-        #             team.save()
-        #         return instance
-        #     else:
-        #         raise serializers.ValidationError('Error in forming teams')
-        # else:
-        #     instance.is_locked = locked
-        #     instance.save()
         return instance
 
     # Function to fetch rewards for a treasure hunt
