@@ -52,17 +52,17 @@ class AuthenticationBloc
           };
           print("Printing params");
           print(jsonEncode(params));
-          // Response response = await Dio().post(
-          //   "${url}users/auth/social/google-oauth2/",
-          //   options: Options(
-          //     headers: {
-          //       "Accept": "application/json",
-          //       "Content-Type": "application/json",
-          //     },
-          //   ),
-          //   data: jsonEncode(params),
-          // );
-          // print("Response: ${response.data}");
+          Response response = await Dio().post(
+            "${url}users/auth/social/google-oauth2/",
+            options: Options(
+              headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+              },
+            ),
+            data: jsonEncode(params),
+          );
+          print("Response: ${response.data}");
 
           emit(AuthenticationSuccess());
         } catch (e) {

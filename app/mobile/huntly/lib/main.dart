@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:huntly/features/hunts/presentation/bloc/treasurehunt_bloc.dart';
 import 'package:huntly/features/hunts/presentation/pages/home_page.dart';
 import 'package:huntly/features/presets/presentation/preset_page.dart';
 
@@ -39,6 +40,7 @@ class Huntly extends StatelessWidget {
         BlocProvider<AuthenticationBloc>(
           create: (context) => AuthenticationBloc(),
         ),
+        BlocProvider<TreasureHuntBloc>(create: (context) => TreasureHuntBloc()),
       ],
       child: MaterialApp(
         scrollBehavior: MyCustomScrollBehavior(),
@@ -64,47 +66,25 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  GoogleSignInAccount? _currentUser;
-
-  static const String OAUTH_CLIENT_ID =
-      '363088523272-orkcfiqub7hshaq29pisji796or7ohpq.apps.googleusercontent.com';
-  final GoogleSignIn _googleSignIn = GoogleSignIn(
-    // Optional clientId
-    // serverClientId: '500990447063-tclvi1rdaaugi424hsnkt5kmdj0vfhhg.apps.googleusercontent.com',
-    serverClientId: OAUTH_CLIENT_ID,
-    scopes: <String>[
-      'email',
-      'profile',
-    ],
-  );
-
-  StreamController<int> mystream = StreamController<int>.broadcast();
   @override
   void initState() {
-    _googleSignIn.onCurrentUserChanged.asBroadcastStream();
-    GoogleSignInAccount? a = _googleSignIn.currentUser;
-    if (a != null) {
-      mystream.add(1);
-    } else {
-      mystream.add(0);
-    }
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return MainPage2();
+    return WrapperPage();
   }
 }
 
-class MainPage2 extends StatefulWidget {
-  const MainPage2({Key? key}) : super(key: key);
+class WrapperPage extends StatefulWidget {
+  const WrapperPage({Key? key}) : super(key: key);
 
   @override
-  State<MainPage2> createState() => _MainPage2State();
+  State<WrapperPage> createState() => _WrapperPageState();
 }
 
-class _MainPage2State extends State<MainPage2> {
+class _WrapperPageState extends State<WrapperPage> {
   GoogleSignInAccount? _currentUser;
 
   static const String OAUTH_CLIENT_ID =
