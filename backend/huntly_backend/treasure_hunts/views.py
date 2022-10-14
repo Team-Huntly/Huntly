@@ -2,8 +2,10 @@ from rest_framework import generics, status
 from rest_framework.response import Response
 from uritemplate import partial
 from .serializers import TreasureHuntSerializer, ThemeSerializer, ClueSerializer, TreasureHuntParticipantsSerializer, \
-    TeamProgressSerializer, LeaderboardSerializer, TeamSerializer
+    TeamProgressSerializer, LeaderboardSerializer, TeamSerializer, MemoryThreadSerializer, MemoryThreadListSerializer
+from memories.serializers import MemorySerializer
 from .models import TreasureHunt, Theme, Clue, TeamProgress, Team
+from memories.models import Memory
 from .utils import calc_distance
 from datetime import datetime
 
@@ -276,3 +278,23 @@ class RetrieveTreashureHuntRewardsAPIView(generics.RetrieveAPIView):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
         return Response(serializer.get_rewards(instance))
+
+class MemoryThreadRetrieveAPIView(generics.RetrieveAPIView):
+    """
+    List all memories of a treasure hunt as a thread
+    """
+    queryset = TreasureHunt.objects.all()
+    serializer_class = MemoryThreadSerializer
+    lookup_field = 'id'
+
+
+class MemoryThreadListAPIView(generics.ListAPIView):
+    """
+    List all memory threads of a user
+    """
+    queryset = TreasureHunt.objects.all()
+    serializer_class = MemoryThreadListSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return TreasureHunt.objects.filter(participants__id=user.id)

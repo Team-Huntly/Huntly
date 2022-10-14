@@ -1,8 +1,10 @@
 from rest_framework import serializers
 from .models import TreasureHunt, Clue, Theme, Team, TeamProgress
+from memories.models import Memory
 from rewards.models import Coupon
 from users.serializers import UserViewSerializer
 from rewards.serializers import CouponSerializer
+from memories.serializers import MemorySerializer
 from .utils import calc_distance
 from django.contrib.auth import get_user_model
 import requests
@@ -272,3 +274,30 @@ class LeaderboardSerializer(serializers.ModelSerializer):
         leaderboard_teams = sorted(leaderboard_teams, key=lambda k: (k['no_of_clues'], -k['last_solved_at'].timestamp()), reverse=True)
         leaderboard_teams.extend(other_teams)
         return teams
+
+
+# Serializer for Memory Threads
+class MemoryThreadSerializer(serializers.ModelSerializer):
+    memories = serializers.SerializerMethodField()
+    class Meta:
+        model = TreasureHunt
+        fields = ('id', 'name', 'started_at', 'ended_at', 'is_locked', 'location_name', 'memories')
+
+    def get_memories(self, instance):
+        memories = Memory.objects.filter(treasure_hunt=instance)
+        memories = MemorySerializer(memories, many=True).data
+        return memories
+
+
+# Serializer for Memory Thread List
+class MemoryThreadListSerializer(serializers.ModelSerializer):
+    cover_img = serializers.SerializerMethodField()
+    class Meta:
+        model = TreasureHunt
+        fields = ('id', 'name', 'started_at', 'ended_at', 'is_locked', 'location_name', 'cover_img')
+
+    def get_cover_img(self, instance):
+        memories = Memory.objects.filter(treasure_hunt=instance)
+        if memories.count() > 0:
+            return memories.first().image.url
+        return None
