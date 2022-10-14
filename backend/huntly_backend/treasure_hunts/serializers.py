@@ -1,7 +1,9 @@
 from code import interact
 from rest_framework import serializers
 from .models import TreasureHunt, Clue, Theme, Team, TeamProgress
+from rewards.models import Coupon
 from users.serializers import UserViewSerializer
+from rewards.serializers import CouponSerializer
 from .utils import calc_distance
 from django.contrib.auth import get_user_model
 import requests
@@ -142,6 +144,11 @@ class TreasureHuntSerializer(serializers.ModelSerializer):
             instance.is_locked = locked
             instance.save()
             return instance
+
+    def get_rewards(self, instance):
+        coupons =  Coupon.objects.filter(treasure_hunt=instance)
+        coupons = CouponSerializer(coupons, many=True).data
+        return coupons  
     
 
 class TreasureHuntParticipantsSerializer(serializers.ModelSerializer):

@@ -5,7 +5,6 @@ from .serializers import TreasureHuntSerializer, ThemeSerializer, ClueSerializer
     TeamProgressSerializer, LeaderboardSerializer, TeamSerializer
 from .models import TreasureHunt, Theme, Clue, TeamProgress, Team
 from .utils import calc_distance
-import coreapi
 
 RADIUS = 10
 
@@ -19,11 +18,11 @@ class TreasureHuntListAPIView(generics.ListAPIView):
         if lat and lon:
             queryset = self.get_queryset()
             for hunt in queryset:
-                hunt.distance = calc_distance(float(lat), float(lon), float(hunt.location_longitude), float(hunt.location_longitude))
-                if hunt.distance > RADIUS:
+                hunt_distance = calc_distance(float(lat), float(lon), float(hunt.location_longitude), float(hunt.location_longitude))
+                if hunt_distance > RADIUS:  
                     queryset = queryset.exclude(id=hunt.id)
                     
-            queryset = sorted(queryset, key=lambda x: x.distance)
+            # queryset = sorted(queryset, key=lambda x: x.distance)
             serializer = self.get_serializer(queryset, many=True)
             return Response(serializer.data)
         else:
@@ -122,7 +121,7 @@ class TeamProgressAPIView(generics.ListAPIView):
 
     def get_queryset(self):
         team_id = self.kwargs['team_id']
-        return TeamProgress.objects.filter(team_id=team_id)
+        return TeamProgress.objects.filter(team__id=team_id)
 
     def get(self, request, *args, **kwargs):
         queryset = self.get_queryset()
@@ -164,10 +163,20 @@ class RetrieveUserTeamAPIView(generics.RetrieveAPIView):
         treasure_hunt_id = kwargs.get('id', None)
         if user and treasure_hunt_id:
             try:
-                team = self.get_queryset().get(team_members__id = user.id, treasure_hunt_id=treasure_hunt_id)
+                team = self.get_queryset().get(team_members__id = user.id, treasure_hunt__id=treasure_hunt_id)
             except Team.DoesNotExist:
                 return Response(status=status.HTTP_404_NOT_FOUND)
             serializer = self.get_serializer(team)
             return Response(serializer.data)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+class RetrieveTreashureHuntRewardsAPIView(generics.RetrieveAPIView):
+    queryset = TreasureHunt.objects.all()
+    serializer_class = TreasureHuntSerializer
+    lookup_field = 'id'
+
+    def get(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return Response(serializer.get_rewards(instance))

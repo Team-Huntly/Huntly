@@ -8,7 +8,9 @@ from rest_framework import generics, status
 from django.contrib.auth import get_user_model
 from .serializers import UpdateUserSerializer, UserRegistrationSerializer, UserLoginSerializer, UserViewSerializer, ChangePasswordSerializer
 from treasure_hunts.serializers import TreasureHuntSerializer
+from rewards.serializers import CouponSerializer
 from treasure_hunts.models import TreasureHunt
+from rewards.models import Coupon
 
 #Google Auth Registration for Huntly app
 @api_view(['POST'])
@@ -131,3 +133,12 @@ class FetchUserHuntsAPIView(generics.ListAPIView):
     def get_queryset(self):
         user = self.request.user
         return TreasureHunt.objects.filter(participants__id=user.id)
+
+
+class FetchUserRewardsAPIView(generics.ListAPIView):
+    serializer_class = CouponSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return Coupon.objects.filter(user=user)
+        

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Coupon, Brand
+from .models import Coupon, Brand, CouponDescription
 from users.serializers import UserViewSerializer
 
 
@@ -16,11 +16,18 @@ class BrandSerializer(serializers.ModelSerializer):
 
 class CouponDescriptionSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Coupon
+        model = CouponDescription
         fields = '__all__'
 
     def to_representation(self, instance):
-        return super().to_representation(instance)
+        codes = Coupon.objects.filter(description=instance)
+        return {
+            'id': instance.id,
+            'brand': BrandSerializer(instance.brand).data,
+            'terms_and_conditions': instance.terms_and_conditions,
+            'title': instance.title,
+            'description': instance.description,
+        }
 
 
 class CouponSerializer(serializers.ModelSerializer):
@@ -29,12 +36,13 @@ class CouponSerializer(serializers.ModelSerializer):
         fields = '__all__'
     
     def to_representation(self, instance):
-        brand = BrandSerializer(instance.brand)
-        user = UserViewSerializer(instance.user)
         return {
+            'id': instance.id,
             'code': instance.code,
-            'expiry_date': instance.expiry_date,
+            'description': CouponDescriptionSerializer(instance.description).data,
+            'treasure_hunt': instance.treasure_hunt.id,
+            'user': UserViewSerializer(instance.user).data,
             'created_at': instance.created_at,
-            'brand': brand,
-            'user': user
+            'expiry_date': instance.expiry_date
         }
+        

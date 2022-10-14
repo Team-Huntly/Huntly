@@ -5,7 +5,6 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-# Create your models here.
 class Brand(models.Model):
     name = models.CharField(max_length = 256)
     logo = models.ImageField(upload_to='brand_logos', blank=True, null=True)
