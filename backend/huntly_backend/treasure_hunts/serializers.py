@@ -1,4 +1,3 @@
-from code import interact
 from rest_framework import serializers
 from .models import TreasureHunt, Clue, Theme, Team, TeamProgress
 from rewards.models import Coupon
@@ -68,7 +67,7 @@ class ClueSerializer(serializers.ModelSerializer):
         instance.answer_latitude = validated_data.get('answer_latitude', instance.answer_latitude)
         instance.answer_longitude = validated_data.get('answer_longitude', instance.answer_longitude)
         instance.is_qr_based = validated_data.get('is_qr_based', instance.is_qr_based)
-        instance.save() 
+        instance.save()
         return instance
 
 
@@ -84,7 +83,7 @@ class TreasureHuntSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TreasureHunt
-        fields = ('name', 'started_at', 'ended_at', 'location_latitude', 'location_longitude', 'total_seats', 'team_size', 'theme', 'is_locked')
+        fields = ('name', 'started_at', 'ended_at', 'location_latitude', 'location_longitude', 'location_name', 'total_seats', 'team_size', 'theme', 'is_locked')
 
     # Function to change the way the object is displayed
     def to_representation(self, instance):
@@ -101,6 +100,7 @@ class TreasureHuntSerializer(serializers.ModelSerializer):
             'ended_at': instance.ended_at,
             'location_latitude': instance.location_latitude,
             'location_longitude': instance.location_longitude,
+            'location_name': instance.location_name,
             'total_seats': instance.total_seats,
             'team_size': instance.team_size,
             'theme': ThemeSerializer(instance.theme).data,
@@ -122,16 +122,19 @@ class TreasureHuntSerializer(serializers.ModelSerializer):
         instance.ended_at = validated_data.get('ended_at', instance.ended_at)
         instance.location_latitude = validated_data.get('location_latitude', instance.location_latitude)
         instance.location_longitude = validated_data.get('location_longitude', instance.location_longitude)
+        instance.location_name = validated_data.get('location_name', instance.location_name)
         instance.total_seats = validated_data.get('total_seats', instance.total_seats)
         instance.team_size = validated_data.get('team_size', instance.team_size)
         instance.theme = validated_data.get('theme', instance.theme)
-        locked = validated_data.get('is_locked', instance.is_locked)    
+        locked = validated_data.get('is_locked', instance.is_locked)
 
         if validated_data.get('is_locked') and not instance.is_locked and len(instance.participants.all()) >= 2*instance.team_size:
             bios =[]
             userids =[]
             for participant in instance.participants.all():
-                interests = json.loads(participant.interests)
+                interests={}
+                if (participant.interests):
+                    interests = json.loads(participant.interests)
                 interests_string = ''
                 for i in interests:
                     interests_string += interests[i] + ' '
@@ -161,8 +164,8 @@ class TreasureHuntSerializer(serializers.ModelSerializer):
     def get_rewards(self, instance):
         coupons =  Coupon.objects.filter(treasure_hunt=instance)
         coupons = CouponSerializer(coupons, many=True).data
-        return coupons  
-    
+        return coupons
+
 
 # Serializer for Treasure Hunt Participants
 class TreasureHuntParticipantsSerializer(serializers.ModelSerializer):
@@ -228,7 +231,7 @@ class TeamProgressSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError('You are not at the correct location')
         super().validate(data)
         return data
-        
+
     # Function to create a new team progress
     def create(self, validated_data):
         team_id = self.context.get('team_id')

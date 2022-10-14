@@ -30,4 +30,5 @@ urlpatterns = [
     path('users/', include('users.urls')),
     path('treasure-hunts/', include('treasure_hunts.urls')),
     path('rewards/', include('rewards.urls')),
+    path('memories/', include('memories.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

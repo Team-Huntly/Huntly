@@ -96,7 +96,6 @@ class UpdateUserAPIView(generics.UpdateAPIView):
     """
     queryset = get_user_model().objects.all()
     serializer_class = UpdateUserSerializer
-    permission_classes = (AllowAny,)
 
     def get_object(self):
         return self.request.user
