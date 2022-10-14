@@ -121,12 +121,12 @@ class ClueCreateAPIView(generics.CreateAPIView):
     queryset = Clue.objects.all()
     serializer_class = ClueSerializer
 
-    def get_serializer_context(self):
-        context = super().get_serializer_context()
-        context.update({
-            'treasure_hunt': self.kwargs['treasure_hunt']
-        })
-        return context
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data, context={'request': request, 'treasure_hunt': kwargs['treasure_hunt']})
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
 class ClueRetrieveAPIView(generics.RetrieveAPIView):

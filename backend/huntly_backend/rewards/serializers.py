@@ -8,14 +8,6 @@ class BrandSerializer(serializers.ModelSerializer):
     class Meta:
         model = Brand
         fields = '__all__'
-    
-    # Function to change the way the object is displayed
-    def to_representation(self, instance):
-        return super().to_representation(instance)
-    
-    # Function to create a new brand
-    def create(self, validated_data):
-        return super().create(validated_data)
 
 
 # Serializer for Coupon Description Model
