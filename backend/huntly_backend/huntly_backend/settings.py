@@ -48,8 +48,6 @@ INSTALLED_APPS = [
     'drf_yasg',
     'corsheaders',
     'django_cron',
-    # "treasure_hunts.cron.FormTeamsCronJob",
-    # "treasure_hunts.cron.DistributeRewardsCronJob",
     'users.apps.UsersConfig',
     'memories.apps.MemoriesConfig',
     'rewards.apps.RewardsConfig',
@@ -191,3 +189,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+CRON_CLASSES = [
+    "treasure_hunts.cron.FormTeamsCronJob",
+    "treasure_hunts.cron.FormTeamsCronJob",
+]

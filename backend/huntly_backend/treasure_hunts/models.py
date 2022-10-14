@@ -10,6 +10,12 @@ User = get_user_model()
 
 # Create your models here.
 class TreasureHunt(models.Model):
+    STATUS_CHOICES = (
+        ('O', 'Open'),
+        ('A', 'Allotted'),
+        ('C', 'Cancelled'),
+        ('F', 'Finished'),
+    )
     name =  models.CharField(max_length = 256)
     created_at = models.DateTimeField(auto_now_add=True)
     started_at = models.DateTimeField()
@@ -23,6 +29,7 @@ class TreasureHunt(models.Model):
     participants = models.ManyToManyField(User, blank=True)
     created_by = models.ForeignKey(User, on_delete = models.CASCADE, blank=True, null=True, related_name='treasure_hunts_created_by')
     is_locked = models.BooleanField(default=False)
+    status = models.CharField(max_length=1, choices = STATUS_CHOICES, default='O', null=False, blank=False)
 
     def _str_(self):
         return self.name
