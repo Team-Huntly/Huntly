@@ -27,9 +27,9 @@ class TreasureHuntListAPIView(generics.ListAPIView):
             queryset = self.get_queryset()
             for hunt in queryset:
                 hunt_distance = calc_distance(float(lat), float(lon), float(hunt.location_latitude), float(hunt.location_longitude))
-                if hunt_distance > RADIUS:  
+                if hunt_distance > RADIUS:
                     queryset = queryset.exclude(id=hunt.id)
-                    
+
             # queryset = sorted(queryset, key=lambda x: x.distance)
             serializer = self.get_serializer(queryset, many=True)
             return Response(serializer.data)
@@ -45,9 +45,9 @@ class TreasureHuntListAPIView(generics.ListAPIView):
             queryset = self.get_queryset()
             for hunt in queryset:
                 hunt_distance = calc_distance(float(lat), float(lon), float(hunt.location_latitude), float(hunt.location_longitude))
-                if hunt_distance > RADIUS:  
+                if hunt_distance > RADIUS:
                     queryset = queryset.exclude(id=hunt.id)
-                    
+
             # queryset = sorted(queryset, key=lambda x: x.distance)
             serializer = self.get_serializer(queryset, many=True)
             return Response(serializer.data)
@@ -60,7 +60,6 @@ class TreasureHuntCreateAPIView(generics.CreateAPIView):
     Create a new treasure hunt
     """
     serializer_class = TreasureHuntSerializer
-    queryset = TreasureHunt.objects.all()
     queryset = TreasureHunt.objects.all()
     serializer_class = TreasureHuntSerializer
 
@@ -221,7 +220,7 @@ class TeamProgressCreateAPIView(generics.CreateAPIView):
     """
     queryset = TeamProgress.objects.all()
     serializer_class = TeamProgressSerializer
-    
+
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data, context={'request': request, 'team_id': kwargs['team_id']})
         serializer.is_valid(raise_exception=True)
@@ -242,7 +241,7 @@ class LeaderboardRetrieveAPIView(generics.RetrieveAPIView):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
         return Response(serializer.get_leaderboard(instance))
-    
+
 
 class RetrieveUserTeamAPIView(generics.RetrieveAPIView):
     """
