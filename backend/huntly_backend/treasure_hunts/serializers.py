@@ -12,7 +12,7 @@ import json
 User = get_user_model()
 
 DIST_BUFFER = 0.1
-ML_API = 'http://localhost:5000/predict'
+ML_API = 'https://huntlymlapi.mixedbag.repl.co/service'
 
 
 # Serializer for Treasure Hunt Model
@@ -127,7 +127,7 @@ class TreasureHuntSerializer(serializers.ModelSerializer):
         instance.theme = validated_data.get('theme', instance.theme)
         locked = validated_data.get('is_locked', instance.is_locked)    
 
-        if validated_data.get('is_locked') and not instance.is_locked:
+        if validated_data.get('is_locked') and not instance.is_locked and len(instance.participants.all()) >= 2*instance.team_size:
             bios =[]
             userids =[]
             for participant in instance.participants.all():
