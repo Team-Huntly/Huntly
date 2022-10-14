@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -61,7 +59,7 @@ class Huntly extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: WrapperPage(),
+        home: const WrapperPage(),
       ),
     );
   }
@@ -107,9 +105,7 @@ class _WrapperPageState extends State<WrapperPage> {
                           0) {
                         return const ProfilePage();
                       } else {
-                        // TODO CHANGE THIS TO HOME PAGE
                         return const HomePage();
-                        // return const ProfilePage();
                       }
                     }
                     return const Center(child: CircularProgressIndicator());

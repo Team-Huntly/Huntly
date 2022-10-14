@@ -19,3 +19,5 @@ class Loaded extends TreasureHuntState {
   @override
   List<Object> get props => [treasureHunts];
 }
+
+class Done extends TreasureHuntState {}

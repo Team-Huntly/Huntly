@@ -1,4 +1,8 @@
 import 'package:equatable/equatable.dart';
+import 'package:huntly/features/authentication/data/models/user_model.dart';
+import 'package:huntly/features/authentication/domain/entities/user.dart';
+
+import '../../data/models/theme_model.dart';
 
 class TreasureHunt extends Equatable {
   String name;
@@ -8,8 +12,10 @@ class TreasureHunt extends Equatable {
   String location_longitude;
   int total_seats;
   int team_size;
-  dynamic theme;
+  ThemeModel theme;
   bool is_locked;
+  String location_name;
+  List<UserModel> participants;
 
   TreasureHunt({
     required this.name,
@@ -21,6 +27,8 @@ class TreasureHunt extends Equatable {
     required this.team_size,
     required this.theme,
     required this.is_locked,
+    required this.location_name,
+    required this.participants,
   });
 
   @override
@@ -34,5 +42,7 @@ class TreasureHunt extends Equatable {
         team_size,
         theme,
         is_locked,
+        participants,
+        theme
       ];
 }

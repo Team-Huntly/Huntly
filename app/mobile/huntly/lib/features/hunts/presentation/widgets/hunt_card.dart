@@ -22,8 +22,8 @@ class HuntCard extends StatelessWidget {
   Widget build(BuildContext context) {
     const borderRadius = Radius.circular(10);
 
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8.0),
+    return Container(
+      margin: const EdgeInsets.only(bottom: 10),
       child: GestureDetector(
         onTap: () {
           Navigator.of(context).pushReplacement(MaterialPageRoute(
@@ -44,6 +44,7 @@ class HuntCard extends StatelessWidget {
                   width: 5,
                 ))),
                 child: Container(
+                  width: 90,
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   decoration: BoxDecoration(
@@ -105,7 +106,7 @@ class HuntCard extends StatelessWidget {
                             ),
                             const SizedBox(height: 10),
                             Text(
-                              "${treasureHunt.total_seats} seats left",
+                              "${treasureHunt.total_seats - treasureHunt.participants.length} seats left",
                               style: TextStyle(
                                 color: darkTheme.colorScheme.secondary,
                                 fontSize: 12,

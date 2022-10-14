@@ -8,6 +8,7 @@ import 'package:huntly/features/authentication/presentation/widgets/box_renderer
 import 'package:huntly/features/hunts/presentation/pages/home_page.dart';
 import '../../../../common/constants.dart';
 import '../../../../core/theme/theme.dart';
+import '../../../../core/utils/action_button.dart';
 import '../bloc/authentication_bloc.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -140,28 +141,16 @@ class _ProfilePageState extends State<ProfilePage> {
               const SizedBox(
                 height: 30,
               ),
-              ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      primary: Colors.red,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10))),
-                  onPressed: () {
-                    BlocProvider.of<AuthenticationBloc>(context).add(
-                        AddProfileEvent(
-                            bio: _controller.text,
-                            interests: selectedWords.value));
-                  },
-                  child: Text(
-                    "SUBMIT",
-                    style: GoogleFonts.poppins(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  )),
-              const SizedBox(
-                height: 30,
+              ActionButton(
+                text: 'Submit',
+                onTap: () {
+                  BlocProvider.of<AuthenticationBloc>(context).add(
+                      AddProfileEvent(
+                          bio: _controller.text,
+                          interests: selectedWords.value));
+                },
               ),
+              const SizedBox(height: 20),
             ],
           ),
         ),

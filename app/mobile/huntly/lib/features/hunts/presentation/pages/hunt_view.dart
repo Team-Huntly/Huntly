@@ -29,7 +29,7 @@ class _HuntViewState extends State<HuntView> {
         length: 3,
         child: Column(children: [
           TabBar(
-              tabs: [
+              tabs: const [
                 ViewTab(icon: AntDesign.info_circle_outlined),
                 ViewTab(icon: Ri.team_line),
                 ViewTab(icon: Carbon.trophy)
