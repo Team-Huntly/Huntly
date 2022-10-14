@@ -217,13 +217,13 @@ class TeamProgressCreateAPIView(generics.CreateAPIView):
     """
     queryset = TeamProgress.objects.all()
     serializer_class = TeamProgressSerializer
-
-    def get_serializer_context(self):
-        context = super().get_serializer_context()
-        context.update({
-            'team_id': self.kwargs['team_id']
-        })
-        return context
+    
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data, context={'request': request, 'team_id': kwargs['team_id']})
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
 class LeaderboardRetrieveAPIView(generics.RetrieveAPIView):
