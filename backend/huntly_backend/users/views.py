@@ -180,6 +180,17 @@ class FetchUserPastHuntsAPIView(generics.ListAPIView):
         return TreasureHunt.objects.filter(participants__id=user.id, ended_at__lte=datetime.now())
 
 
+class FetchUserCreatedHuntsAPIView(generics.ListAPIView):
+    """
+    Fetch logged in user's created hunts
+    """
+    serializer_class = TreasureHuntSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return TreasureHunt.objects.filter(created_by=user)
+
+
 class FetchUserRewardsAPIView(generics.ListAPIView):
     """
     Fetch logged in user's rewards
