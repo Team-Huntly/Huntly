@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:huntly/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:huntly/features/authentication/presentation/pages/profile_page.dart';
+import 'package:huntly/features/hunts/presentation/pages/my_hunts_page.dart';
+import 'package:huntly/features/memories/presentation/pages/memories_menu_page.dart';
+import 'package:huntly/features/rewards/presentation/pages/rewards_page.dart';
 import 'package:huntly/main.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/carbon.dart';
@@ -87,13 +90,22 @@ class HuntlyScaffold extends StatelessWidget {
               DrawerListItem(
                   icon: Carbon.recently_viewed, onTap: () {}, title: 'Recent'),
               DrawerListItem(
-                  icon: Ic.outline_diamond, onTap: () {}, title: 'My Hunts'),
+                  icon: Ic.outline_diamond, onTap: () {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => const MyHuntsPage()));
+                  }, title: 'My Hunts'),
               DrawerListItem(
                   icon: Ph.currency_circle_dollar,
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => const RewardsPage()));
+                  },
                   title: 'Rewards'),
               DrawerListItem(
-                  icon: Bx.photo_album, onTap: () {}, title: 'Memories'),
+                  icon: Bx.photo_album, onTap: () {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => const MemoriesMenuPage()));
+                  }, title: 'Memories'),
               DrawerListItem(
                   icon: Ic.round_mail_outline, onTap: () {}, title: 'Invites'),
               Expanded(
