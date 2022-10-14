@@ -109,7 +109,7 @@ class TreasureHuntSerializer(serializers.ModelSerializer):
             'clues': clues,
             'teams': teams,
             'participants': UserViewSerializer(instance.participants, many=True).data,
-            'is_locked': instance.is_locked
+            'status': instance.get_status_display(),
         }
 
     # Function to create a new treasure hunt
@@ -128,39 +128,38 @@ class TreasureHuntSerializer(serializers.ModelSerializer):
         instance.total_seats = validated_data.get('total_seats', instance.total_seats)
         instance.team_size = validated_data.get('team_size', instance.team_size)
         instance.theme = validated_data.get('theme', instance.theme)
-        locked = validated_data.get('is_locked', instance.is_locked)
-
-        if validated_data.get('is_locked') and not instance.is_locked and len(instance.participants.all()) >= 2*instance.team_size:
-            bios =[]
-            userids =[]
-            for participant in instance.participants.all():
-                interests={}
-                if (participant.interests):
-                    interests = json.loads(participant.interests)
-                interests_string = ''
-                for i in interests:
-                    interests_string += interests[i] + ' '
-                bios.append(participant.bio+' '+ interests_string)
-                userids.append(participant.id)
-            response = requests.post(ML_API, json={
-            'team_size': instance.team_size,
-             'bios': bios })
-            if response.status_code == 200:
-                instance.is_locked = locked
-                instance.save()
-                data = response.json()
-                for i in data:
-                    team = Team.objects.create(name='Team'+str(i), treasure_hunt=instance)
-                    for j in data[i]:
-                        team.team_members.add(User.objects.get(id=userids[j]))
-                    team.save()
-                return instance
-            else:
-                raise serializers.ValidationError('Error in forming teams')
-        else:
-            instance.is_locked = locked
-            instance.save()
-            return instance
+        instance.save()
+        # if validated_data.get('is_locked') and not instance.is_locked and len(instance.participants.all()) >= 2*instance.team_size:
+        #     bios =[]
+        #     userids =[]
+        #     for participant in instance.participants.all():
+        #         interests={}
+        #         if (participant.interests):
+        #             interests = json.loads(participant.interests)
+        #         interests_string = ''
+        #         for i in interests:
+        #             interests_string += interests[i] + ' '
+        #         bios.append(participant.bio+' '+ interests_string)
+        #         userids.append(participant.id)
+        #     response = requests.post(ML_API, json={
+        #     'team_size': instance.team_size,
+        #      'bios': bios })
+        #     if response.status_code == 200:
+        #         instance.is_locked = locked
+        #         instance.save()
+        #         data = response.json()
+        #         for i in data:
+        #             team = Team.objects.create(name='Team'+str(i), treasure_hunt=instance)
+        #             for j in data[i]:
+        #                 team.team_members.add(User.objects.get(id=userids[j]))
+        #             team.save()
+        #         return instance
+        #     else:
+        #         raise serializers.ValidationError('Error in forming teams')
+        # else:
+        #     instance.is_locked = locked
+        #     instance.save()
+        return instance
 
     # Function to fetch rewards for a treasure hunt
     def get_rewards(self, instance):
@@ -182,8 +181,8 @@ class TreasureHuntParticipantsSerializer(serializers.ModelSerializer):
             treasure_hunt = instance
             if treasure_hunt.participants.filter(id=user.id).exists():
                 raise serializers.ValidationError('User is already registered')
-            if treasure_hunt.is_locked:
-                raise serializers.ValidationError('Registration is closed')
+            # if treasure_hunt.is_locked:
+            #     raise serializers.ValidationError('Registration is closed')
             treasure_hunt.participants.add(user)
             treasure_hunt.save()
             return treasure_hunt
@@ -196,8 +195,8 @@ class TreasureHuntParticipantsSerializer(serializers.ModelSerializer):
             treasure_hunt = instance
             if not treasure_hunt.participants.filter(id=user.id).exists():
                 raise serializers.ValidationError('User is not registered')
-            if treasure_hunt.is_locked:
-                raise serializers.ValidationError('Registration is locked')
+            # if treasure_hunt.is_locked:
+            #     raise serializers.ValidationError('Registration is locked')
             treasure_hunt.participants.remove(user)
             treasure_hunt.save()
             return treasure_hunt
@@ -267,13 +266,27 @@ class LeaderboardSerializer(serializers.ModelSerializer):
             team['no_of_clues'] = progress.count()
             if team['no_of_clues'] == 0:
                 team['last_solved_at'] = None
-                other_teams.append(team)
+                other_teams.append({
+                    'id': team['id'],
+                    'name': team['name'],
+                    'no_of_clues': team['no_of_clues'],
+                    'last_solved_at': team['last_solved_at']
+                })
             else:
                 team['last_solved_at'] = progress.first().solved_at
-                leaderboard_teams.append(team)
+                leaderboard_teams.append({
+                    'id': team['id'],
+                    'name': team['name'],
+                    'no_of_clues': team['no_of_clues'],
+                    'last_solved_at': team['last_solved_at']
+                })
         leaderboard_teams = sorted(leaderboard_teams, key=lambda k: (k['no_of_clues'], -k['last_solved_at'].timestamp()), reverse=True)
         leaderboard_teams.extend(other_teams)
-        return teams
+        return_obj = {
+            'hunt_id': instance.id,
+            'teams': leaderboard_teams
+        }
+        return return_obj
 
 
 # Serializer for Memory Threads
@@ -281,7 +294,7 @@ class MemoryThreadSerializer(serializers.ModelSerializer):
     memories = serializers.SerializerMethodField()
     class Meta:
         model = TreasureHunt
-        fields = ('id', 'name', 'started_at', 'ended_at', 'is_locked', 'location_name', 'memories')
+        fields = ('id', 'name', 'started_at', 'ended_at', 'location_name', 'memories')
 
     def get_memories(self, instance):
         memories = Memory.objects.filter(treasure_hunt=instance)
@@ -294,7 +307,7 @@ class MemoryThreadListSerializer(serializers.ModelSerializer):
     cover_img = serializers.SerializerMethodField()
     class Meta:
         model = TreasureHunt
-        fields = ('id', 'name', 'started_at', 'ended_at', 'is_locked', 'location_name', 'cover_img')
+        fields = ('id', 'name', 'started_at', 'ended_at', 'location_name', 'cover_img')
 
     def get_cover_img(self, instance):
         memories = Memory.objects.filter(treasure_hunt=instance)
