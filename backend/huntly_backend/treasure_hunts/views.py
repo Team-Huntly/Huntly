@@ -1,9 +1,12 @@
 from rest_framework import generics, status
 from rest_framework.response import Response
 from uritemplate import partial
-from .serializers import TreasureHuntSerializer, ThemeSerializer, ClueSerializer, TreasureHuntParticipantsSerializer
-from .models import TreasureHunt, Theme, Clue
+from .serializers import TreasureHuntSerializer, ThemeSerializer, ClueSerializer, TreasureHuntParticipantsSerializer, \
+    TeamProgressSerializer, LeaderboardSerializer, TeamSerializer
+from .models import TreasureHunt, Theme, Clue, TeamProgress, Team
 from .utils import calc_distance
+
+RADIUS = 10
 
 class TreasureHuntListAPIView(generics.ListAPIView):
     queryset = TreasureHunt.objects.all()
@@ -16,6 +19,9 @@ class TreasureHuntListAPIView(generics.ListAPIView):
             queryset = self.get_queryset()
             for hunt in queryset:
                 hunt.distance = calc_distance(float(lat), float(lon), float(hunt.location_longitude), float(hunt.location_longitude))
+                if hunt.distance > RADIUS:
+                    queryset = queryset.exclude(id=hunt.id)
+                    
             queryset = sorted(queryset, key=lambda x: x.distance)
             serializer = self.get_serializer(queryset, many=True)
             return Response(serializer.data)
@@ -108,3 +114,60 @@ class UnregisterParticipantAPIView(generics.UpdateAPIView):
         serializer.is_valid(raise_exception=True)
         updated_treasure_hunt = TreasureHuntSerializer(serializer.unregister_participant(instance)).data
         return Response(updated_treasure_hunt, status=status.HTTP_200_OK)
+
+class TeamProgressAPIView(generics.ListAPIView):
+    queryset = TeamProgress.objects.all()
+    serializer_class = TeamProgressSerializer
+    lookup_field = 'id'
+
+    def get_queryset(self):
+        team_id = self.kwargs['team_id']
+        return TeamProgress.objects.filter(team_id=team_id)
+
+    def get(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        if queryset:
+            serializer = self.get_serializer(queryset, many=True)
+            return Response(serializer.data)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+class TeamProgressCreateAPIView(generics.CreateAPIView):
+    queryset = TeamProgress.objects.all()
+    serializer_class = TeamProgressSerializer
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({
+            'team_id': self.kwargs['team_id']
+        })
+        return context
+
+
+class LeaderboardRetrieveAPIView(generics.RetrieveAPIView):
+    queryset = TreasureHunt.objects.all()
+    serializer_class = LeaderboardSerializer
+    lookup_field = 'id'
+
+    def get(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return Response(serializer.get_leaderboard(instance))
+    
+
+class RetrieveUserTeamAPIView(generics.RetrieveAPIView):
+    queryset = Team.objects.all()
+    serializer_class = TeamSerializer
+
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        treasure_hunt_id = kwargs.get('id', None)
+        if user and treasure_hunt_id:
+            try:
+                team = self.get_queryset().get(team_members__id = user.id, treasure_hunt_id=treasure_hunt_id)
+            except Team.DoesNotExist:
+                return Response(status=status.HTTP_404_NOT_FOUND)
+            serializer = self.get_serializer(team)
+            return Response(serializer.data)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)

@@ -1,7 +1,9 @@
 from rest_framework import serializers
 from .models import TreasureHunt, Clue, Theme, Team, TeamProgress
 from users.serializers import UserViewSerializer
+from .utils import calc_distance
 
+DIST_BUFFER = 0.1
 
 class TeamSerializer(serializers.ModelSerializer):
     class Meta:
@@ -13,7 +15,7 @@ class TeamSerializer(serializers.ModelSerializer):
         return {
             'id': instance.id,
             'name': instance.name,
-            'logo': instance.logo.url,
+             **({'logo': instance.logo.url} if instance.logo else {}),
             'treasure_hunt': instance.treasure_hunt.id,
             'team_members': team_members
         }
@@ -131,5 +133,62 @@ class TreasureHuntParticipantsSerializer(serializers.ModelSerializer):
             treasure_hunt.save()
             return treasure_hunt
         raise serializers.ValidationError('User not found')
-        
 
+
+class TeamProgressSerializer(serializers.ModelSerializer):
+    latitude = serializers.FloatField()
+    longitude = serializers.FloatField()
+
+    class Meta:
+        model = TeamProgress
+        exclude = ('solved_at', 'team',)
+
+    def to_representation(self, instance):
+        return {
+            'id': instance.id,
+            'team': TeamSerializer(instance.team).data,
+            'clue': ClueSerializer(instance.clue).data,
+            'solved_at': instance.solved_at
+        }
+    def validate(self, data):
+        latitude = data.get('latitude')
+        longitude = data.get('longitude')
+        if latitude is None or longitude is None:
+            raise serializers.ValidationError('Latitude and longitude are required')
+        distance = calc_distance(float(latitude), float(longitude), float(data.get('clue').answer_latitude), float(data.get('clue').answer_longitude))
+        if distance > DIST_BUFFER:
+            raise serializers.ValidationError('You are not at the correct location')
+        super().validate(data)
+        return data
+        
+    def create(self, validated_data):
+        team_id = self.context.get('team_id')
+        team = Team.objects.get(id=team_id)
+        validated_data.pop('latitude')
+        validated_data.pop('longitude')
+        return TeamProgress.objects.create(**validated_data, team=team)
+
+    def update(self, instance, validated_data):
+        instance.is_completed = validated_data.get('is_completed', instance.is_completed)
+        instance.completed_at = validated_data.get('completed_at', instance.completed_at)
+        instance.save()
+        return instance
+
+
+class LeaderboardSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TreasureHunt
+        fields = ()
+
+    def get_leaderboard(self, instance):
+        teams = Team.objects.filter(treasure_hunt=instance)
+        teams = TeamSerializer(teams, many=True).data
+        for team in teams:
+            progress = TeamProgress.objects.filter(team=team['id'], clue__treasure_hunt = instance).order_by('-solved_at')
+            team['no_of_clues'] = progress.count()
+            if team['no_of_clues'] == 0:
+                team['last_solved_at'] = None
+            else:
+                team['last_clue_solved_at'] = progress.first().solved_at
+        teams = sorted(teams, key=lambda k: (k['no_of_clues'], -k['last_clue_solved_at']), reverse=True)
+        return teams

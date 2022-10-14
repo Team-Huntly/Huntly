@@ -1,4 +1,4 @@
-def calc_distance(self, lat1, lon1, lat2, lon2):
+def calc_distance(lat1, lon1, lat2, lon2):
     from math import sin, cos, sqrt, atan2, radians
 
     # approximate radius of earth in km
