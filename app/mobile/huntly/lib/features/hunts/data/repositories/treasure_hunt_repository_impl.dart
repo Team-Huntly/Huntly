@@ -28,10 +28,40 @@ class TreasureHuntRepositoryImpl implements TreasureHuntRepository {
   }
 
   @override
-  Future<Either<Failure, List<TreasureHunt>>> fetchUserTreasureHunts({required int userId}) async {
+  Future<Either<Failure, List<TreasureHunt>>> fetchUserTreasureHunts(
+      {required int userId}) async {
     try {
-      final treasureHunts = await remoteDataSource.fetchUserTreasureHunts(userId: userId);
+      final treasureHunts =
+          await remoteDataSource.fetchUserTreasureHunts(userId: userId);
       return Right(treasureHunts);
+    } on ServerException {
+      return Left(ServerFailure());
+    } on NetworkException {
+      return Left(NetworkFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> registerUser(
+      {required int treasureHuntId}) async {
+    try {
+      final response =
+          await remoteDataSource.registerUser(treasureHuntId: treasureHuntId);
+      return Right(response);
+    } on ServerException {
+      return Left(ServerFailure());
+    } on NetworkException {
+      return Left(NetworkFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> unregisterUser(
+      {required int treasureHuntId}) async {
+    try {
+      final response =
+          await remoteDataSource.unregisterUser(treasureHuntId: treasureHuntId);
+      return Right(response);
     } on ServerException {
       return Left(ServerFailure());
     } on NetworkException {

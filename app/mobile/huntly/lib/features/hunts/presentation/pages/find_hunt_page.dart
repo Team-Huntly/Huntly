@@ -54,49 +54,51 @@ class _FindHuntPageState extends State<FindHuntPage> {
                 ),
               ),
             ),
-        BlocConsumer<TreasureHuntBloc, TreasureHuntState>(
-          listener: (context, state) {
-            if (state is TreasureHuntInitial) {
-              BlocProvider.of<TreasureHuntBloc>(context)
-                  .add(GetTreasureHunts());
-            }
-          },
-          builder: (context, state) {
-            if (state is Loading) {
-              return const Center(
-                child: CircularProgressIndicator(color: Colors.white,),
-              );
-            } else if (state is Loaded) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 24),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: state.treasureHunts.length,
-                    itemBuilder: (context, index) {
-                      return HuntCard(
-                        treasureHunt: state.treasureHunts[index]
-                      );
-                    },
-                  )
-                ]
-              );
-            } else if (state is TreasureHuntInitial) {
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                BlocProvider.of<TreasureHuntBloc>(context)
-                    .add(GetTreasureHunts());
-              });
-              return const Center(
-                child: CircularProgressIndicator(color: Colors.white,),
-              );
-            } else {
-              return const Center(
-                child: Text('Error'),
-              );
-            }
-          },
-        )
+            BlocConsumer<TreasureHuntBloc, TreasureHuntState>(
+              listener: (context, state) {
+                if (state is TreasureHuntInitial) {
+                  BlocProvider.of<TreasureHuntBloc>(context)
+                      .add(GetTreasureHunts());
+                }
+              },
+              builder: (context, state) {
+                if (state is Loading) {
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                    ),
+                  );
+                } else if (state is Loaded) {
+                  return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 24),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: state.treasureHunts.length,
+                          itemBuilder: (context, index) {
+                            return HuntCard(
+                                treasureHunt: state.treasureHunts[index]);
+                          },
+                        )
+                      ]);
+                } else if (state is TreasureHuntInitial) {
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    BlocProvider.of<TreasureHuntBloc>(context)
+                        .add(GetTreasureHunts());
+                  });
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                    ),
+                  );
+                } else {
+                  return const Center(
+                    child: Text('Error'),
+                  );
+                }
+              },
+            )
           ],
         ),
       ),

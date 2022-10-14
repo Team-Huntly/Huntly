@@ -11,4 +11,3 @@ Future<Options> getHeaders() async {
     },
   );
 }
-

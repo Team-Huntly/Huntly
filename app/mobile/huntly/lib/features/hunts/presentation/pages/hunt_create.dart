@@ -43,13 +43,12 @@ class _HuntCreateState extends State<HuntCreate> with TickerProviderStateMixin {
             tabs: _tab.map((e) => e).toList(),
             controller: _tabController,
             indicatorColor: Colors.transparent,
-            overlayColor:
-                MaterialStateProperty.all<Color>(Colors.transparent),
-              indicator: BoxDecoration(
-                color: darkTheme.highlightColor,
-                border: Border.all(color: darkTheme.highlightColor),
-                borderRadius: const BorderRadius.all(Radius.circular(100)),
-              ),
+            overlayColor: MaterialStateProperty.all<Color>(Colors.transparent),
+            indicator: BoxDecoration(
+              color: darkTheme.highlightColor,
+              border: Border.all(color: darkTheme.highlightColor),
+              borderRadius: const BorderRadius.all(Radius.circular(100)),
+            ),
           ),
           Expanded(
             child: TabBarView(
@@ -66,18 +65,14 @@ class _HuntCreateState extends State<HuntCreate> with TickerProviderStateMixin {
               onTap: () {
                 setState(() {
                   _tab.add(HuntTab(color: darkTheme.colorScheme.primary));
-                  _tabMenu.add(
-                    Column(
-                      children: [
-                        const SizedBox(height: 20),
-                        Text(
-                          "Clue #${_tabController.index + 1}",
-                          style: darkTheme.textTheme.caption
-                        ),
-                        const ClueCreatePage()
-                      ],
-                    )
-                  );
+                  _tabMenu.add(Column(
+                    children: [
+                      const SizedBox(height: 20),
+                      Text("Clue #${_tabController.index + 1}",
+                          style: darkTheme.textTheme.caption),
+                      const ClueCreatePage()
+                    ],
+                  ));
                   _tabController =
                       TabController(length: _tab.length, vsync: this);
                   _tabController.animateTo(_tab.length - 1);

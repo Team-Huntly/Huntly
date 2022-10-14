@@ -1,30 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:huntly/core/utils/action_button.dart';
-import 'package:huntly/core/utils/scaffold.dart';
 import 'package:huntly/features/hunts/domain/entities/treasure_hunt.dart';
 import 'package:huntly/features/hunts/presentation/widgets/hunt_info_card.dart';
+import 'package:iconify_flutter/icons/carbon.dart';
 import 'package:iconify_flutter/icons/ic.dart';
 import 'package:iconify_flutter/icons/mdi.dart';
 import 'package:iconify_flutter/icons/majesticons.dart';
-import 'package:colorful_iconify_flutter/icons/twemoji.dart';
-import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/ri.dart';
+import 'package:colorful_iconify_flutter/icons/twemoji.dart';
+
 import 'package:intl/intl.dart';
 
 import '../../../../core/theme/theme.dart';
+import '../../../authentication/data/models/user_model.dart';
 
 class HuntDetailPage extends StatefulWidget {
   final TreasureHunt treasureHunt;
 
-  const HuntDetailPage({Key? key, required this.treasureHunt}) : super(key: key);
+  const HuntDetailPage({Key? key, required this.treasureHunt})
+      : super(key: key);
 
   @override
   State<HuntDetailPage> createState() => _HuntDetailPageState();
 }
 
 class _HuntDetailPageState extends State<HuntDetailPage> {
+  bool isParticipant(int userId) {
+    for (final UserModel participant in widget.treasureHunt.participants) {
+      if (participant.id == userId) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -40,8 +49,6 @@ class _HuntDetailPageState extends State<HuntDetailPage> {
                 width: 100,
                 child: Image.asset(
                   'assets/images/0.jpg',
-                  // height: 200,
-                  // width: 100,
                   fit: BoxFit.fill,
                 ),
               ),
@@ -49,11 +56,9 @@ class _HuntDetailPageState extends State<HuntDetailPage> {
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Container(
-                  child: Text(widget.treasureHunt.name,
-                      style:
-                          darkTheme.textTheme.headline2!.copyWith(height: 1.2)),
-                ),
+                child: Text(widget.treasureHunt.name,
+                    style:
+                        darkTheme.textTheme.headline2!.copyWith(height: 1.2)),
               ),
             )
           ],
@@ -88,16 +93,18 @@ class _HuntDetailPageState extends State<HuntDetailPage> {
               title: 'Team size',
               info: widget.treasureHunt.team_size.toString(),
             ),
-            // HuntInfoCard(
-            //   icon: Ri.team_line,
-            //   title: 'Theme',
-            //   info: widget.treasureHunt.theme,
-            // ),
-            // HuntInfoCard(
-            //   icon: Ri.team_line,
-            //   title: 'Seats left',
-            //   info: widget.treasureHunt.team_size.toString(),
-            // ),
+            HuntInfoCard(
+              icon: Carbon.paint_brush,
+              title: 'Theme',
+              info: widget.treasureHunt.theme.name,
+            ),
+            HuntInfoCard(
+              icon: Carbon.cabin_care_alert,
+              title: 'Seats left',
+              info: (widget.treasureHunt.total_seats -
+                      widget.treasureHunt.participants.length)
+                  .toString(),
+            ),
           ],
         ),
         const SizedBox(

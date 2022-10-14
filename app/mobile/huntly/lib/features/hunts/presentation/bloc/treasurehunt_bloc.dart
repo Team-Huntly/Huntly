@@ -9,6 +9,8 @@ import '../../../../core/utils/get_current_location.dart';
 import '../../domain/entities/treasure_hunt.dart';
 
 import '../../domain/usecases/get_treasure_hunts.dart' as gth;
+import '../../domain/usecases/register_user.dart' as ru;
+import '../../domain/usecases/unregister_user.dart' as uu;
 
 part 'treasurehunt_event.dart';
 part 'treasurehunt_state.dart';
@@ -20,21 +22,45 @@ class TreasureHuntBloc extends Bloc<TreasureHuntEvent, TreasureHuntState> {
         emit(Loading());
 
         try {
-          // print("==========================");
-          // final Position currentPosition = await determinePosition();
-          // print("location: $currentPosition");
           final failureOrTreasureHunts = await gth.FetchTreasureHunt(
                   TreasureHuntRepositoryImpl(
                       remoteDataSource: TreasureHuntRemoteDataSourceImpl()))
-              .call(gth.Params(
-                latitude: "11212",
-                longitude: "2323232",
-              )
-            );
+              .call(const gth.Params(
+            latitude: "11212",
+            longitude: "2323232",
+          ));
 
           failureOrTreasureHunts.fold((failure) => emit(Failed()),
               (treasureHunts) {
             emit(Loaded(treasureHunts: treasureHunts));
+          });
+        } catch (e) {
+          debugPrint(e.toString());
+          emit(Failed());
+        }
+      } else if (event is RegisterUser) {
+        emit(Loading());
+        try {
+          final failureOrVoid = await ru.RegisterUser(
+                  TreasureHuntRepositoryImpl(
+                      remoteDataSource: TreasureHuntRemoteDataSourceImpl()))
+              .call(ru.Params(treasureHuntId: event.treasureHuntId));
+          failureOrVoid.fold((failure) => emit(Failed()), (treasureHunts) {
+            emit(Done());
+          });
+        } catch (e) {
+          debugPrint(e.toString());
+          emit(Failed());
+        }
+      } else if (event is UnregisterUser) {
+        emit(Loading());
+        try {
+          final failureOrVoid = await uu.UnregisterUser(
+                  TreasureHuntRepositoryImpl(
+                      remoteDataSource: TreasureHuntRemoteDataSourceImpl()))
+              .call(uu.Params(treasureHuntId: event.treasureHuntId));
+          failureOrVoid.fold((failure) => emit(Failed()), (treasureHunts) {
+            emit(Done());
           });
         } catch (e) {
           debugPrint(e.toString());

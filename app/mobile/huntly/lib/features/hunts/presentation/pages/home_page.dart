@@ -29,7 +29,9 @@ class _HomePageState extends State<HomePage> {
           builder: (context, state) {
             if (state is Loading) {
               return const Center(
-                child: CircularProgressIndicator(color: Colors.white,),
+                child: CircularProgressIndicator(
+                  color: Colors.white,
+                ),
               );
             } else if (state is Loaded) {
               return Column(
@@ -48,9 +50,7 @@ class _HomePageState extends State<HomePage> {
                     shrinkWrap: true,
                     itemCount: state.treasureHunts.length,
                     itemBuilder: (context, index) {
-                      return HuntCard(
-                        treasureHunt: state.treasureHunts[index]
-                      );
+                      return HuntCard(treasureHunt: state.treasureHunts[index]);
                     },
                   ),
                 ],
@@ -61,7 +61,9 @@ class _HomePageState extends State<HomePage> {
                     .add(GetTreasureHunts());
               });
               return const Center(
-                child: CircularProgressIndicator(color: Colors.white,),
+                child: CircularProgressIndicator(
+                  color: Colors.white,
+                ),
               );
             } else {
               return const Center(

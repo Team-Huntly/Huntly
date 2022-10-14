@@ -62,132 +62,126 @@ class HuntlyScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: getUser(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            GoogleSignInAccount? data = snapshot.data as GoogleSignInAccount?;
-            if (data == null) {
-              return const Text('Null');
-            }
-            return Scaffold(
-                backgroundColor: darkTheme.colorScheme.background,
-                appBar: AppBar(
-                  foregroundColor: darkTheme.colorScheme.onBackground,
-                  backgroundColor: darkTheme.colorScheme.background,
-                  elevation: 0,
-                  leadingWidth: 80,
-                ),
-                drawer: Drawer(
-                  backgroundColor: darkTheme.colorScheme.background,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      DrawerHeader(
-                        decoration: BoxDecoration(
-                          color: darkTheme.colorScheme.background,
-                        ),
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              ClipRRect(
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(100)),
-                                child: Image.network(
-                                  data.photoUrl.toString(),
-                                  width: 80,
-                                ),
-                              ),
-                              const SizedBox(height: 10),
-                              Text(
-                                data.displayName.toString(),
-                                style: darkTheme.textTheme.headline2,
-                              )
-                            ]),
-                      ),
-                      DrawerListItem(
-                          icon: Ri.home_2_line,
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => const HomePage()));
-                          },
-                          title: 'Home'),
-                      DrawerListItem(
-                          icon: Healthicons.ui_user_profile,
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => const ProfileEditPage()));
-                          },
-                          title: 'Profile'),
-                      DrawerListItem(
-                          icon: Mdi.file_find_outline,
-                          onTap: () {},
-                          title: 'Find'),
-                      DrawerListItem(
-                          icon: Carbon.recently_viewed,
-                          onTap: () {},
-                          title: 'Recent'),
-                      DrawerListItem(
-                          icon: Ic.outline_diamond,
-                          onTap: () {
-                            Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                    builder: (context) => const MyHuntsPage()));
-                          },
-                          title: 'My Hunts'),
-                      DrawerListItem(
-                          icon: Ph.currency_circle_dollar,
-                          onTap: () {
-                            Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                    builder: (context) => const RewardsPage()));
-                          },
-                          title: 'Rewards'),
-                      DrawerListItem(
-                          icon: Bx.photo_album,
-                          onTap: () {
-                            Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const MemoriesMenuPage()));
-                          },
-                          title: 'Memories'),
-                      DrawerListItem(
-                          icon: Ic.round_mail_outline,
-                          onTap: () {},
-                          title: 'Invites'),
-                      Expanded(
-                        child: Align(
-                          alignment: Alignment.bottomLeft,
-                          child: DrawerListItem(
-                              icon: Uiw.logout,
-                              onTap: () {
-                                BlocProvider.of<AuthenticationBloc>(
-                                        outerContext)
-                                    .add(AuthenticationLogOut());
-                                Future.delayed(Duration(seconds: 1));
-                                Navigator.of(outerContext)
-                                    .popUntil((route) => route.isFirst);
-                                Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(
-                                        builder: (context) => const Huntly()));
-                              },
-                              title: 'Logout'),
-                        ),
-                      )
-                    ],
+    // return FutureBuilder(
+    //     future: getUser(),
+    //     builder: (context, snapshot) {
+    //       if (snapshot.connectionState == ConnectionState.done) {
+    //         GoogleSignInAccount data = snapshot.data as GoogleSignInAccount;
+    return Scaffold(
+        backgroundColor: darkTheme.colorScheme.background,
+        appBar: AppBar(
+          foregroundColor: darkTheme.colorScheme.onBackground,
+          backgroundColor: darkTheme.colorScheme.background,
+          elevation: 0,
+          leadingWidth: 80,
+        ),
+        drawer: Drawer(
+          backgroundColor: darkTheme.colorScheme.background,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              DrawerHeader(
+                  decoration: BoxDecoration(
+                    color: darkTheme.colorScheme.background,
                   ),
+                  child: FutureBuilder(
+                      future: getUser(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          GoogleSignInAccount data =
+                              snapshot.data as GoogleSignInAccount;
+                          return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ClipRRect(
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(100)),
+                                  child: Image.network(
+                                    data.photoUrl.toString(),
+                                    width: 80,
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                Text(
+                                  data.displayName.toString(),
+                                  style: darkTheme.textTheme.headline2,
+                                )
+                              ]);
+                        } else {
+                          return const Center(
+                              child: CircularProgressIndicator(
+                            color: Colors.white,
+                          ));
+                        }
+                      })),
+              DrawerListItem(
+                  icon: Ri.home_2_line,
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const HomePage()));
+                  },
+                  title: 'Home'),
+              DrawerListItem(
+                  icon: Healthicons.ui_user_profile,
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const ProfileEditPage()));
+                  },
+                  title: 'Profile'),
+              DrawerListItem(
+                  icon: Mdi.file_find_outline, onTap: () {}, title: 'Find'),
+              DrawerListItem(
+                  icon: Carbon.recently_viewed, onTap: () {}, title: 'Recent'),
+              DrawerListItem(
+                  icon: Ic.outline_diamond,
+                  onTap: () {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => const MyHuntsPage()));
+                  },
+                  title: 'My Hunts'),
+              DrawerListItem(
+                  icon: Ph.currency_circle_dollar,
+                  onTap: () {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => const RewardsPage()));
+                  },
+                  title: 'Rewards'),
+              DrawerListItem(
+                  icon: Bx.photo_album,
+                  onTap: () {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => const MemoriesMenuPage()));
+                  },
+                  title: 'Memories'),
+              DrawerListItem(
+                  icon: Ic.round_mail_outline, onTap: () {}, title: 'Invites'),
+              Expanded(
+                child: Align(
+                  alignment: Alignment.bottomLeft,
+                  child: DrawerListItem(
+                      icon: Uiw.logout,
+                      onTap: () {
+                        BlocProvider.of<AuthenticationBloc>(outerContext)
+                            .add(AuthenticationLogOut());
+                        Future.delayed(Duration(seconds: 1));
+                        Navigator.of(outerContext)
+                            .popUntil((route) => route.isFirst);
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => const Huntly()));
+                      },
+                      title: 'Logout'),
                 ),
-                body: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: body,
-                ));
-          } else {
-            return const Center(
-                child: CircularProgressIndicator(
-              color: Colors.white,
-            ));
-          }
-        });
+              )
+            ],
+          ),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30),
+          child: body,
+        ));
+    //   } else {
+    //
+    //   }
+    // });
   }
 }

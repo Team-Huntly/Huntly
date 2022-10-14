@@ -4,26 +4,25 @@ import 'package:huntly/features/hunts/domain/repositories/treasure_hunt_reposito
 
 import '../../../../core/error/failures.dart';
 import '../../../../core/usecases/usecase.dart';
-import '../entities/treasure_hunt.dart';
 
-class FetchUserTreasureHunt implements UseCase<List<TreasureHunt>, Params> {
+class RegisterUser implements UseCase<void, Params> {
   final TreasureHuntRepository repository;
 
-  FetchUserTreasureHunt(this.repository);
+  RegisterUser(this.repository);
 
   @override
-  Future<Either<Failure, List<TreasureHunt>>> call(Params params) async {
-    return await repository.fetchUserTreasureHunts(userId: params.userId);
+  Future<Either<Failure, void>> call(Params params) async {
+    return await repository.registerUser(treasureHuntId: params.treasureHuntId);
   }
 }
 
 class Params extends Equatable {
-  final int userId;
+  final int treasureHuntId;
 
   const Params({
-    required this.userId,
+    required this.treasureHuntId,
   });
 
   @override
-  List<Object> get props => [userId];
+  List<Object> get props => [treasureHuntId];
 }
