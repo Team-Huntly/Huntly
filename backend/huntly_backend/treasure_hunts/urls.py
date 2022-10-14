@@ -4,7 +4,7 @@ from .views import RetrieveTreashureHuntRewardsAPIView, TreasureHuntCreateAPIVie
      TreasureHuntUpdateAPIView, TreasureHuntDeleteAPIView, ThemeListAPIView, ClueListAPIView, ClueCreateAPIView,\
          ClueRetrieveAPIView, ClueUpdateAPIView, RegisterParticipantAPIView, UnregisterParticipantAPIView, \
             TeamProgressAPIView, TeamProgressCreateAPIView, LeaderboardRetrieveAPIView, RetrieveUserTeamAPIView, \
-                RetrieveTreashureHuntRewardsAPIView
+                RetrieveTreashureHuntRewardsAPIView, MemoryThreadRetrieveAPIView, MemoryThreadListAPIView
 
 app_name = 'treasure_hunts'
 
@@ -36,4 +36,8 @@ urlpatterns = [
     # Team progress
     path('teams/<int:team_id>/progress/', TeamProgressAPIView.as_view()),
     path('teams/<int:team_id>/progress/create/', TeamProgressCreateAPIView.as_view()),
+
+    # Memory Thread
+    path('memory-threads/', MemoryThreadListAPIView.as_view()),
+    path('<int:id>/memory-thread/', MemoryThreadRetrieveAPIView.as_view()),
 ]
