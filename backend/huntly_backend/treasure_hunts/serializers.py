@@ -85,7 +85,7 @@ class TreasureHuntSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TreasureHunt
-        fields = ('name', 'started_at', 'ended_at', 'location_latitude', 'location_longitude', 'location_name', 'total_seats', 'team_size', 'theme', 'is_locked')
+        fields = ('name', 'started_at', 'ended_at', 'location_latitude', 'location_longitude', 'location_name', 'total_seats', 'team_size', 'theme',)
 
     # Function to change the way the object is displayed
     def to_representation(self, instance):

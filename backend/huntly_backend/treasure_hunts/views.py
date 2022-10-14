@@ -134,6 +134,22 @@ class ClueCreateAPIView(generics.CreateAPIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
+class ClueListCreateAPIView(generics.ListCreateAPIView):
+    """
+    Create a list of clues for a treasure hunt
+    """
+    queryset = Clue.objects.all()
+    serializer_class = ClueSerializer
+    http_method_names = ['post']
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data, context={'request': request, 'treasure_hunt': kwargs['treasure_hunt']}, many=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+
 class ClueRetrieveAPIView(generics.RetrieveAPIView):
     """
     Retrieve a clue by id
