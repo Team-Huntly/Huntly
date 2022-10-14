@@ -85,5 +85,33 @@ A cross-platform mobile application that brings people closer to the physical en
 
 ## Directory Structure
 
+```
+Team-Name-404/
+├─ app/                           # Frontend
+│  ├─ mobile/
+│  │  ├─ huntly/
+│  │  │  ├─ android/
+│  │  │  ├─ lib/
+│  │  │  │  ├─ features/          # App widgets
+│  │  │  │  │  ├─ authentication/
+│  │  │  │  │  ├─ hunts/
+│  │  │  │  │  ├─ memories/
+│  │  │  │  │  ├─ rewards/
+│  │  │  │  ├─ main.dart
+│  │  │  ├─ test/
+├─ backend/                       # API
+│  ├─ huntly_backend/             # Django Rest Framework apps
+│  │  ├─ huntly_backend/
+│  │  ├─ memories/ 
+│  │  ├─ rewards/
+│  │  ├─ treasure_hunts/
+│  │  ├─ users/
+|  ├─ env                         # Envirnment variables
+├─ services/                      # Machine Learning service
+│  ├─ ml_api/
+├─ .gitignore
+├─ LICENSE
+├─ README.md
+
 
 
