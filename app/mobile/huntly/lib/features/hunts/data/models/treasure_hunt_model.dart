@@ -5,7 +5,7 @@ import '../../domain/entities/treasure_hunt.dart';
 class TreasureHuntModel extends TreasureHunt {
   TreasureHuntModel({
     required String name,
-    required String started_at,
+    required DateTime started_at,
     required String ended_at,
     required String location_latitute,
     required String location_longitude,
@@ -36,7 +36,7 @@ class TreasureHuntModel extends TreasureHunt {
     // print(json['theme']);
     return TreasureHuntModel(
       name: json['name'],
-      started_at: json['started_at'],
+      started_at: DateTime.parse(json['started_at']),
       ended_at: json['ended_at'],
       location_latitute: json['location_latitute'] ?? "asd",
       location_longitude: json['location_longitude'],

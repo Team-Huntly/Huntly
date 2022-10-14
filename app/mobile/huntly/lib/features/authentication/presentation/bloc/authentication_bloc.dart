@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:huntly/features/authentication/data/profile_model.dart';
+import 'package:huntly/core/utils/get_google_signin.dart';
+import 'package:huntly/core/utils/get_headers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../common/constants.dart';
@@ -19,17 +21,7 @@ class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
   AuthenticationBloc() : super(AuthenticationInitial()) {
     on<AuthenticationEvent>((event, emit) async {
-      const String oAuthClientId =
-          '363088523272-orkcfiqub7hshaq29pisji796or7ohpq.apps.googleusercontent.com';
-      final GoogleSignIn googleSignIn = GoogleSignIn(
-        // Optional clientId
-        // serverClientId: '500990447063-tclvi1rdaaugi424hsnkt5kmdj0vfhhg.apps.googleusercontent.com',
-        serverClientId: oAuthClientId,
-        scopes: <String>[
-          'email',
-          'profile',
-        ],
-      );
+      final GoogleSignIn googleSignIn = getGoogleSignin();
 
       if (event is AuthenticationStarted) {
         emit(AuthenticationLoading());
@@ -106,30 +98,14 @@ class AuthenticationBloc
           final _prefs = await SharedPreferences.getInstance();
           Response response = await Dio().put(
             "${url}users/update/",
-            options: Options(
-              headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-                "Authorization": "Token ${_prefs.getString("token")}"
-              },
-            ),
+            options: await getHeaders(),
             data: jsonEncode(params),
           );
-
-          print("Response => ${response.data}");
-          // response.data = {token : 213414124}
-          // get token from response
-          // save token in shared preferences
-          // print("Token: $token");
-
           final prefs = await SharedPreferences.getInstance();
-          // prefs.setString("token", token);
-
           prefs.setInt("profile", 1);
           emit(ProfileAdded());
         } catch (e) {
           // Authentication Failure
-          print("Failure");
           emit(AuthenticationFailure());
           debugPrint(e.toString());
         }

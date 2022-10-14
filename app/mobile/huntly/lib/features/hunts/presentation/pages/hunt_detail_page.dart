@@ -3,16 +3,22 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:huntly/core/utils/action_button.dart';
 import 'package:huntly/core/utils/scaffold.dart';
+import 'package:huntly/features/hunts/domain/entities/treasure_hunt.dart';
 import 'package:huntly/features/hunts/presentation/widgets/hunt_info_card.dart';
 import 'package:iconify_flutter/icons/ic.dart';
 import 'package:iconify_flutter/icons/mdi.dart';
 import 'package:iconify_flutter/icons/majesticons.dart';
 import 'package:colorful_iconify_flutter/icons/twemoji.dart';
+import 'package:iconify_flutter/iconify_flutter.dart';
+import 'package:iconify_flutter/icons/ri.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../core/theme/theme.dart';
 
 class HuntDetailPage extends StatefulWidget {
-  const HuntDetailPage({Key? key}) : super(key: key);
+  final TreasureHunt treasureHunt;
+
+  const HuntDetailPage({Key? key, required this.treasureHunt}) : super(key: key);
 
   @override
   State<HuntDetailPage> createState() => _HuntDetailPageState();
@@ -44,7 +50,7 @@ class _HuntDetailPageState extends State<HuntDetailPage> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Container(
-                  child: Text('Manipal Inst. of Technology Hunt!',
+                  child: Text(widget.treasureHunt.name,
                       style:
                           darkTheme.textTheme.headline2!.copyWith(height: 1.2)),
                 ),
@@ -63,12 +69,13 @@ class _HuntDetailPageState extends State<HuntDetailPage> {
             HuntInfoCard(
               icon: Ic.baseline_calendar_today,
               title: 'On',
-              info: '17/6/22',
+              info: DateFormat.yMd().format(widget.treasureHunt.started_at),
+              // fontSize: 8,
             ),
             HuntInfoCard(
               icon: Ic.baseline_alarm,
               title: 'Starts at',
-              info: '17:00',
+              info: DateFormat('HH:MM').format(widget.treasureHunt.started_at),
             ),
             HuntInfoCard(
               icon: Mdi.map_marker_outline,
@@ -76,6 +83,21 @@ class _HuntDetailPageState extends State<HuntDetailPage> {
               info: 'kEF, MIT',
               trailing: Majesticons.external_link_line,
             ),
+            HuntInfoCard(
+              icon: Ri.team_line,
+              title: 'Team size',
+              info: widget.treasureHunt.team_size.toString(),
+            ),
+            // HuntInfoCard(
+            //   icon: Ri.team_line,
+            //   title: 'Theme',
+            //   info: widget.treasureHunt.theme,
+            // ),
+            // HuntInfoCard(
+            //   icon: Ri.team_line,
+            //   title: 'Seats left',
+            //   info: widget.treasureHunt.team_size.toString(),
+            // ),
           ],
         ),
         const SizedBox(

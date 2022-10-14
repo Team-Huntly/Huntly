@@ -10,13 +10,14 @@ class HuntInfoCard extends StatelessWidget {
   final String title;
   final String info;
   final String? trailing;
+  final double? fontSize;
 
   const HuntInfoCard(
       {Key? key,
       required this.icon,
       required this.title,
       required this.info,
-      this.trailing})
+      this.trailing, this.fontSize})
       : super(key: key);
 
   @override
@@ -63,7 +64,9 @@ class HuntInfoCard extends StatelessWidget {
                   : Container()
             ],
           ),
-          Text(info, style: darkTheme.textTheme.headline2)
+          Text(info, style: darkTheme.textTheme.headline2!.copyWith(
+            fontSize: fontSize ?? 18
+          ))
         ],
       ),
     );
