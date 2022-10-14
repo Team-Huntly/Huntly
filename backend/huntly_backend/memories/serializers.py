@@ -15,7 +15,12 @@ class MemorySerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         return {
             'id': instance.id,
-            'clicked_by': UserViewSerializer(instance.clicked_by).data,
+            'clicked_by': {
+                'id': instance.clicked_by.id,
+                'first_name': instance.clicked_by.first_name,
+                'last_name': instance.clicked_by.last_name,
+                'email': instance.clicked_by.email,
+            },
             'image': instance.image.url,
             'added_at': instance.added_at
         }
