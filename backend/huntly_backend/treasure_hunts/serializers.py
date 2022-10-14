@@ -267,6 +267,6 @@ class MemoryThreadListSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'started_at', 'ended_at', 'location_name', 'memories')
 
     def get_memories(self, instance):
-        memories = Memory.objects.filter(treasure_hunt=instance, clicked_by__in=Team.objects.filter(treasure_hunt=instance, team_members__id=self.context.get('request').user.id))
+        memories = Memory.objects.filter(treasure_hunt=instance, clicked_by__in=Team.objects.filter(treasure_hunt=instance, team_members__id=self.context.get('request').user.id).first().team_members)
         memories = MemorySerializer(memories, many=True).data
         return memories
