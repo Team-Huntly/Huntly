@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:huntly/core/utils/get_headers.dart';
+import 'package:huntly/features/huntsCreate/data/models/clue_model.dart';
 import 'package:place_picker/entities/entities.dart';
 
 import '../../../../common/constants.dart';
@@ -35,11 +36,37 @@ class HuntsCreateBloc extends Bloc<HuntsCreateEvent, HuntsCreateState> {
           if (response.statusCode == 201) {
             print(response.data["id"]);
             print(response.data["name"]);
-            emit(HuntCreated(message: "${response.data["name"]} created"));
+            emit(HuntCreated(
+                message: "${response.data["name"]} created",
+                id: response.data["id"],
+                name: response.data["name"]));
           } else {}
         } catch (e) {
           print("Error in CreateHunt $e");
         }
+      } else if (event is AddClues) {
+        print("working");
+        List<Map<String, dynamic>> clues = [];
+        for (var clue in event.clue) {
+          clues.add({
+            "step_no": clue.stepNo,
+            "description": clue.description,
+            "answer_description": clue.answerDescription,
+            "answer_latitude": clue.answerLatitude,
+            "answer_longitude": clue.answerLongitude,
+            "is_qr_based": true
+          });
+        }
+        Dio dio = Dio();
+        print(clues);
+        print(jsonEncode(clues));
+        Response response = await dio.post(
+          "${url}treasure-hunts/${event.huntId}/clues/create/list/",
+          options: await getHeaders(),
+          data: jsonEncode(clues),
+        );
+
+        print(response.data);
       }
     });
   }

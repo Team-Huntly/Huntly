@@ -26,3 +26,13 @@ class CreateHunt extends HuntsCreateEvent {
     required this.theme,
   });
 }
+
+class AddClues extends HuntsCreateEvent {
+  final int huntId;
+  final List<ClueModel> clue;
+
+  AddClues({
+    required this.huntId,
+    required this.clue,
+  });
+}

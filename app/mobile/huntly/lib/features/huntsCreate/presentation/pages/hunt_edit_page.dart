@@ -40,7 +40,7 @@ class _HuntEditPageState extends State<HuntEditPage> {
             ),
           );
           Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (context) => HuntCreate(),
+            builder: (context) => HuntCreate(huntId: state.id),
           ));
           // ignore: curly_braces_in_flow_control_structures
         } else if (state is Error) {
@@ -50,7 +50,7 @@ class _HuntEditPageState extends State<HuntEditPage> {
             ),
           );
           Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (context) => HuntEditPage(),
+            builder: (context) => const HuntEditPage(),
           ));
         }
       },

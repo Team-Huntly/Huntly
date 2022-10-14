@@ -9,9 +9,19 @@ import 'package:iconify_flutter/icons/ph.dart';
 import 'package:place_picker/entities/location_result.dart';
 
 import '../../../../core/utils/text_field.dart';
+import '../../data/models/clue_model.dart';
 
 class ClueCreatePage extends StatefulWidget {
-  const ClueCreatePage({Key? key}) : super(key: key);
+  // Function to call when the user presses the button
+  final Function onDelete;
+  int index;
+  final ValueNotifier<List<ClueModel>> clubs;
+  ClueCreatePage(
+      {Key? key,
+      required this.onDelete,
+      required this.index,
+      required this.clubs})
+      : super(key: key);
 
   @override
   State<ClueCreatePage> createState() => _ClueCreatePageState();
@@ -20,18 +30,33 @@ class ClueCreatePage extends StatefulWidget {
 class _ClueCreatePageState extends State<ClueCreatePage>
     with AutomaticKeepAliveClientMixin<ClueCreatePage> {
   LocationResult? _locationResult;
-
+  TextEditingController _hintController = TextEditingController();
+  TextEditingController _answerController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         const SizedBox(height: 20),
-        TextField(
-            maxLines: 5,
-            maxLength: 250,
-            style: darkTheme.textTheme.bodyText2,
-            decoration: inputDecoration('Clue hint...')),
+        Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              TextField(
+                  controller: _hintController,
+                  maxLines: 5,
+                  style: darkTheme.textTheme.bodyText2,
+                  decoration: inputDecoration('Clue hint...')),
+              SizedBox(height: 20),
+              TextField(
+                  controller: _answerController,
+                  maxLines: 3,
+                  style: darkTheme.textTheme.bodyText2,
+                  decoration: inputDecoration('Answer...')),
+            ],
+          ),
+        ),
         const SizedBox(height: 15),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
@@ -83,11 +108,37 @@ class _ClueCreatePageState extends State<ClueCreatePage>
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               ActionButton(
-                  text: "Save", leading: Ph.download_simple_fill, onTap: () {}),
-              ActionButton(
-                  text: "Delete",
-                  leading: Ic.baseline_delete_outline,
-                  onTap: () {}),
+                  text: "Save",
+                  leading: Ph.download_simple_fill,
+                  onTap: () {
+                    if (_formKey.currentState!.validate() &&
+                        _locationResult != null) {
+                      ClueModel club = ClueModel(
+                          stepNo: widget.index + 1,
+                          description: _hintController.text,
+                          answerDescription: _answerController.text,
+                          answerLatitude:
+                              _locationResult!.latLng!.latitude.toString(),
+                          answerLongitude:
+                              _locationResult!.latLng!.longitude.toString(),
+                          isQrBased: false);
+
+                      widget.clubs.value.add(club);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text('Please fill all the fields')));
+                    }
+                  }),
+              widget.index != 0
+                  ? ActionButton(
+                      text: "Delete",
+                      leading: Ic.baseline_delete_outline,
+                      onTap: () {
+                        setState(() {
+                          widget.onDelete(widget.index);
+                        });
+                      })
+                  : Container(),
             ],
           ),
         ),

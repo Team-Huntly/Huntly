@@ -27,11 +27,13 @@ class _MyHuntsPageState extends State<MyHuntsPage> {
             ),
             onTap: () {
               // TODO: Navigate to custom hunt edit page
-              // Navigator.of(context).pushReplacement(MaterialPageRoute(
-              //     builder: (context) => const HuntEditPage()));
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) => const HuntEditPage()));
               // TODO remove this
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => const HuntCreate()));
+              // Navigator.of(context).pushReplacement(MaterialPageRoute(
+              //     builder: (context) => const HuntCreate(
+              //           huntId: 3,
+              //         )));
             },
           ),
           Padding(
