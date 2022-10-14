@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'rest_framework_swagger',
     'drf_yasg',
     'corsheaders',
-    'django_cron',
+    'django_q',
     'users.apps.UsersConfig',
     'memories.apps.MemoriesConfig',
     'rewards.apps.RewardsConfig',
@@ -190,7 +190,7 @@ MEDIA_URL = '/media/'
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-CRON_CLASSES = [
-    "treasure_hunts.cron.FormTeamsCronJob",
-    "treasure_hunts.cron.FormTeamsCronJob",
-]
+Q_CLUSTER = {
+    "name": "huntly_backend",
+    "orm": "default",  # Use Django's ORM + database for broker
+}
