@@ -7,9 +7,14 @@ class FormTextField extends StatelessWidget {
   final String hint;
   final String label;
   final TextInputType type;
+  final TextEditingController controller;
 
   const FormTextField(
-      {Key? key, required this.hint, required this.label, required this.type})
+      {Key? key,
+      required this.hint,
+      required this.label,
+      required this.type,
+      required this.controller})
       : super(key: key);
 
   @override
@@ -17,6 +22,7 @@ class FormTextField extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 20),
       child: TextFormField(
+          controller: controller,
           style: darkTheme.textTheme.bodyText2,
           cursorColor: Colors.white,
           keyboardType:

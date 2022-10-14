@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:huntly/core/utils/scaffold.dart';
-import 'package:huntly/features/hunts/presentation/pages/hunt_create.dart';
+import 'package:huntly/features/huntsCreate/presentation/pages/hunt_create.dart';
 import 'package:huntly/features/hunts/presentation/pages/presets_page.dart';
 
 class MyHuntsPage extends StatefulWidget {
@@ -20,18 +20,24 @@ class _MyHuntsPageState extends State<MyHuntsPage> {
       body: Column(
         children: [
           GestureDetector(
-            child: Text('Custom'),
+            child: Text(
+              'Custom',
+              style: TextStyle(fontSize: 40),
+            ),
             onTap: () {
               Navigator.of(context).pushReplacement(
                   MaterialPageRoute(builder: (context) => const HuntCreate()));
             },
           ),
-          GestureDetector(
-            child: Text('Presets'),
-            onTap: () {
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => const PresetsPage()));
-            },
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: GestureDetector(
+              child: Text('Presets'),
+              onTap: () {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => const PresetsPage()));
+              },
+            ),
           ),
         ],
       ),

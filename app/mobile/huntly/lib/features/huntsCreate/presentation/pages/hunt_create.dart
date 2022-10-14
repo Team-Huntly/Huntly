@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:huntly/core/theme/theme.dart';
 import 'package:huntly/core/utils/action_button.dart';
 import 'package:huntly/core/utils/scaffold.dart';
-import 'package:huntly/features/hunts/presentation/pages/clue_create_page.dart';
-import 'package:huntly/features/hunts/presentation/pages/hunt_edit_page.dart';
+import 'package:huntly/features/huntsCreate/presentation/pages/clue_create_page.dart';
+import 'package:huntly/features/huntsCreate/presentation/pages/hunt_edit_page.dart';
 import 'package:huntly/features/hunts/presentation/widgets/tab.dart';
 import 'package:iconify_flutter/icons/ic.dart';
 
@@ -46,12 +46,12 @@ class _HuntCreateState extends State<HuntCreate> with TickerProviderStateMixin {
               indicatorColor: Colors.transparent,
               overlayColor:
                   MaterialStateProperty.all<Color>(Colors.transparent),
-                indicator: BoxDecoration(
-                  color: darkTheme.highlightColor,
-                  border: Border.all(color: darkTheme.highlightColor),
-                  borderRadius: const BorderRadius.all(Radius.circular(100)),
-                  // shape: BoxShape.circle
-                ),
+              indicator: BoxDecoration(
+                color: darkTheme.highlightColor,
+                border: Border.all(color: darkTheme.highlightColor),
+                borderRadius: const BorderRadius.all(Radius.circular(100)),
+                // shape: BoxShape.circle
+              ),
             ),
           ),
           Expanded(
@@ -69,18 +69,15 @@ class _HuntCreateState extends State<HuntCreate> with TickerProviderStateMixin {
               onTap: () {
                 setState(() {
                   _tab.add(HuntTab(color: darkTheme.colorScheme.primary));
-                  _tabMenu.add(
-                    Column(
-                      children: [
-                        const SizedBox(height: 20),
-                        Text(
+                  _tabMenu.add(Column(
+                    children: [
+                      const SizedBox(height: 20),
+                      Text(
                           "Clue #${_tabController.index + 1}/${_tab.length - 1}",
-                          style: darkTheme.textTheme.caption
-                        ),
-                        const ClueCreatePage()
-                      ],
-                    )
-                  );
+                          style: darkTheme.textTheme.caption),
+                      const ClueCreatePage()
+                    ],
+                  ));
                   _tabController =
                       TabController(length: _tab.length, vsync: this);
                   _tabController.animateTo(_tab.length - 1);

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:huntly/core/utils/scaffold.dart';
-import 'package:huntly/features/hunts/presentation/widgets/form_text_field.dart';
+import 'package:huntly/features/huntsCreate/presentation/widgets/form_text_field.dart';
 import 'package:huntly/features/hunts/presentation/widgets/tab.dart';
 import '../../../../core/theme/theme.dart';
 import '../../../../core/utils/action_button.dart';
@@ -15,6 +15,10 @@ class HuntEditPage extends StatefulWidget {
 }
 
 class _HuntEditPageState extends State<HuntEditPage> {
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _totalSeatsController = TextEditingController();
+  final TextEditingController _teamSizeController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Column(children: [
@@ -22,12 +26,24 @@ class _HuntEditPageState extends State<HuntEditPage> {
         Form(
             child: Column(children: [
           const SizedBox(height: 100),
-          const FormTextField(
-              hint: '', label: 'Name', type: TextInputType.text),
-          const FormTextField(
-              hint: '', label: 'Total seats', type: TextInputType.number),
-          const FormTextField(
-              hint: '', label: 'Team size', type: TextInputType.number),
+          FormTextField(
+            hint: '',
+            label: 'Name',
+            type: TextInputType.text,
+            controller: _nameController,
+          ),
+          FormTextField(
+            hint: '',
+            label: 'Total seats',
+            type: TextInputType.number,
+            controller: _totalSeatsController,
+          ),
+          FormTextField(
+            hint: '',
+            label: 'Team size',
+            type: TextInputType.number,
+            controller: _teamSizeController,
+          ),
           ActionButton(
             text: 'Save',
             color: darkTheme.indicatorColor,

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:huntly/core/theme/theme.dart';
 import 'package:huntly/core/utils/action_button.dart';
 import 'package:huntly/core/utils/scaffold.dart';
-import 'package:huntly/features/hunts/presentation/pages/clue_create_page.dart';
+import 'package:huntly/features/huntsCreate/presentation/pages/clue_create_page.dart';
 import 'package:huntly/features/hunts/presentation/pages/clue_page.dart';
-import 'package:huntly/features/hunts/presentation/pages/hunt_edit_page.dart';
+import 'package:huntly/features/huntsCreate/presentation/pages/hunt_edit_page.dart';
 import 'package:huntly/features/hunts/presentation/widgets/tab.dart';
 import 'package:iconify_flutter/icons/ic.dart';
 

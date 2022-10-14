@@ -27,11 +27,12 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
       listener: (context, state) async {
         if (state is AuthenticationSuccess) {
           final prefs = await SharedPreferences.getInstance();
+          print(prefs.getInt("profile"));
           if (prefs.getInt("profile") == 0) {
-            Navigator.push(context,
+            Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) => ProfilePage()));
           } else {
-            Navigator.push(
+            Navigator.pushReplacement(
                 context, MaterialPageRoute(builder: (context) => HomePage()));
           }
         }

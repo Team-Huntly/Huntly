@@ -10,8 +10,7 @@ abstract class TreasureHuntRemoteDataSource {
   Future<List<TreasureHuntModel>> fetchTreasureHunts(
       {required String latitude, required String longitude});
 
-  Future<List<TreasureHuntModel>> fetchUserTreasureHunts(
-      {required int userId});
+  Future<List<TreasureHuntModel>> fetchUserTreasureHunts({required int userId});
 }
 
 class TreasureHuntRemoteDataSourceImpl implements TreasureHuntRemoteDataSource {
@@ -43,10 +42,8 @@ class TreasureHuntRemoteDataSourceImpl implements TreasureHuntRemoteDataSource {
       {required int userId}) async {
     try {
       Dio dio = Dio();
-      var response = await dio.get(
-        "${url}user/treasure-hunts/upcoming",
-        options: await getHeaders()
-      );
+      var response = await dio.get("${url}user/treasure-hunts/upcoming",
+          options: await getHeaders());
       if (response.statusCode == 200) {
         List<TreasureHuntModel> treasureHunts = response.data
             .map<TreasureHuntModel>((m) => TreasureHuntModel.fromJson(m))

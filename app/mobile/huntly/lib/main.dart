@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:huntly/core/utils/service.dart';
 import 'package:huntly/features/hunts/presentation/bloc/treasurehunt_bloc.dart';
 import 'package:huntly/features/hunts/presentation/pages/home_page.dart';
 
@@ -18,6 +19,17 @@ void main() async {
   if (!prefs.containsKey("profile")) {
     prefs.setInt("profile", 0);
   }
+  if (!prefs.containsKey("name")) {
+    username_ = prefs.getString("name")!;
+  }
+  if (!prefs.containsKey("email")) {
+    email_ = prefs.getString("email")!;
+  }
+  if (!prefs.containsKey("photo")) {
+    photoUrl_ = prefs.getString("photo")!;
+  }
+  prefs.setInt("profile", 0);
+
   runApp(const Huntly());
 }
 

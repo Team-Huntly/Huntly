@@ -6,6 +6,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:huntly/core/utils/service.dart';
 import 'package:huntly/features/authentication/data/profile_model.dart';
 import 'package:huntly/core/utils/get_google_signin.dart';
 import 'package:huntly/core/utils/get_headers.dart';
@@ -55,6 +56,13 @@ class AuthenticationBloc
 
           SharedPreferences prefs = await SharedPreferences.getInstance();
           prefs.setString("token", response.data["token"]);
+          prefs.setString("name", googleUser.displayName!);
+          prefs.setString("email", googleUser.email);
+          prefs.setString("photo", googleUser.photoUrl!);
+          username_ = googleUser.displayName!;
+          email_ = googleUser.email;
+          photoUrl_ = googleUser.photoUrl!;
+
           emit(AuthenticationSuccess());
         } catch (e) {
           // Authentication Failure

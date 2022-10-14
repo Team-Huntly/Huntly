@@ -259,7 +259,7 @@ List<Map<String, List<Interests>>> interests = [
   hobbies
 ];
 
-String url = "https://huntlybackend.mixedbag.repl.co/";
+String url = "https://huntly-backend.mixedbag.repl.co/";
 
 Interests? sendInterest(String s) {
   if (s == "Writing") {
