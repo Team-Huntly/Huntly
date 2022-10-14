@@ -1,9 +1,16 @@
+from code import interact
 from rest_framework import serializers
 from .models import TreasureHunt, Clue, Theme, Team, TeamProgress
 from users.serializers import UserViewSerializer
 from .utils import calc_distance
+from django.contrib.auth import get_user_model
+import requests
+import json
+
+User = get_user_model()
 
 DIST_BUFFER = 0.1
+ML_API = 'http://localhost:5000/predict'
 
 class TeamSerializer(serializers.ModelSerializer):
     class Meta:
@@ -104,8 +111,38 @@ class TreasureHuntSerializer(serializers.ModelSerializer):
         instance.total_seats = validated_data.get('total_seats', instance.total_seats)
         instance.team_size = validated_data.get('team_size', instance.team_size)
         instance.theme = validated_data.get('theme', instance.theme)
-        instance.save()
-        return instance
+        locked = validated_data.get('is_locked', instance.is_locked)    
+
+        if validated_data.get('is_locked') and not instance.is_locked:
+            bios =[]
+            userids =[]
+            for participant in instance.participants.all():
+                interests = json.loads(participant.interests)
+                interests_string = ''
+                for i in interests:
+                    interests_string += interests[i] + ' '
+                bios.append(participant.bio+' '+ interests_string)
+                userids.append(participant.id)
+            response = requests.post(ML_API, json={
+            'team_size': instance.team_size,
+             'bios': bios })
+            if response.status_code == 200:
+                instance.is_locked = locked
+                instance.save()
+                data = response.json()
+                for i in data:
+                    team = Team.objects.create(name='Team'+str(i), treasure_hunt=instance)
+                    for j in data[i]:
+                        team.team_members.add(User.objects.get(id=userids[j]))
+                    team.save()
+                return instance
+            else:
+                raise serializers.ValidationError('Error in forming teams')
+        else:
+            instance.is_locked = locked
+            instance.save()
+            return instance
+    
 
 class TreasureHuntParticipantsSerializer(serializers.ModelSerializer):
     class Meta:
@@ -118,6 +155,8 @@ class TreasureHuntParticipantsSerializer(serializers.ModelSerializer):
             treasure_hunt = instance
             if treasure_hunt.participants.filter(id=user.id).exists():
                 raise serializers.ValidationError('User is already registered')
+            if treasure_hunt.is_locked:
+                raise serializers.ValidationError('Registration is closed')
             treasure_hunt.participants.add(user)
             treasure_hunt.save()
             return treasure_hunt
@@ -129,6 +168,8 @@ class TreasureHuntParticipantsSerializer(serializers.ModelSerializer):
             treasure_hunt = instance
             if not treasure_hunt.participants.filter(id=user.id).exists():
                 raise serializers.ValidationError('User is not registered')
+            if treasure_hunt.is_locked:
+                raise serializers.ValidationError('Registration is locked')
             treasure_hunt.participants.remove(user)
             treasure_hunt.save()
             return treasure_hunt

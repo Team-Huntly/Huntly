@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'social_django',
     'rest_framework_swagger',
     'drf_yasg',
+    'corsheaders',
     'users.apps.UsersConfig',
     'memories.apps.MemoriesConfig',
     'rewards.apps.RewardsConfig',
@@ -61,6 +62,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'huntly_backend.urls'
@@ -178,3 +180,5 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
 ]
 
 AUTH_USER_MODEL = 'users.CustomUser'
+
+CORS_ORIGIN_ALLOW_ALL = True

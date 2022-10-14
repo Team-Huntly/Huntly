@@ -5,6 +5,7 @@ from .serializers import TreasureHuntSerializer, ThemeSerializer, ClueSerializer
     TeamProgressSerializer, LeaderboardSerializer, TeamSerializer
 from .models import TreasureHunt, Theme, Clue, TeamProgress, Team
 from .utils import calc_distance
+import coreapi
 
 RADIUS = 10
 
@@ -26,7 +27,6 @@ class TreasureHuntListAPIView(generics.ListAPIView):
             serializer = self.get_serializer(queryset, many=True)
             return Response(serializer.data)
         else:
-            #return all hunts
             return super().get(request, *args, **kwargs)
 
 
