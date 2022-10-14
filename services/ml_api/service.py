@@ -11,7 +11,11 @@ nltk.download('punkt')
 
 
 def process_text(text, stem=True):
-    """ Tokenize text and stem words removing punctuation """
+    """ Tokenize text and stem words removing punctuation
+    #Params:
+    text: string
+    stem: boolean
+    """
 
     text = text.translate(str.maketrans('','',string.punctuation))
     tokens = word_tokenize(text)
@@ -23,8 +27,12 @@ def process_text(text, stem=True):
     return tokens
  
  
-def model_generator(texts, clusters=3):
-    """ Transform texts to Tf-Idf coordinates """
+def model_generator(texts):
+    """ Transform texts to Tf-Idf coordinates
+    #Params:
+    texts: list of strings
+
+    """
     vectorizer = TfidfVectorizer(tokenizer=process_text,
                                  stop_words=stopwords.words('english'),
                                  max_df=0.5,
@@ -35,7 +43,11 @@ def model_generator(texts, clusters=3):
     return tfidf_model
  
 def optimal_k(tfidf_model, max_k):
-    """ Calculate the optimal number of clusters using the sil coeff"""
+    """ Calculate the optimal number of clusters using the sil coeff
+    #Params:
+    tfidf_model: Tf-Idf vector
+    max_k: maximum number of clusters
+    """
     from sklearn.metrics import silhouette_score
     from sklearn.cluster import KMeans
  
@@ -50,6 +62,11 @@ def optimal_k(tfidf_model, max_k):
 
 
 def clusterer(tfidf_model, clusters):
+    """ Cluster the model using K-Means
+    #Params:
+    tfidf_model: Tf-Idf vector
+    clusters: number of clusters
+    """
     km_model = KMeans(n_clusters=clusters)
     km_model.fit(tfidf_model)
  
@@ -61,7 +78,11 @@ def clusterer(tfidf_model, clusters):
     return clustering
 
 def get_even_clusters(clustering, n):
-    """ Divide the clusters into n even groups """
+    """ Divide the clusters into n even groups 
+    #Params:
+    clustering: dict of clusters
+    n: number of teams
+    """
     random =[]
     final_cluster={}
     clusters = list(clustering.keys())
@@ -89,7 +110,11 @@ def get_even_clusters(clustering, n):
 
         
 def cluster_texts(texts,n):
-    """ Cluster texts using K-Means """
+    """ Cluster texts using K-Means 
+    #Params:
+    texts: list of strings
+    n: number of teams
+    """
     tfidf_model = model_generator(texts)
     clusters = optimal_k(tfidf_model,2*n) 
     clustering = clusterer(tfidf_model, clusters)
