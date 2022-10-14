@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify  
-from service import clusterer 
+from service import cluster_texts
 
 app = Flask(__name__)
 
@@ -12,7 +12,7 @@ def service():
     data = request.get_json()
     bios = data['bios']
     size = data['size']
-    clusters = clusterer(bios, size)
+    clusters = cluster_texts(bios, size)
     clusters = {int(k) : v for k, v in clusters.items()}
     try:
         return jsonify(clusters)
