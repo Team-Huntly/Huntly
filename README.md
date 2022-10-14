@@ -6,7 +6,7 @@
 2. [Description of project](https://github.com/Manipal-Hackathon-2022/Team-Name-404/blob/main/README.md#description-of-project)
 3. [What we have built](https://github.com/Manipal-Hackathon-2022/Team-Name-404/blob/main/README.md#what-we-have-built)
 4. [Directory Structure](https://github.com/Manipal-Hackathon-2022/Team-Name-404/blob/main/README.md#directory-structure)
-5. [Demo](https://github.com/Manipal-Hackathon-2022/Team-Name-404/blob/main/README.md#demo)
+5. [Network Diagram](https://github.com/Manipal-Hackathon-2022/Team-Name-404/blob/main/README.md#network-diagram)
 
 <br/>
 
@@ -117,5 +117,9 @@ Team-Name-404/
 ├─ LICENSE
 ├─ README.md
 
+```
 
+## Network Diagram
+
+![Huntly Network Diagram without Redis with grid](https://user-images.githubusercontent.com/76661350/195946928-111cc54f-637b-465c-ac9a-4983b10548a3.png)
 
