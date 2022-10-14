@@ -106,7 +106,7 @@ Team-Name-404/
 │  │  ├─ rewards/
 │  │  ├─ treasure_hunts/
 │  │  ├─ users/
-|  ├─ env                         # Envirnment variables
+|  ├─ env                         # Environment variables
 ├─ services/                      # Machine Learning service
 │  ├─ ml_api/
 ├─ .gitignore
