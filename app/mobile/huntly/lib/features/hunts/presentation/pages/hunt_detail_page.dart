@@ -36,118 +36,121 @@ class _HuntDetailPageState extends State<HuntDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        const SizedBox(height: 50),
-        Row(
-          children: [
-            ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
-              child: SizedBox(
-                height: 120,
-                width: 100,
-                child: Image.asset(
-                  'assets/images/0.jpg',
-                  fit: BoxFit.fill,
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const SizedBox(height: 50),
+          Row(
+            children: [
+              ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                child: SizedBox(
+                  height: 120,
+                  width: 100,
+                  child: Image.asset(
+                    'assets/images/0.jpg',
+                    fit: BoxFit.fill,
+                  ),
                 ),
               ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Text(widget.treasureHunt.name,
-                    style:
-                        darkTheme.textTheme.headline2!.copyWith(height: 1.2)),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Text(widget.treasureHunt.name,
+                      style:
+                          darkTheme.textTheme.headline2!.copyWith(height: 1.2)),
+                ),
+              )
+            ],
+          ),
+          const SizedBox(
+            height: 25,
+          ),
+          Wrap(
+            alignment: WrapAlignment.center,
+            runSpacing: 10,
+            spacing: 10,
+            children: [
+              HuntInfoCard(
+                icon: Ic.baseline_calendar_today,
+                title: 'On',
+                info: DateFormat.yMd().format(widget.treasureHunt.started_at),
+                // fontSize: 8,
               ),
-            )
-          ],
-        ),
-        const SizedBox(
-          height: 25,
-        ),
-        Wrap(
-          alignment: WrapAlignment.center,
-          runSpacing: 10,
-          spacing: 10,
-          children: [
-            HuntInfoCard(
-              icon: Ic.baseline_calendar_today,
-              title: 'On',
-              info: DateFormat.yMd().format(widget.treasureHunt.started_at),
-              // fontSize: 8,
-            ),
-            HuntInfoCard(
-              icon: Ic.baseline_alarm,
-              title: 'Starts at',
-              info: DateFormat('HH:MM').format(widget.treasureHunt.started_at),
-            ),
-            HuntInfoCard(
-              icon: Mdi.map_marker_outline,
-              title: 'Location',
-              info: widget.treasureHunt.location_name,
-              trailing: Majesticons.external_link_line,
-            ),
-            HuntInfoCard(
-              icon: Ri.team_line,
-              title: 'Team size',
-              info: widget.treasureHunt.team_size.toString(),
-            ),
-            HuntInfoCard(
-              icon: Carbon.paint_brush,
-              title: 'Theme',
-              info: widget.treasureHunt.theme.name,
-            ),
-            HuntInfoCard(
-              icon: Carbon.cabin_care_alert,
-              title: 'Seats left',
-              info: (widget.treasureHunt.total_seats -
-                      widget.treasureHunt.participants.length)
-                  .toString(),
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 25,
-        ),
-        ActionButton(
-          text: 'Register',
-          onTap: () {},
-          color: darkTheme.indicatorColor,
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        ActionButton(
-          text: 'Unregister',
-          onTap: () {},
-          color: darkTheme.colorScheme.secondary,
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ActionButton(onTap: () {}, text: 'Lock teams'),
-            const SizedBox(width: 10),
-            ActionButton(
-              onTap: () {},
-              leading: Ic.twotone_edit,
-            )
-          ],
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        ActionButton(
-          text: 'Teams locked',
-          onTap: () {},
-          color: darkTheme.colorScheme.secondary,
-          leading: Twemoji.locked_with_key,
-          colorIcon: false,
-        )
-      ],
+              HuntInfoCard(
+                icon: Ic.baseline_alarm,
+                title: 'Starts at',
+                info:
+                    DateFormat('HH:MM').format(widget.treasureHunt.started_at),
+              ),
+              HuntInfoCard(
+                icon: Mdi.map_marker_outline,
+                title: 'Location',
+                info: widget.treasureHunt.location_name,
+                trailing: Majesticons.external_link_line,
+              ),
+              HuntInfoCard(
+                icon: Ri.team_line,
+                title: 'Team size',
+                info: widget.treasureHunt.team_size.toString(),
+              ),
+              HuntInfoCard(
+                icon: Carbon.paint_brush,
+                title: 'Theme',
+                info: widget.treasureHunt.theme.name,
+              ),
+              HuntInfoCard(
+                icon: Carbon.cabin_care_alert,
+                title: 'Seats left',
+                info: (widget.treasureHunt.total_seats -
+                        widget.treasureHunt.participants.length)
+                    .toString(),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 25,
+          ),
+          ActionButton(
+            text: 'Register',
+            onTap: () {},
+            color: darkTheme.indicatorColor,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          ActionButton(
+            text: 'Unregister',
+            onTap: () {},
+            color: darkTheme.colorScheme.secondary,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ActionButton(onTap: () {}, text: 'Lock teams'),
+              const SizedBox(width: 10),
+              ActionButton(
+                onTap: () {},
+                leading: Ic.twotone_edit,
+              )
+            ],
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          ActionButton(
+            text: 'Teams locked',
+            onTap: () {},
+            color: darkTheme.colorScheme.secondary,
+            leading: Twemoji.locked_with_key,
+            colorIcon: false,
+          )
+        ],
+      ),
     );
   }
 }
