@@ -19,13 +19,7 @@ class _HuntCreateState extends State<HuntCreate> with TickerProviderStateMixin {
 
   final List<Widget> _tab = [HuntTab(color: darkTheme.colorScheme.secondary)];
   final List<Widget> _tabMenu = [
-    Column(
-      children: [
-        const SizedBox(height: 20),
-        Text("Clue #1", style: darkTheme.textTheme.caption),
-        const ClueCreatePage()
-      ],
-    ),
+    const HuntEditPage(),
   ];
 
   @override
@@ -75,7 +69,7 @@ class _HuntCreateState extends State<HuntCreate> with TickerProviderStateMixin {
                   _tabMenu.add(Column(
                     children: [
                       const SizedBox(height: 20),
-                      Text("Clue #${_tabController.index + 2}",
+                      Text("Clue #${_tabController.index + 1}",
                           style: darkTheme.textTheme.caption),
                       const ClueCreatePage()
                     ],

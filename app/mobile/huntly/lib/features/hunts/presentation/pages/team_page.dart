@@ -18,7 +18,7 @@ class _TeamPageState extends State<TeamPage> {
   @override
   void initState() {
     BlocProvider.of<TreasureHuntBloc>(context)
-        .add(getTeamMates(widget.treasureHuntId));
+        .add(GetTeamMates(widget.treasureHuntId));
     super.initState();
   }
 

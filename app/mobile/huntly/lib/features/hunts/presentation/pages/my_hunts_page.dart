@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:huntly/core/utils/scaffold.dart';
 import 'package:huntly/features/huntsCreate/presentation/pages/hunt_create.dart';
 import 'package:huntly/features/hunts/presentation/pages/presets_page.dart';
+import 'package:huntly/features/huntsCreate/presentation/pages/hunt_edit_page.dart';
 
 class MyHuntsPage extends StatefulWidget {
   const MyHuntsPage({Key? key}) : super(key: key);
@@ -25,6 +26,10 @@ class _MyHuntsPageState extends State<MyHuntsPage> {
               style: TextStyle(fontSize: 40),
             ),
             onTap: () {
+              // TODO: Navigate to custom hunt edit page
+              // Navigator.of(context).pushReplacement(MaterialPageRoute(
+              //     builder: (context) => const HuntEditPage()));
+              // TODO remove this
               Navigator.of(context).pushReplacement(
                   MaterialPageRoute(builder: (context) => const HuntCreate()));
             },

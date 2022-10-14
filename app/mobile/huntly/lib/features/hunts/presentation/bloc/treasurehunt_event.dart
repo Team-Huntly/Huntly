@@ -21,8 +21,10 @@ class UnregisterUser extends TreasureHuntEvent {
   const UnregisterUser(this.treasureHuntId);
 }
 
-class getTeamMates extends TreasureHuntEvent {
+class GetTeamMates extends TreasureHuntEvent {
   final int treasureHuntId;
 
-  const getTeamMates(this.treasureHuntId);
+  const GetTeamMates(this.treasureHuntId);
 }
+
+class GetUserHunts extends TreasureHuntEvent {}

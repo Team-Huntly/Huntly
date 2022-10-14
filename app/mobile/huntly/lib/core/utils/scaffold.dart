@@ -64,6 +64,7 @@ class HuntlyScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: darkTheme.colorScheme.background,
         appBar: AppBar(
           foregroundColor: darkTheme.colorScheme.onBackground,

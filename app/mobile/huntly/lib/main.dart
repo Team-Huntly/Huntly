@@ -11,6 +11,8 @@ import 'features/authentication/presentation/pages/profile_page.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'features/huntsCreate/presentation/bloc/hunts_create_bloc.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final prefs = await SharedPreferences.getInstance();
@@ -52,13 +54,15 @@ class Huntly extends StatelessWidget {
         BlocProvider<TreasureHuntBloc>(
           create: (context) => TreasureHuntBloc(),
         ),
+        BlocProvider<HuntsCreateBloc>(
+          create: (context) => HuntsCreateBloc(),
+        ),
       ],
       child: MaterialApp(
         scrollBehavior: MyCustomScrollBehavior(),
         title: 'Huntly',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
+        // darkTheme
+        theme: ThemeData.dark(),
         home: const WrapperPage(),
       ),
     );

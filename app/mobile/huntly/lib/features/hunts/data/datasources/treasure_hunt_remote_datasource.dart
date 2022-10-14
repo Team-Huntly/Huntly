@@ -18,6 +18,8 @@ abstract class TreasureHuntRemoteDataSource {
   Future<void> unregisterUser({required int treasureHuntId});
 
   Future<TeamModel> getTeammates({required int treasureHuntId});
+
+  // Future<TeamModel> getUserHunts();
 }
 
 class TreasureHuntRemoteDataSourceImpl implements TreasureHuntRemoteDataSource {
@@ -116,4 +118,24 @@ class TreasureHuntRemoteDataSourceImpl implements TreasureHuntRemoteDataSource {
       throw NetworkException();
     }
   }
+  // TODO:
+  // @override
+  // Future<List<TreasureHuntModel>> getUserHunts() async {
+  //   try {
+  //     Dio dio = Dio();
+  //     final response = await dio.get("${url}users/hunts/created/",
+  //         options: await getHeaders());
+  //     if (response.statusCode == 200) {
+  //       List<TreasureHuntModel> treasureHunts = response.data
+  //           .map<TreasureHuntModel>((m) => TreasureHuntModel.fromJson(m))
+  //           .toList();
+  //       return treasureHunts;
+  //     } else {
+  //       throw ServerException();
+  //     }
+  //   } catch (e) {
+  //     debugPrint("Datasource error: $e");
+  //     throw NetworkException();
+  //   }
+  // }
 }

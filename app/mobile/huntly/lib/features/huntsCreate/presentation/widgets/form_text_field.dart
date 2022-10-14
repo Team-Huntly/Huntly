@@ -22,11 +22,16 @@ class FormTextField extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 20),
       child: TextFormField(
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter some value';
+            }
+            return null;
+          },
           controller: controller,
           style: darkTheme.textTheme.bodyText2,
           cursorColor: Colors.white,
-          keyboardType:
-              TextInputType.emailAddress, // Use email input type for emails.
+          keyboardType: type, // Use email input type for emails.
           decoration: InputDecoration(
             hintText: hint,
             labelText: label,

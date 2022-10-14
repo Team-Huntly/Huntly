@@ -15,3 +15,5 @@ class HuntCreated extends HuntsCreateState {
   @override
   List<Object> get props => [message];
 }
+
+class Loading extends HuntsCreateState {}

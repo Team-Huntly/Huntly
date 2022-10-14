@@ -67,7 +67,21 @@ class TreasureHuntBloc extends Bloc<TreasureHuntEvent, TreasureHuntState> {
           debugPrint(e.toString());
           emit(Failed());
         }
-      } else if (event is getTeamMates) {
+      } else if (event is GetTeamMates) {
+        emit(Loading());
+        try {
+          final TreasureHuntRemoteDataSourceImpl THRDS =
+              TreasureHuntRemoteDataSourceImpl();
+          final TeamModel team =
+              await THRDS.getTeammates(treasureHuntId: event.treasureHuntId);
+          print(team);
+
+          emit(TeamLoaded(teamMates: team));
+        } catch (e) {
+          debugPrint(e.toString());
+          emit(Failed());
+        }
+      } else if (event is GetTeamMates) {
         emit(Loading());
         try {
           final TreasureHuntRemoteDataSourceImpl THRDS =
