@@ -1,6 +1,6 @@
 <h1 align="center">ML API </h1> 
 <br>
-<p>This folder contains the ML api endpoint which uses NLP and K-means clustering for Team Matching.</p>
+<h3>This folder contains the ML api endpoint which uses NLP and K-means clustering for Team Matching.</h3>
 
 <br/>
 
@@ -12,6 +12,9 @@
 <br/>
 
 ## Workflow: 
+  
+  ![image](https://user-images.githubusercontent.com/72497928/195720513-d6f35d5e-8172-48da-a7af-1e8f9e58206d.png)
+
 
 ### 1. Data Preprocessing:
 Here the text is tokenized and then converted into a vector using TF-IDF <i>(term frequency–inverse document frequency)</i> vectorizer.
