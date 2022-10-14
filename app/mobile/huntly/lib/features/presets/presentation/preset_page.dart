@@ -31,6 +31,7 @@ class _PresetPage extends State<PresetPage> {
   @override
   Widget build(BuildContext context) {
     return HuntlyScaffold(
+      outerContext: context,
       body: SingleChildScrollView(
         child: Column(
           children: [

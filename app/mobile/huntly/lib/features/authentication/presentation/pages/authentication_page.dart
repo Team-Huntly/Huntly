@@ -5,8 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:huntly/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:huntly/features/authentication/presentation/pages/profile_page.dart';
+import 'package:huntly/features/hunts/presentation/pages/home_page.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:colorful_iconify_flutter/icons/logos.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/theme/theme.dart';
 
@@ -20,62 +22,74 @@ class AuthenticationPage extends StatefulWidget {
 class _AuthenticationPageState extends State<AuthenticationPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: darkTheme.colorScheme.background,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
-        child: Column(
-          children: [
-            const SizedBox(height: 30),
-            Image.asset('assets/images/map.png'),
-            Positioned(
-              top: 350,
-              child: Text(
-                'Huntly'.toUpperCase(),
-                style: darkTheme.textTheme.headline1,
-              ),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            Container(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "Welcome to Huntly!",
-                style: darkTheme.textTheme.headline4,
-              ),
-            ),
-            Text(
-              "Your one stop destination for making connections and memories you’ll treasure forever.",
-              style: darkTheme.textTheme.bodyText2,
-            ),
-            const SizedBox(height: 30),
-            ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                      darkTheme.colorScheme.onBackground),
-                  fixedSize: MaterialStateProperty.all<Size>(
-                      const Size.fromWidth(250)),
-                  padding: MaterialStateProperty.all<EdgeInsets>(
-                      const EdgeInsets.symmetric(horizontal: 40)),
+    return BlocListener<AuthenticationBloc, AuthenticationState>(
+      listener: (context, state) async {
+        if (state is AuthenticationSuccess) {
+          final prefs = await SharedPreferences.getInstance();
+          if (prefs.getInt("profile") == 0) {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ProfilePage()));
+          } else {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => HomePage()));
+          }
+        }
+      },
+      child: Scaffold(
+        backgroundColor: darkTheme.colorScheme.background,
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30),
+          child: Column(
+            children: [
+              const SizedBox(height: 30),
+              Image.asset('assets/images/map.png'),
+              Positioned(
+                top: 350,
+                child: Text(
+                  'Huntly'.toUpperCase(),
+                  style: darkTheme.textTheme.headline1,
                 ),
-                child: Row(
-                  children: [
-                    const Iconify(Logos.google_icon),
-                    const SizedBox(width: 15),
-                    Text(
-                      'Sign-In with Google',
-                      style: darkTheme.textTheme.button,
-                    )
-                  ],
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Container(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Welcome to Huntly!",
+                  style: darkTheme.textTheme.headline4,
                 ),
-                onPressed: () async {
-                  BlocProvider.of<AuthenticationBloc>(context)
-                      .add(AuthenticationStarted());
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const ProfilePage()));
-                })
-          ],
+              ),
+              Text(
+                "Your one stop destination for making connections and memories you’ll treasure forever.",
+                style: darkTheme.textTheme.bodyText2,
+              ),
+              const SizedBox(height: 30),
+              ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        darkTheme.colorScheme.onBackground),
+                    fixedSize: MaterialStateProperty.all<Size>(
+                        const Size.fromWidth(250)),
+                    padding: MaterialStateProperty.all<EdgeInsets>(
+                        const EdgeInsets.symmetric(horizontal: 40)),
+                  ),
+                  child: Row(
+                    children: [
+                      const Iconify(Logos.google_icon),
+                      const SizedBox(width: 15),
+                      Text(
+                        'Sign-In with Google',
+                        style: darkTheme.textTheme.button,
+                      )
+                    ],
+                  ),
+                  onPressed: () async {
+                    BlocProvider.of<AuthenticationBloc>(context)
+                        .add(AuthenticationStarted());
+                  })
+            ],
+          ),
         ),
       ),
     );

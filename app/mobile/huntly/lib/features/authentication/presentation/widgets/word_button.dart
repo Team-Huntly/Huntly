@@ -26,7 +26,6 @@ class _WordButtonState extends State<WordButton> {
     return GestureDetector(
       onTap: () {
         if (!widget.isSelected) {
-          print(widget.selectedWords.value.length);
           widget.selectedWords.value.add(widget.word);
         } else {
           widget.selectedWords.value.remove(widget.word);
@@ -34,7 +33,6 @@ class _WordButtonState extends State<WordButton> {
         setState(() {
           widget.isSelected = !widget.isSelected;
         });
-        print(widget.selectedWords.value);
       },
       child: UnconstrainedBox(
           child: Container(
@@ -63,8 +61,8 @@ class _WordButtonState extends State<WordButton> {
                   Center(
                     child: Text(widget.word.interest,
                         textAlign: TextAlign.center,
-                        style: GoogleFonts.poppins(color: Colors.white,
-                        letterSpacing: 2)),
+                        style: GoogleFonts.poppins(
+                            color: Colors.white, letterSpacing: 2)),
                   ),
                 ],
               ))),
