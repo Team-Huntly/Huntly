@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:huntly/core/utils/action_button.dart';
 import 'package:huntly/features/hunts/domain/entities/treasure_hunt.dart';
+import 'package:huntly/features/hunts/presentation/pages/hunt_play.dart';
 import 'package:huntly/features/hunts/presentation/widgets/hunt_info_card.dart';
 import 'package:iconify_flutter/icons/carbon.dart';
 import 'package:iconify_flutter/icons/ic.dart';
@@ -109,6 +110,13 @@ class _HuntDetailPageState extends State<HuntDetailPage> {
         ),
         const SizedBox(
           height: 25,
+        ),
+        ActionButton(
+          text: 'Start',
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const HuntPlay()));
+          },
         ),
         ActionButton(
           text: 'Register',

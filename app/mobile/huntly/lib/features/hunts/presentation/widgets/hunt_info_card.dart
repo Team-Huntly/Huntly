@@ -25,12 +25,12 @@ class HuntInfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      width: 140,
+      width: MediaQuery.of(context).size.width * 0.39,
       decoration: BoxDecoration(
           color: darkTheme.colorScheme.background,
           borderRadius: const BorderRadius.all(Radius.circular(15)),
-          boxShadow: [
-            const BoxShadow(
+          boxShadow: const [
+            BoxShadow(
                 color: Colors.black, blurRadius: 1, offset: Offset(2, 2)),
           ]),
       child: Column(
