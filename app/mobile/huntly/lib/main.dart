@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:huntly/features/hunts/presentation/pages/hunt_create.dart';
+import 'package:huntly/features/hunts/presentation/pages/hunt_detail_page.dart';
 import 'package:huntly/features/hunts/presentation/pages/home_page.dart';
-import 'package:huntly/features/presets/presentation/preset_page.dart';
+import 'package:huntly/features/hunts/presentation/pages/preset_page.dart';
 
 import 'features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'features/authentication/presentation/pages/authentication_page.dart';
@@ -39,7 +41,7 @@ class Huntly extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const PresetPage(),
+        home: const HuntCreate(),
       ),
     );
   }

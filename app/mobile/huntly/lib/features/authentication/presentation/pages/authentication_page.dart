@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:huntly/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:huntly/features/authentication/presentation/pages/profile_page.dart';
@@ -65,7 +66,11 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                     const SizedBox(width: 15),
                     Text(
                       'Sign-In with Google',
-                      style: darkTheme.textTheme.button,
+                      style: GoogleFonts.poppins(
+                        color: const Color(0xff293241),
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400
+                      ),
                     )
                   ],
                 ),
