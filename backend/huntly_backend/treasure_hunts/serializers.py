@@ -261,13 +261,12 @@ class MemoryThreadSerializer(serializers.ModelSerializer):
 
 # Serializer for Memory Thread List
 class MemoryThreadListSerializer(serializers.ModelSerializer):
-    cover_img = serializers.SerializerMethodField()
+    memories = serializers.SerializerMethodField()
     class Meta:
         model = TreasureHunt
-        fields = ('id', 'name', 'started_at', 'ended_at', 'location_name', 'cover_img')
+        fields = ('id', 'name', 'started_at', 'ended_at', 'location_name', 'memories')
 
-    def get_cover_img(self, instance):
-        memories = Memory.objects.filter(treasure_hunt=instance)
-        if memories.count() > 0:
-            return memories.first().image.url
-        return None
+    def get_memories(self, instance):
+        memories = Memory.objects.filter(treasure_hunt=instance, clicked_by__in=Team.objects.filter(treasure_hunt=instance, team_members__id=self.context.get('request').user.id))
+        memories = MemorySerializer(memories, many=True).data
+        return memories
