@@ -9,9 +9,12 @@ import 'package:iconify_flutter/icons/ri.dart';
 import 'package:iconify_flutter/icons/carbon.dart';
 
 import '../../../../core/theme/theme.dart';
+import '../../domain/entities/treasure_hunt.dart';
 
 class HuntView extends StatefulWidget {
-  const HuntView({Key? key}) : super(key: key);
+  final TreasureHunt treasureHunt;
+
+  const HuntView({Key? key, required this.treasureHunt}) : super(key: key);
 
   @override
   State<HuntView> createState() => _HuntViewState();
@@ -35,10 +38,10 @@ class _HuntViewState extends State<HuntView> {
                   color: darkTheme.highlightColor,
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                   shape: BoxShape.rectangle)),
-          const Expanded(
+          Expanded(
             child: TabBarView(
               children: [
-                HuntDetailPage(),
+                HuntDetailPage(treasureHunt: widget.treasureHunt),
                 TeamPage(),
                 LeaderboardPage(),
               ],

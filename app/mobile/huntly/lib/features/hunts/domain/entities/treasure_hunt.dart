@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 class TreasureHunt extends Equatable {
   String name;
-  String started_at;
+  DateTime started_at;
   String ended_at;
   String location_latitute;
   String location_longitude;

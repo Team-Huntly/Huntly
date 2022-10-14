@@ -10,18 +10,15 @@ import 'package:intl/intl.dart';
 import '../../../../core/theme/theme.dart';
 
 class HuntCard extends StatelessWidget {
-  final String title;
-  final String location;
-  final int seatsLeft;
-  final DateTime start;
+  // final String title;
+  // final String location;
+  // final int seatsLeft;
+  // final DateTime start;
+  final TreasureHunt treasureHunt;
 
   const HuntCard(
       {Key? key,
-      required this.title,
-      required this.location,
-      required this.seatsLeft,
-      required this.start,
-      required TreasureHunt treasureHunt})
+      required this.treasureHunt})
       : super(key: key);
 
   @override
@@ -31,49 +28,47 @@ class HuntCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const HuntView()));
+            MaterialPageRoute(builder: (context) => HuntView(treasureHunt: treasureHunt,)));
       },
       child: IntrinsicHeight(
         child: Row(
           children: [
             Container(
+              decoration: BoxDecoration(
+                  border: Border(
+                      right: BorderSide(
+                color: treasureHunt.started_at.isBefore(DateTime.now())
+                    ? darkTheme.indicatorColor
+                    : darkTheme.highlightColor,
+                width: 5,
+              ))),
               child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 decoration: BoxDecoration(
-                    border: Border(
-                        right: BorderSide(
-                  color: start.isBefore(DateTime.now())
-                      ? darkTheme.indicatorColor
-                      : darkTheme.highlightColor,
-                  width: 5,
-                ))),
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
-                        topLeft: borderRadius, bottomLeft: borderRadius),
-                    color: darkTheme.colorScheme.secondary,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(start.day.toString(),
-                          style: GoogleFonts.poppins(
-                            fontSize: 40,
-                            fontWeight: FontWeight.w600,
-                          )),
-                      Text(DateFormat('MMM').format(start),
-                          style: GoogleFonts.poppins(
-                              fontSize: 20, fontWeight: FontWeight.w400)),
-                      const SizedBox(height: 10),
-                      Text(DateFormat('HH:MM').format(start),
-                          style: GoogleFonts.poppins(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            fontStyle: FontStyle.italic,
-                          )),
-                    ],
-                  ),
+                  borderRadius: const BorderRadius.only(
+                      topLeft: borderRadius, bottomLeft: borderRadius),
+                  color: darkTheme.colorScheme.secondary,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(treasureHunt.started_at.day.toString(),
+                        style: GoogleFonts.poppins(
+                          fontSize: 40,
+                          fontWeight: FontWeight.w600,
+                        )),
+                    Text(DateFormat('MMM').format(treasureHunt.started_at),
+                        style: GoogleFonts.poppins(
+                            fontSize: 20, fontWeight: FontWeight.w400)),
+                    const SizedBox(height: 10),
+                    Text(DateFormat('HH:MM').format(treasureHunt.started_at),
+                        style: GoogleFonts.poppins(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          fontStyle: FontStyle.italic,
+                        )),
+                  ],
                 ),
               ),
             ),
@@ -91,7 +86,7 @@ class HuntCard extends StatelessWidget {
                     children: [
                       Container(
                         child: Text(
-                          title,
+                          treasureHunt.name,
                           style: darkTheme.textTheme.headline3,
                         ),
                       ),
@@ -99,7 +94,8 @@ class HuntCard extends StatelessWidget {
                         children: [
                           Container(
                             child: Text(
-                              location,
+                              // treasureHu``,
+                              'hello',
                               style: TextStyle(
                                 color: darkTheme.colorScheme.secondary,
                                 fontSize: 14,
@@ -108,7 +104,7 @@ class HuntCard extends StatelessWidget {
                           ),
                           const SizedBox(height: 10),
                           Text(
-                            "$seatsLeft seats left",
+                            "${treasureHunt.total_seats} seats left",
                             style: TextStyle(
                               color: darkTheme.colorScheme.secondary,
                               fontSize: 12,
