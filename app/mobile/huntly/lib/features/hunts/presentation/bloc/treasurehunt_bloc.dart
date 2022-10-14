@@ -1,10 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:huntly/features/hunts/data/datasources/treasure_hunt_remote_datasource.dart';
+import 'package:huntly/features/hunts/data/models/leaderboard_model.dart';
 import 'package:huntly/features/hunts/data/repositories/treasure_hunt_repository_impl.dart';
-import '../../../../core/utils/get_current_location.dart';
 
 import '../../data/models/team_model.dart';
 import '../../domain/entities/treasure_hunt.dart';
@@ -67,16 +66,38 @@ class TreasureHuntBloc extends Bloc<TreasureHuntEvent, TreasureHuntState> {
           debugPrint(e.toString());
           emit(Failed());
         }
-      } else if (event is getTeamMates) {
+      } else if (event is GetTeamMates) {
         emit(Loading());
         try {
-          final TreasureHuntRemoteDataSourceImpl THRDS =
+          final TreasureHuntRemoteDataSourceImpl thrds =
               TreasureHuntRemoteDataSourceImpl();
           final TeamModel team =
-              await THRDS.getTeammates(treasureHuntId: event.treasureHuntId);
-          print(team);
+              await thrds.getTeammates(treasureHuntId: event.treasureHuntId);
 
           emit(TeamLoaded(teamMates: team));
+        } catch (e) {
+          debugPrint(e.toString());
+          emit(Failed());
+        }
+      } else if (event is GetLeaderboard) {
+        emit(Loading());
+        try {
+          final TreasureHuntRemoteDataSourceImpl thrds =
+              TreasureHuntRemoteDataSourceImpl();
+          final LeaderboardModel leaderboard =
+              await thrds.getLeaderboard(treasureHuntId: event.treasureHuntId);
+          emit(LeaderboardLoaded(leaderboard: leaderboard));
+        } catch (e) {
+          debugPrint(e.toString());
+          emit(Failed());
+        }
+      } else if (event is GetRecentTreasureHunts) {
+        try {
+          emit(Loading());
+          final TreasureHuntRemoteDataSourceImpl thrds =
+              TreasureHuntRemoteDataSourceImpl();
+          final treasureHunts = await thrds.fetchRecentTreasureHunts();
+          emit(Loaded(treasureHunts: treasureHunts));
         } catch (e) {
           debugPrint(e.toString());
           emit(Failed());

@@ -4,6 +4,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:huntly/core/utils/service.dart';
 import 'package:huntly/features/hunts/presentation/bloc/treasurehunt_bloc.dart';
 import 'package:huntly/features/hunts/presentation/pages/home_page.dart';
+import 'package:huntly/features/rewards/presentation/bloc/rewards_bloc.dart';
 
 import 'features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'features/authentication/presentation/pages/authentication_page.dart';
@@ -13,21 +14,20 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final prefs = await SharedPreferences.getInstance();
-  if (!prefs.containsKey("profile")) {
-    prefs.setInt("profile", 0);
-  }
-  if (!prefs.containsKey("name")) {
-    username_ = prefs.getString("name")!;
-  }
-  if (!prefs.containsKey("email")) {
-    email_ = prefs.getString("email")!;
-  }
-  if (!prefs.containsKey("photo")) {
-    photoUrl_ = prefs.getString("photo")!;
-  }
-  prefs.setInt("profile", 0);
-
+  // final prefs = await SharedPreferences.getInstance();
+  // if (!prefs.containsKey("profile")) {
+  //   prefs.setInt("profile", 0);
+  // }
+  // if (!prefs.containsKey("name")) {
+  //   username_ = prefs.getString("name")!;
+  // }
+  // if (!prefs.containsKey("email")) {
+  //   email_ = prefs.getString("email")!;
+  // }
+  // if (!prefs.containsKey("photo")) {
+  //   photoUrl_ = prefs.getString("photo")!;
+  // }
+  // prefs.setInt("profile", 0);
   runApp(const Huntly());
 }
 
@@ -52,6 +52,9 @@ class Huntly extends StatelessWidget {
         BlocProvider<TreasureHuntBloc>(
           create: (context) => TreasureHuntBloc(),
         ),
+        BlocProvider<RewardsBloc>(
+          create: (context) => RewardsBloc()
+        )
       ],
       child: MaterialApp(
         scrollBehavior: MyCustomScrollBehavior(),
@@ -73,7 +76,6 @@ class WrapperPage extends StatefulWidget {
 }
 
 class _WrapperPageState extends State<WrapperPage> {
-  // ignore: constant_identifier_names
   static const String OAUTH_CLIENT_ID =
       '363088523272-orkcfiqub7hshaq29pisji796or7ohpq.apps.googleusercontent.com';
 
@@ -101,8 +103,7 @@ class _WrapperPageState extends State<WrapperPage> {
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
                       if ((snapshot.data as SharedPreferences)
-                              .getInt("profile") ==
-                          0) {
+                            .getInt("profile") == 0) {
                         return const ProfilePage();
                       } else {
                         return const HomePage();
