@@ -260,19 +260,10 @@ class LeaderboardSerializer(serializers.ModelSerializer):
         teams = Team.objects.filter(treasure_hunt=instance)
         teams = TeamSerializer(teams, many=True).data
         leaderboard_teams = []
-        other_teams = []
         for team in teams:
             progress = TeamProgress.objects.filter(team=team['id'], clue__treasure_hunt = instance).order_by('-solved_at')
             team['no_of_clues'] = progress.count()
-            if team['no_of_clues'] == 0:
-                team['last_solved_at'] = None
-                other_teams.append({
-                    'id': team['id'],
-                    'name': team['name'],
-                    'no_of_clues': team['no_of_clues'],
-                    'last_solved_at': team['last_solved_at']
-                })
-            else:
+            if team['no_of_clues'] != 0:
                 team['last_solved_at'] = progress.first().solved_at
                 leaderboard_teams.append({
                     'id': team['id'],
@@ -281,7 +272,6 @@ class LeaderboardSerializer(serializers.ModelSerializer):
                     'last_solved_at': team['last_solved_at']
                 })
         leaderboard_teams = sorted(leaderboard_teams, key=lambda k: (k['no_of_clues'], -k['last_solved_at'].timestamp()), reverse=True)
-        leaderboard_teams.extend(other_teams)
         return_obj = {
             'hunt_id': instance.id,
             'teams': leaderboard_teams
