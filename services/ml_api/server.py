@@ -4,8 +4,10 @@ from service import cluster_texts
 app = Flask(__name__)
 
 @app.route('/')
+
 def index():
     return 'endpoint is at /service'
+
 
 @app.route('/service', methods=['POST'])
 def service():
