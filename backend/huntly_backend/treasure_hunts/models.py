@@ -2,6 +2,7 @@ from asyncore import read
 from django.db import models
 from email.policy import default
 from django.contrib.auth import get_user_model
+from django.core.validators import MinValueValidator
 
 # Create your models here.
 
@@ -15,8 +16,8 @@ class TreasureHunt(models.Model):
     ended_at = models.DateTimeField()
     location_latitude = models.CharField(max_length = 30)
     location_longitude = models.CharField(max_length = 30)
-    total_seats = models.IntegerField()
-    team_size = models.IntegerField()
+    total_seats = models.IntegerField(validators=[MinValueValidator(1)])
+    team_size = models.IntegerField(validators=[MinValueValidator(1)])
     theme = models.ForeignKey('Theme', blank=True, null=True, on_delete = models.CASCADE, related_name='treasure_hunts_theme')
     participants = models.ManyToManyField(User, blank=True)
     created_by = models.ForeignKey(User, on_delete = models.CASCADE, blank=True, null=True, related_name='treasure_hunts_created_by')
@@ -27,7 +28,7 @@ class TreasureHunt(models.Model):
 
 class Clue(models.Model):
     treasure_hunt = models.ForeignKey(TreasureHunt, blank=False, null = False, on_delete=models.CASCADE, related_name='clues_treasure_hunt')
-    step_no = models.IntegerField()
+    step_no = models.IntegerField(validators=[MinValueValidator(1)])
     description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add = True)
     answer_description = models.TextField(blank=True, null=True)
