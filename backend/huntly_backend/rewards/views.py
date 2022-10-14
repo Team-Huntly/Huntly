@@ -3,11 +3,18 @@ from rest_framework.response import Response
 from .serializers import BrandSerializer, CouponSerializer
 from .models import Brand, Coupon
 
+
 class BrandCreateAPIView(generics.CreateAPIView):
+    """
+    Create a new brand
+    """
     serializer_class = BrandSerializer
     queryset = Brand.objects.all()
 
 class CouponCreateAPIView(generics.CreateAPIView):
+    """
+    Create a new coupon
+    """
     serializer_class = CouponSerializer
     queryset = Coupon
 

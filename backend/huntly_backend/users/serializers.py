@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate
 User = get_user_model()
 
 
+# Serializer for User Registration
 class UserRegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     password2 = serializers.CharField(write_only=True)
@@ -26,6 +27,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         return user
 
 
+# Serializer for User Update
 class UpdateUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -33,12 +35,14 @@ class UpdateUserSerializer(serializers.ModelSerializer):
     # TODO: Add phone number regex validation
 
 
+# Serializer for User Details
 class UserViewSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'first_name', 'last_name', 'email', 'gender', 'date_of_birth', 'phone_no', 'bio', 'interests', 'profile_pic')
 
     
+# Serializer for User Login
 class UserLoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField()
@@ -49,6 +53,8 @@ class UserLoginSerializer(serializers.Serializer):
             return user
         raise serializers.ValidationError("Incorrect Credentials")
 
+
+# Serializer for User Password Change
 class ChangePasswordSerializer(serializers.Serializer):
     old_password = serializers.CharField(required=True)
     new_password = serializers.CharField(required=True)

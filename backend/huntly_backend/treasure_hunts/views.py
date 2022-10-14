@@ -8,7 +8,29 @@ from .utils import calc_distance
 
 RADIUS = 10
 
+
 class TreasureHuntListAPIView(generics.ListAPIView):
+    """
+    List all treasure hunts near a location
+    """
+    serializer_class = TreasureHuntSerializer
+    queryset = TreasureHunt.objects.all()
+
+    def get(self, request, *args, **kwargs):
+        lat = request.query_params.get('latitude', None)
+        lon = request.query_params.get('longitude', None)
+        if lat and lon:
+            queryset = self.get_queryset()
+            for hunt in queryset:
+                hunt_distance = calc_distance(float(lat), float(lon), float(hunt.location_latitude), float(hunt.location_longitude))
+                if hunt_distance > RADIUS:  
+                    queryset = queryset.exclude(id=hunt.id)
+                    
+            # queryset = sorted(queryset, key=lambda x: x.distance)
+            serializer = self.get_serializer(queryset, many=True)
+            return Response(serializer.data)
+        else:
+            return super().get(request, *args, **kwargs)
     queryset = TreasureHunt.objects.all()
     serializer_class = TreasureHuntSerializer
 
@@ -18,7 +40,7 @@ class TreasureHuntListAPIView(generics.ListAPIView):
         if lat and lon:
             queryset = self.get_queryset()
             for hunt in queryset:
-                hunt_distance = calc_distance(float(lat), float(lon), float(hunt.location_longitude), float(hunt.location_longitude))
+                hunt_distance = calc_distance(float(lat), float(lon), float(hunt.location_latitude), float(hunt.location_longitude))
                 if hunt_distance > RADIUS:  
                     queryset = queryset.exclude(id=hunt.id)
                     
@@ -30,40 +52,72 @@ class TreasureHuntListAPIView(generics.ListAPIView):
 
 
 class TreasureHuntCreateAPIView(generics.CreateAPIView):
+    """
+    Create a new treasure hunt
+    """
+    serializer_class = TreasureHuntSerializer
+    queryset = TreasureHunt.objects.all()
     queryset = TreasureHunt.objects.all()
     serializer_class = TreasureHuntSerializer
 
 
 class TreasureHuntRetrieveAPIView(generics.RetrieveAPIView):
+    """
+    Retrieve a treasure hunt by id
+    """
     queryset = TreasureHunt.objects.all()
     serializer_class = TreasureHuntSerializer
     lookup_field = 'id'
 
 
 class TreasureHuntUpdateAPIView(generics.UpdateAPIView):
+    """
+    Update a treasure hunt by id
+    """
+    queryset = TreasureHunt.objects.all()
+    serializer_class = TreasureHuntSerializer
+    lookup_field = 'id'
     queryset = TreasureHunt.objects.all()
     serializer_class = TreasureHuntSerializer
     lookup_field = 'id'
 
 
 class TreasureHuntDeleteAPIView(generics.DestroyAPIView):
+    """
+    Delete a treasure hunt by id
+    """
     queryset = TreasureHunt.objects.all()
     serializer_class = TreasureHuntSerializer
     lookup_field = 'id'
 
 
 class ThemeListAPIView(generics.ListAPIView):
+    """
+    List all themes
+    """
+    serializer_class = ThemeSerializer
+    queryset = Theme.objects.all()
     queryset = Theme.objects.all()
     serializer_class = ThemeSerializer
 
 
 class ClueListAPIView(generics.ListAPIView):
+    """
+    List all clues for a treasure hunt
+    """
+    serializer_class = ClueSerializer
+    queryset = Clue.objects.all()
+    queryset = Clue.objects.all()
+    serializer_class = ClueSerializer
     queryset = Clue.objects.all()
     serializer_class = ClueSerializer
     lookup_field = 'treasure_hunt'
 
 
 class ClueCreateAPIView(generics.CreateAPIView):
+    """
+    Create a new clue for a treasure hunt
+    """
     queryset = Clue.objects.all()
     serializer_class = ClueSerializer
 
@@ -76,18 +130,36 @@ class ClueCreateAPIView(generics.CreateAPIView):
 
 
 class ClueRetrieveAPIView(generics.RetrieveAPIView):
+    """
+    Retrieve a clue by id
+    """
+    queryset = Clue.objects.all()
+    serializer_class = ClueSerializer
+    lookup_field = 'id'
     queryset = Clue.objects.all()
     serializer_class = ClueSerializer
     lookup_field = 'id'
 
 
 class ClueUpdateAPIView(generics.UpdateAPIView):
+    """
+    Update a clue by id
+    """
+    queryset = Clue.objects.all()
+    serializer_class = ClueSerializer
+    lookup_field = 'id'
+    queryset = Clue.objects.all()
+    serializer_class = ClueSerializer
+    lookup_field = 'id'
     queryset = Clue.objects.all()
     serializer_class = ClueSerializer
     lookup_field = 'id'
 
 
 class RegisterParticipantAPIView(generics.UpdateAPIView):
+    """
+    Register a participant for a treasure hunt
+    """
     queryset = TreasureHunt.objects.all()
     serializer_class = TreasureHuntParticipantsSerializer
     http_method_names = ['patch']
@@ -102,6 +174,9 @@ class RegisterParticipantAPIView(generics.UpdateAPIView):
 
 
 class UnregisterParticipantAPIView(generics.UpdateAPIView):
+    """
+    Unregister a participant for a treasure hunt
+    """
     queryset = TreasureHunt.objects.all()
     serializer_class = TreasureHuntParticipantsSerializer
     http_method_names = ['patch']
@@ -114,7 +189,11 @@ class UnregisterParticipantAPIView(generics.UpdateAPIView):
         updated_treasure_hunt = TreasureHuntSerializer(serializer.unregister_participant(instance)).data
         return Response(updated_treasure_hunt, status=status.HTTP_200_OK)
 
+
 class TeamProgressAPIView(generics.ListAPIView):
+    """
+    List all teams' progress for a treasure hunt
+    """
     queryset = TeamProgress.objects.all()
     serializer_class = TeamProgressSerializer
     lookup_field = 'id'
@@ -131,7 +210,11 @@ class TeamProgressAPIView(generics.ListAPIView):
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
+
 class TeamProgressCreateAPIView(generics.CreateAPIView):
+    """
+    Update a team's progress for a treasure hunt by adding a new TeamProgress object
+    """
     queryset = TeamProgress.objects.all()
     serializer_class = TeamProgressSerializer
 
@@ -144,6 +227,9 @@ class TeamProgressCreateAPIView(generics.CreateAPIView):
 
 
 class LeaderboardRetrieveAPIView(generics.RetrieveAPIView):
+    """
+    Retrieve a leaderboard by using the TeamProgress model
+    """
     queryset = TreasureHunt.objects.all()
     serializer_class = LeaderboardSerializer
     lookup_field = 'id'
@@ -155,6 +241,9 @@ class LeaderboardRetrieveAPIView(generics.RetrieveAPIView):
     
 
 class RetrieveUserTeamAPIView(generics.RetrieveAPIView):
+    """
+    Retrieve logged in user's team
+    """
     queryset = Team.objects.all()
     serializer_class = TeamSerializer
 
@@ -171,7 +260,11 @@ class RetrieveUserTeamAPIView(generics.RetrieveAPIView):
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
+
 class RetrieveTreashureHuntRewardsAPIView(generics.RetrieveAPIView):
+    """
+    Retrieve a treasure hunt's rewards
+    """
     queryset = TreasureHunt.objects.all()
     serializer_class = TreasureHuntSerializer
     lookup_field = 'id'
