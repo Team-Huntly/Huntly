@@ -21,11 +21,10 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = User.objects.create_user(
-            validated_data['email'],
+            email=validated_data['email'],
             password=validated_data['password']
         )
         return user
-
 
 # Serializer for User Update
 class UpdateUserSerializer(serializers.ModelSerializer):
