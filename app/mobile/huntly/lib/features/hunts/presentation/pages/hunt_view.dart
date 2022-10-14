@@ -24,31 +24,27 @@ class _HuntViewState extends State<HuntView> {
       outerContext: context,
       body: DefaultTabController(
         length: 3,
-        child: Column(
-          children: [
-            TabBar(
+        child: Column(children: [
+          TabBar(
               tabs: [
                 ViewTab(icon: AntDesign.info_circle_outlined),
                 ViewTab(icon: Ri.team_line),
                 ViewTab(icon: Carbon.trophy)
               ],
               indicator: BoxDecoration(
-                color: darkTheme.highlightColor,
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
-                shape: BoxShape.rectangle
-              )
+                  color: darkTheme.highlightColor,
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  shape: BoxShape.rectangle)),
+          const Expanded(
+            child: TabBarView(
+              children: [
+                HuntDetailPage(),
+                TeamPage(),
+                LeaderboardPage(),
+              ],
             ),
-            const Expanded(
-              child: TabBarView(
-                children: [
-                  HuntDetailPage(),
-                  TeamPage(),
-                  LeaderboardPage(),
-                ],
-              ),
-            ),
-          ]
-        ),
+          ),
+        ]),
       ),
     );
   }

@@ -1,55 +1,24 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:http/http.dart' as http;
 import 'package:huntly/common/constants.dart';
-import 'package:huntly/features/hunts/domain/entities/treasure_hunt.dart';
 
 import '../../../../core/error/exceptions.dart';
 import '../models/treasure_hunt_model.dart';
-import '../../../../common/getLocation.dart';
-import 'package:geolocator/geolocator.dart';
 
 abstract class TreasureHuntRemoteDataSource {
   Future<List<TreasureHuntModel>> fetchTreasureHunts(
       {required String latitude, required String longitude});
+
+  Future<List<TreasureHuntModel>> fetchUserTreasureHunts(
+      {required int userId});
+  
 }
 
 class TreasureHuntRemoteDataSourceImpl implements TreasureHuntRemoteDataSource {
-  // Just for reference
-  // @override
-  // Future<List<ArticleModel>> fetchCategoryArticles({
-  //   required int page,
-  //   required int categoryId,
-  //   required bool refreshStatus,
-  // }) async {
-  //   try {
-  //     Dio dio = Dio();
-  //     dio.interceptors.add(
-
-  //     if (response.statusCode == 200) {
-  //       articles = response.data
-  //           .map<ArticleModel>((m) => ArticleModel.fromJson(m))
-  //           .toList();
-
-  //       return articles;
-  //     } else {
-  //       throw ServerException();
-  //     }
-  //   } catch (e) {
-  //     debugPrint("error: $e");
-  //     throw NetworkException();
-  //   }
-  // }
-
   @override
   Future<List<TreasureHuntModel>> fetchTreasureHunts(
       {required String latitude, required String longitude}) async {
     try {
-      print("1234");
-      Position _currentPosition = await determinePosition();
       Dio dio = Dio();
       var response = await dio.get(
         "${url}treasure-hunts/?latitude=1&longitude=1",
@@ -57,26 +26,49 @@ class TreasureHuntRemoteDataSourceImpl implements TreasureHuntRemoteDataSource {
           headers: {
             "Accept": "application/json",
             "Content-Type": "application/json",
-            "Authorization": "Token c15e946b7d23c31848a64fd9942f29103a863f57"
+            "Authorization": "Token 6b4a27a545d3a191eaca78e85bcef6703f65aff3"
           },
         ),
       );
-      print("12345");
-      print(response.data);
-
       if (response.statusCode == 200) {
-        print("As");
-
         List<TreasureHuntModel> treasureHunts = response.data
             .map<TreasureHuntModel>((m) => TreasureHuntModel.fromJson(m))
             .toList();
-        print("As");
         return treasureHunts;
       } else {
         throw ServerException();
       }
     } catch (e) {
-      print("error: $e");
+      debugPrint("error: $e");
+      throw NetworkException();
+    }
+  }
+
+  @override
+  Future<List<TreasureHuntModel>> fetchUserTreasureHunts(
+      {required int userId}) async {
+    try {
+      Dio dio = Dio();
+      var response = await dio.get(
+        "${url}treasure-hunts/?latitude=1&longitude=1",
+        options: Options(
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "Authorization": "Token 6b4a27a545d3a191eaca78e85bcef6703f65aff3"
+          },
+        ),
+      );
+      if (response.statusCode == 200) {
+        List<TreasureHuntModel> treasureHunts = response.data
+            .map<TreasureHuntModel>((m) => TreasureHuntModel.fromJson(m))
+            .toList();
+        return treasureHunts;
+      } else {
+        throw ServerException();
+      }
+    } catch (e) {
+      debugPrint("error: $e");
       throw NetworkException();
     }
   }

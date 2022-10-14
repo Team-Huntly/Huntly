@@ -12,15 +12,25 @@ class TreasureHuntRepositoryImpl implements TreasureHuntRepository {
   TreasureHuntRepositoryImpl({
     required this.remoteDataSource,
   });
-  // ArticlesLocalDataSourceImpl localDataSource = ArticlesLocalDataSourceImpl();
 
   @override
   Future<Either<Failure, List<TreasureHunt>>> fetchTreasureHunts(
       {required String latitude, required String longitude}) async {
     try {
-      print("123");
       final treasureHunts = await remoteDataSource.fetchTreasureHunts(
           latitude: latitude, longitude: longitude);
+      return Right(treasureHunts);
+    } on ServerException {
+      return Left(ServerFailure());
+    } on NetworkException {
+      return Left(NetworkFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<TreasureHunt>>> fetchUserTreasureHunts({required int userId}) async {
+    try {
+      final treasureHunts = await remoteDataSource.fetchUserTreasureHunts(userId: userId);
       return Right(treasureHunts);
     } on ServerException {
       return Left(ServerFailure());

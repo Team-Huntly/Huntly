@@ -19,10 +19,20 @@ class _MyHuntsPageState extends State<MyHuntsPage> {
       outerContext: context,
       body: Column(
         children: [
-          GestureDetector(child: Text('Custom'), onTap: () { Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => const HuntCreate())); },),
-          GestureDetector(child: Text('Presets'), onTap: () { Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => const PresetsPage())); },),
+          GestureDetector(
+            child: Text('Custom'),
+            onTap: () {
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => const HuntCreate()));
+            },
+          ),
+          GestureDetector(
+            child: Text('Presets'),
+            onTap: () {
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => const PresetsPage()));
+            },
+          ),
         ],
       ),
     );

@@ -11,13 +11,11 @@ class GalleryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return HuntlyScaffold(
       outerContext: context,
-      body: Column(
-        children: const [
-          SizedBox(height: 30),
-          GalleryImage(),
-          GalleryImage(),
-        ]
-      ),
+      body: Column(children: const [
+        SizedBox(height: 30),
+        GalleryImage(),
+        GalleryImage(),
+      ]),
     );
   }
 }

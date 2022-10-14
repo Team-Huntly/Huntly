@@ -9,11 +9,6 @@ class TeamPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(height: 50),
-        UserCard()
-      ]
-    );
+    return Column(children: [SizedBox(height: 50), UserCard()]);
   }
 }

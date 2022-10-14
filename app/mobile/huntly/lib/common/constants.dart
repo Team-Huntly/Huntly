@@ -255,4 +255,4 @@ List<Map<String, List<Interests>>> interests = [
   hobbies
 ];
 
-String url = "http://39b4-2401-4900-499b-e394-a73d-c573-932d-6f64.ngrok.io/";
+String url = "https://huntlybackend.mixedbag.repl.co/";

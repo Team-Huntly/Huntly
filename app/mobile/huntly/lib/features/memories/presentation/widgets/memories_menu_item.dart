@@ -17,8 +17,8 @@ class MemoriesMenuItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => const GalleryPage()));
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const GalleryPage()));
       },
       child: Transform.rotate(
         angle: random.nextDouble() * angleRangeMultiplier,
@@ -27,18 +27,22 @@ class MemoriesMenuItem extends StatelessWidget {
           width: MediaQuery.of(context).size.width * 0.9,
           // height: 250,
           decoration: const BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-            image: DecorationImage(
-              image: AssetImage('assets/images/0.jpg'),
-              fit: BoxFit.fill
-            )
-          ),
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+              image: DecorationImage(
+                  image: AssetImage('assets/images/0.jpg'), fit: BoxFit.fill)),
           child: Column(
             children: [
               const SizedBox(height: 100),
-              Text('NITK Hunt'.toUpperCase(), style: darkTheme.textTheme.headline1,),
-              Text('16/12/11', style: darkTheme.textTheme.headline3!.copyWith(color: darkTheme.colorScheme.secondary)),
-              const SizedBox(height: 20,),
+              Text(
+                'NITK Hunt'.toUpperCase(),
+                style: darkTheme.textTheme.headline1,
+              ),
+              Text('16/12/11',
+                  style: darkTheme.textTheme.headline3!
+                      .copyWith(color: darkTheme.colorScheme.secondary)),
+              const SizedBox(
+                height: 20,
+              ),
             ],
           ),
         ),

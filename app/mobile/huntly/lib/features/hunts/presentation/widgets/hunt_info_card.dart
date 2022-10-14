@@ -10,9 +10,14 @@ class HuntInfoCard extends StatelessWidget {
   final String title;
   final String info;
   final String? trailing;
-  
-  const HuntInfoCard({Key? key, required this.icon, required this.title, required this.info, this.trailing}) : super(key: key);
 
+  const HuntInfoCard(
+      {Key? key,
+      required this.icon,
+      required this.title,
+      required this.info,
+      this.trailing})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,16 +25,12 @@ class HuntInfoCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       width: 140,
       decoration: BoxDecoration(
-        color: darkTheme.colorScheme.background,
-        borderRadius: const BorderRadius.all(Radius.circular(15)),
-        boxShadow: [
-          const BoxShadow(
-            color: Colors.black,
-            blurRadius: 1,
-            offset: Offset(2, 2)
-          ),
-        ]
-      ),
+          color: darkTheme.colorScheme.background,
+          borderRadius: const BorderRadius.all(Radius.circular(15)),
+          boxShadow: [
+            const BoxShadow(
+                color: Colors.black, blurRadius: 1, offset: Offset(2, 2)),
+          ]),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,28 +46,24 @@ class HuntInfoCard extends StatelessWidget {
               Text(
                 title,
                 style: GoogleFonts.poppins(
-                  color: darkTheme.colorScheme.secondary,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600
-                ),
+                    color: darkTheme.colorScheme.secondary,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600),
               ),
               const SizedBox(width: 10),
               trailing != null
-                ? Align(
-                  alignment: Alignment.centerRight,
-                  child: Iconify(
-                    trailing!,
-                    color: darkTheme.highlightColor,
-                    size: 15,
-                  ),
-                )
-                : Container()
+                  ? Align(
+                      alignment: Alignment.centerRight,
+                      child: Iconify(
+                        trailing!,
+                        color: darkTheme.highlightColor,
+                        size: 15,
+                      ),
+                    )
+                  : Container()
             ],
           ),
-          Text(
-            info,
-            style: darkTheme.textTheme.headline2
-          )
+          Text(info, style: darkTheme.textTheme.headline2)
         ],
       ),
     );

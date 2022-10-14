@@ -32,26 +32,16 @@ ThemeData darkTheme = ThemeData(
             fontSize: 22,
             fontWeight: FontWeight.w700,
             fontStyle: FontStyle.italic),
-          headline5: GoogleFonts.poppins(
+        headline5: GoogleFonts.poppins(
             color: const Color(0xff98c1d9),
             fontSize: 17,
-            fontWeight: FontWeight.w500
-          ),
-          headline6: GoogleFonts.poppins(
-            color: Colors.white,
-            fontSize: 16,
-            fontWeight: FontWeight.w600
-          ),
+            fontWeight: FontWeight.w500),
+        headline6: GoogleFonts.poppins(
+            color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600),
         button: GoogleFonts.poppins(
-            color: Colors.white,
-            fontSize: 18,
-            fontWeight: FontWeight.w400
-        ),
+            color: Colors.white, fontSize: 18, fontWeight: FontWeight.w400),
         bodyText1: GoogleFonts.poppins(
-          color: Colors.white,
-          fontSize: 16,
-          fontWeight: FontWeight.w400
-        ),
+            color: Colors.white, fontSize: 16, fontWeight: FontWeight.w400),
         bodyText2: GoogleFonts.poppins(
           color: Colors.white,
           fontSize: 18,
@@ -60,9 +50,6 @@ ThemeData darkTheme = ThemeData(
           height: 1.2,
         ),
         caption: GoogleFonts.poppins(
-          color: Colors.white,
-          fontSize: 16,
-          fontWeight: FontWeight.w600
-        ),
+            color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600),
         overline: GoogleFonts.damion(
             color: Colors.white, fontSize: 54, fontWeight: FontWeight.w400)));

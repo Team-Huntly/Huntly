@@ -18,9 +18,7 @@ class HuntPlay extends StatefulWidget {
 class _HuntPlayState extends State<HuntPlay> with TickerProviderStateMixin {
   late TabController _tabController;
 
-  final List<Widget> _tab = [
-    HuntTab(color: darkTheme.colorScheme.secondary)
-  ];
+  final List<Widget> _tab = [HuntTab(color: darkTheme.colorScheme.secondary)];
   final List<Widget> _tabMenu = [
     const CluePage(),
   ];
@@ -41,11 +39,12 @@ class _HuntPlayState extends State<HuntPlay> with TickerProviderStateMixin {
           Container(
             padding: const EdgeInsets.only(top: 10),
             child: TabBar(
-              // isScrollable: true, 
+              // isScrollable: true,
               tabs: _tab.map((e) => e).toList(),
               controller: _tabController,
               indicatorColor: Colors.transparent,
-              overlayColor: MaterialStateProperty.all<Color>(Colors.transparent),
+              overlayColor:
+                  MaterialStateProperty.all<Color>(Colors.transparent),
             ),
           ),
           Expanded(
@@ -56,7 +55,8 @@ class _HuntPlayState extends State<HuntPlay> with TickerProviderStateMixin {
           ),
           const SizedBox(height: 100)
         ],
-      ), outerContext: context,
+      ),
+      outerContext: context,
     );
   }
 }

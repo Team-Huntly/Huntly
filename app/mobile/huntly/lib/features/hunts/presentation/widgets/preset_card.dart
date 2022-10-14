@@ -8,7 +8,8 @@ class PresetCard extends StatefulWidget {
   final String presetName;
   final int numberOfHunts;
 
-  const PresetCard({Key? key, required this.presetName, required this.numberOfHunts})
+  const PresetCard(
+      {Key? key, required this.presetName, required this.numberOfHunts})
       : super(key: key);
 
   @override
@@ -20,7 +21,7 @@ class _PresetCardState extends State<PresetCard> {
   Widget build(BuildContext context) {
     const borderRadius = Radius.circular(10);
 
-  Random random = Random();
+    Random random = Random();
 
     return IntrinsicHeight(
       child: Container(
@@ -28,11 +29,11 @@ class _PresetCardState extends State<PresetCard> {
         child: Row(
           children: [
             ClipRRect(
-              borderRadius: const BorderRadius.only(topLeft: borderRadius, bottomLeft: borderRadius),
+              borderRadius: const BorderRadius.only(
+                  topLeft: borderRadius, bottomLeft: borderRadius),
               child: Container(
                 width: MediaQuery.of(context).size.width * 0.4,
-                decoration: const BoxDecoration(
-                ),
+                decoration: const BoxDecoration(),
                 child: Image.asset(
                   'assets/images/${random.nextInt(2)}.jpg',
                 ),

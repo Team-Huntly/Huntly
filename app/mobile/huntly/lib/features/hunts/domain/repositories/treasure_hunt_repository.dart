@@ -8,4 +8,8 @@ abstract class TreasureHuntRepository {
     required String latitude,
     required String longitude,
   });
+
+  Future<Either<Failure, List<TreasureHunt>>> fetchUserTreasureHunts({
+    required int userId,
+  });
 }

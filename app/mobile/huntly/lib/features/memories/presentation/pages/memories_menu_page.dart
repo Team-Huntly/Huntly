@@ -16,7 +16,6 @@ class MemoriesMenuPage extends StatelessWidget {
           const SizedBox(height: 30),
           MemoriesMenuItem(),
           MemoriesMenuItem(),
-
         ],
       ),
     );

@@ -74,7 +74,8 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                     fixedSize: MaterialStateProperty.all<Size>(
                         const Size.fromWidth(250)),
                     padding: MaterialStateProperty.all<EdgeInsets>(
-                        const EdgeInsets.symmetric(horizontal: 15, vertical: 10)),
+                        const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 10)),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -84,9 +85,8 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                       Text(
                         'Sign-In with Google',
                         style: darkTheme.textTheme.button!.copyWith(
-                          color: darkTheme.colorScheme.background,
-                          fontSize: 16
-                        ),
+                            color: darkTheme.colorScheme.background,
+                            fontSize: 16),
                       )
                     ],
                   ),

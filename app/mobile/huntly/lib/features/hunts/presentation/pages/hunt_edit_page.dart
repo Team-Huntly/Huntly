@@ -17,29 +17,24 @@ class HuntEditPage extends StatefulWidget {
 class _HuntEditPageState extends State<HuntEditPage> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Form(
-              child: Column(
-                children: [
-                  const SizedBox(height: 100),
-                  const FormTextField(hint: '', label: 'Name', type: TextInputType.text),
-                  const FormTextField(hint: '', label: 'Total seats', type: TextInputType.number),
-                  const FormTextField(hint: '', label: 'Team size', type: TextInputType.number),
-                  ActionButton(
-                    text: 'Save',
-                    color: darkTheme.indicatorColor,
-                    onTap: () {},
-                  ),
-                ]
-              )
-            )
-          ]
-        )
-      ]
-    );
+    return Column(children: [
+      Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+        Form(
+            child: Column(children: [
+          const SizedBox(height: 100),
+          const FormTextField(
+              hint: '', label: 'Name', type: TextInputType.text),
+          const FormTextField(
+              hint: '', label: 'Total seats', type: TextInputType.number),
+          const FormTextField(
+              hint: '', label: 'Team size', type: TextInputType.number),
+          ActionButton(
+            text: 'Save',
+            color: darkTheme.indicatorColor,
+            onTap: () {},
+          ),
+        ]))
+      ])
+    ]);
   }
 }

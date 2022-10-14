@@ -14,14 +14,13 @@ class _RewardsPageState extends State<RewardsPage> {
   @override
   Widget build(BuildContext context) {
     return HuntlyScaffold(
-      outerContext: context,
-      body: RewardsCard(
-        code: '325rsdv',
-        link: 'www.sdfsf.com',
-        description: 'UPTO 50% OFF + extra 10% OFF via CODE',
-        orgName: 'Spotify',
-        imageLocation: 'assets/images/spotify.png',
-      )
-    );
+        outerContext: context,
+        body: RewardsCard(
+          code: '325rsdv',
+          link: 'www.sdfsf.com',
+          description: 'UPTO 50% OFF + extra 10% OFF via CODE',
+          orgName: 'Spotify',
+          imageLocation: 'assets/images/spotify.png',
+        ));
   }
 }

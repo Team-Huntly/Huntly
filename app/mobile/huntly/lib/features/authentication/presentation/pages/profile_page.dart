@@ -52,17 +52,16 @@ class _ProfilePageState extends State<ProfilePage> {
             Container(
               margin: const EdgeInsets.only(top: 20),
               child: TextField(
-                maxLines: 5,
-                maxLength: 150,
-                style: darkTheme.textTheme.bodyText2,
-                decoration: inputDecoration('What would you like others to know about you?')
-              ),
+                  maxLines: 5,
+                  maxLength: 150,
+                  style: darkTheme.textTheme.bodyText2,
+                  decoration: inputDecoration(
+                      'What would you like others to know about you?')),
             ),
             Padding(
               padding: EdgeInsets.only(
                   bottom: MediaQuery.of(context).viewInsets.bottom),
             ),
-
             BoxRenderer(
               interests: creativity,
               selectedWords: selectedWords,
@@ -135,7 +134,8 @@ class _ProfilePageState extends State<ProfilePage> {
             )
           ],
         ),
-      ), outerContext: context,
+      ),
+      outerContext: context,
     );
   }
 }

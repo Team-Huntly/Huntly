@@ -65,9 +65,14 @@ class _PresetsPage extends State<PresetsPage> {
                 ),
               ),
             ),
-            SizedBox(height: 40,),
+            SizedBox(
+              height: 40,
+            ),
             const PresetCard(presetName: "Running", numberOfHunts: 8),
-            const PresetCard(presetName: "Dancing", numberOfHunts: 7,),
+            const PresetCard(
+              presetName: "Dancing",
+              numberOfHunts: 7,
+            ),
             const PresetCard(presetName: "Yoga", numberOfHunts: 5),
           ],
         ),

@@ -113,7 +113,7 @@ class AuthenticationBloc
                 "Accept": "application/json",
                 "Content-Type": "application/json",
                 "Authorization":
-                    "Token c15e946b7d23c31848a64fd9942f29103a863f57"
+                    "Token 6b4a27a545d3a191eaca78e85bcef6703f65aff3"
               },
             ),
             data: jsonEncode(params),

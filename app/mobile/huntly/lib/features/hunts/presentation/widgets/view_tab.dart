@@ -16,7 +16,6 @@ class ViewTab extends StatelessWidget {
         color: Colors.white,
         size: 30,
       ),
-      
     );
   }
 }

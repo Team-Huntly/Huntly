@@ -4,7 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 
 class HuntTab extends StatelessWidget {
   final Color color;
-  
+
   const HuntTab({Key? key, required this.color}) : super(key: key);
 
   @override
@@ -13,9 +13,8 @@ class HuntTab extends StatelessWidget {
       width: 20,
       height: 20,
       decoration: BoxDecoration(
-        color: color,
-        borderRadius: const BorderRadius.all(Radius.circular(100))
-      ),
+          color: color,
+          borderRadius: const BorderRadius.all(Radius.circular(100))),
     );
   }
 }

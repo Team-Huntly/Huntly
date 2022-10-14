@@ -44,18 +44,17 @@ class _HuntDetailPageState extends State<HuntDetailPage> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Container(
-                  child: Text(
-                    'Manipal Inst. of Technology Hunt!',
-                    style: darkTheme.textTheme.headline2!.copyWith(
-                      height: 1.2
-                    )
-                  ),
+                  child: Text('Manipal Inst. of Technology Hunt!',
+                      style:
+                          darkTheme.textTheme.headline2!.copyWith(height: 1.2)),
                 ),
               ),
             )
           ],
         ),
-        const SizedBox(height: 25,),
+        const SizedBox(
+          height: 25,
+        ),
         Wrap(
           alignment: WrapAlignment.center,
           runSpacing: 10,
@@ -79,28 +78,39 @@ class _HuntDetailPageState extends State<HuntDetailPage> {
             ),
           ],
         ),
-        const SizedBox(height: 25,),
+        const SizedBox(
+          height: 25,
+        ),
         ActionButton(
           text: 'Register',
           onTap: () {},
           color: darkTheme.indicatorColor,
         ),
-        const SizedBox(height: 10,),
+        const SizedBox(
+          height: 10,
+        ),
         ActionButton(
           text: 'Unregister',
           onTap: () {},
           color: darkTheme.colorScheme.secondary,
         ),
-        const SizedBox(height: 10,),
+        const SizedBox(
+          height: 10,
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ActionButton(onTap: () {}, text: 'Lock teams'),
             const SizedBox(width: 10),
-            ActionButton(onTap: () {}, leading: Ic.twotone_edit,)
+            ActionButton(
+              onTap: () {},
+              leading: Ic.twotone_edit,
+            )
           ],
         ),
-        const SizedBox(height: 10,),
+        const SizedBox(
+          height: 10,
+        ),
         ActionButton(
           text: 'Teams locked',
           onTap: () {},

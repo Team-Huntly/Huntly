@@ -18,32 +18,46 @@ class CluePage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         const SizedBox(height: 70),
-        Text(
-          'Clue #1/6',
-          style: darkTheme.textTheme.caption
-        ),
+        Text('Clue #1/6', style: darkTheme.textTheme.caption),
         const SizedBox(height: 50),
         Text(
-          'A man who was outside in the rain without an umbrella or hat didn’t get a single hair on his head wet. Why?',
-          style: darkTheme.textTheme.bodyText2
-        ),
+            'A man who was outside in the rain without an umbrella or hat didn’t get a single hair on his head wet. Why?',
+            style: darkTheme.textTheme.bodyText2),
         const SizedBox(height: 15),
-        ActionButton(leading: Mdi.map_marker_multiple, text: 'Verify', onTap: () {},),
-        ActionButton(leading: Ri.qr_scan_2_line, text: 'Verify', onTap: () {},),
-        ActionButton(leading: Ooui.next_ltr, alignment: Alignment.bottomRight, onTap: () {},),
-        Text(
-          'A man who was outside in the rain without an umbrella or hat didn’t get a single hair on his head wet. Why?',
-          style: darkTheme.textTheme.bodyText2!.copyWith(
-            fontSize: 12,
-            color: darkTheme.disabledColor
-          )
+        ActionButton(
+          leading: Mdi.map_marker_multiple,
+          text: 'Verify',
+          onTap: () {},
         ),
+        ActionButton(
+          leading: Ri.qr_scan_2_line,
+          text: 'Verify',
+          onTap: () {},
+        ),
+        ActionButton(
+          leading: Ooui.next_ltr,
+          alignment: Alignment.bottomRight,
+          onTap: () {},
+        ),
+        Text(
+            'A man who was outside in the rain without an umbrella or hat didn’t get a single hair on his head wet. Why?',
+            style: darkTheme.textTheme.bodyText2!
+                .copyWith(fontSize: 12, color: darkTheme.disabledColor)),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ActionButton(text: 'Success', leading: Noto.party_popper, onTap: () {}, colorIcon: false, color: darkTheme.colorScheme.secondary,),
+            ActionButton(
+              text: 'Success',
+              leading: Noto.party_popper,
+              onTap: () {},
+              colorIcon: false,
+              color: darkTheme.colorScheme.secondary,
+            ),
             const SizedBox(width: 10),
-            ActionButton(leading: Mdi.camera_wireless_outline, onTap: () {}, color: darkTheme.colorScheme.primary)
+            ActionButton(
+                leading: Mdi.camera_wireless_outline,
+                onTap: () {},
+                color: darkTheme.colorScheme.primary)
           ],
         )
         // Container(

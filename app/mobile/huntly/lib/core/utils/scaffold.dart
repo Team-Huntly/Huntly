@@ -90,22 +90,26 @@ class HuntlyScaffold extends StatelessWidget {
               DrawerListItem(
                   icon: Carbon.recently_viewed, onTap: () {}, title: 'Recent'),
               DrawerListItem(
-                  icon: Ic.outline_diamond, onTap: () {
+                  icon: Ic.outline_diamond,
+                  onTap: () {
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => const MyHuntsPage()));
-                  }, title: 'My Hunts'),
+                        builder: (context) => const MyHuntsPage()));
+                  },
+                  title: 'My Hunts'),
               DrawerListItem(
                   icon: Ph.currency_circle_dollar,
                   onTap: () {
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => const RewardsPage()));
+                        builder: (context) => const RewardsPage()));
                   },
                   title: 'Rewards'),
               DrawerListItem(
-                  icon: Bx.photo_album, onTap: () {
+                  icon: Bx.photo_album,
+                  onTap: () {
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => const MemoriesMenuPage()));
-                  }, title: 'Memories'),
+                        builder: (context) => const MemoriesMenuPage()));
+                  },
+                  title: 'Memories'),
               DrawerListItem(
                   icon: Ic.round_mail_outline, onTap: () {}, title: 'Invites'),
               Expanded(

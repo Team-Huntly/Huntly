@@ -6,7 +6,6 @@ import 'package:iconify_flutter/icons/mdi.dart';
 import 'package:iconify_flutter/icons/ic.dart';
 import 'package:iconify_flutter/icons/ph.dart';
 
-
 class ClueCreatePage extends StatelessWidget {
   const ClueCreatePage({Key? key}) : super(key: key);
 
