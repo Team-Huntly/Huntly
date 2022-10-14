@@ -41,15 +41,19 @@ A cross-platform mobile application that brings people closer to the physical en
 
 - Flutter
 - Django Rest Framework
+- Flask
 
 <li>Packages</li>
 
  - Geolocator
  - QR Code Scanner
+ - Swagger
 
 <li>Libraries/Tools</li>
 
 - Google OAuth
+- nltk
+- sklearn
 - Figma
 - Git/GitHub
 
@@ -83,7 +87,7 @@ A cross-platform mobile application that brings people closer to the physical en
     - Rewards
     - Memory Threads
 
-## Directory Structure
+## Directory Structure 🗃️
 
 ```
 Team-Name-404/
