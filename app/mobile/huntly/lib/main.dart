@@ -4,20 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:huntly/features/hunts/presentation/bloc/treasurehunt_bloc.dart';
-import 'package:huntly/features/hunts/presentation/pages/hunt_create.dart';
-import 'package:huntly/features/hunts/presentation/pages/hunt_edit_page.dart';
 import 'package:huntly/features/hunts/presentation/pages/home_page.dart';
-import 'package:huntly/features/hunts/presentation/pages/presets_page.dart';
 
 import 'features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'features/authentication/presentation/pages/authentication_page.dart';
 import 'features/authentication/presentation/pages/profile_page.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'features/hunts/presentation/pages/clue_page.dart';
-import 'features/hunts/presentation/pages/hunt_play.dart';
-import 'features/hunts/presentation/pages/hunt_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -54,28 +47,9 @@ class Huntly extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: MyHomePage(),
+        home: WrapperPage(),
       ),
     );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return WrapperPage();
   }
 }
 
@@ -87,13 +61,11 @@ class WrapperPage extends StatefulWidget {
 }
 
 class _WrapperPageState extends State<WrapperPage> {
-  GoogleSignInAccount? _currentUser;
-
+  // ignore: constant_identifier_names
   static const String OAUTH_CLIENT_ID =
       '363088523272-orkcfiqub7hshaq29pisji796or7ohpq.apps.googleusercontent.com';
+
   final GoogleSignIn _googleSignIn = GoogleSignIn(
-    // Optional clientId
-    // serverClientId: '500990447063-tclvi1rdaaugi424hsnkt5kmdj0vfhhg.apps.googleusercontent.com',
     serverClientId: OAUTH_CLIENT_ID,
     scopes: <String>[
       'email',
@@ -103,13 +75,6 @@ class _WrapperPageState extends State<WrapperPage> {
 
   @override
   Widget build(BuildContext context) {
-    _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) {
-      print('account: $account');
-      setState(() {
-        _currentUser = account;
-      });
-    });
-    // return ProfilePage();
     return FutureBuilder(
         future: _googleSignIn.isSignedIn(),
         builder: (context, snapshot) {
@@ -117,23 +82,21 @@ class _WrapperPageState extends State<WrapperPage> {
             return const Text('Error');
           } else if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.data == false) {
-              return AuthenticationPage();
+              return const AuthenticationPage();
             } else {
               return FutureBuilder(
                   future: SharedPreferences.getInstance(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
-                      print((snapshot.data as SharedPreferences)
-                          .getInt("profile"));
                       if ((snapshot.data as SharedPreferences)
                               .getInt("profile") ==
                           0) {
-                        return ProfilePage();
+                        return const ProfilePage();
                       } else {
-                        return HomePage();
+                        return const HomePage();
                       }
                     }
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   });
             }
           } else {

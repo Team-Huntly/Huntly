@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:huntly/common/constants.dart';
 import 'package:huntly/features/hunts/domain/entities/treasure_hunt.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/error/exceptions.dart';
 import '../models/treasure_hunt_model.dart';
@@ -49,15 +50,18 @@ class TreasureHuntRemoteDataSourceImpl implements TreasureHuntRemoteDataSource {
       {required String latitude, required String longitude}) async {
     try {
       print("1234");
-      Position _currentPosition = await determinePosition();
+      // !! Todo : Add current position
+      // Position _currentPosition = await determinePosition();
       Dio dio = Dio();
+      final _prefs = await SharedPreferences.getInstance();
+      print(_prefs.getString("token"));
       var response = await dio.get(
         "${url}treasure-hunts/?latitude=1&longitude=1",
         options: Options(
           headers: {
             "Accept": "application/json",
             "Content-Type": "application/json",
-            "Authorization": "Token c15e946b7d23c31848a64fd9942f29103a863f57"
+            "Authorization": "Token ${_prefs.getString("token")}",
           },
         ),
       );
