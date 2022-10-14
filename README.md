@@ -121,5 +121,6 @@ Team-Name-404/
 
 ## Network Diagram
 
-![Huntly Network Diagram without Redis with grid](https://user-images.githubusercontent.com/76661350/195946928-111cc54f-637b-465c-ac9a-4983b10548a3.png)
+
+![Huntly Network Diagram without Redis](https://user-images.githubusercontent.com/76661350/195947815-5499aecf-b457-40be-b8c5-8fd9be131f88.png)
 
