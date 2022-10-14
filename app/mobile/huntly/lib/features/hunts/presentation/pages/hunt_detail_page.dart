@@ -80,7 +80,7 @@ class _HuntDetailPageState extends State<HuntDetailPage> {
             HuntInfoCard(
               icon: Mdi.map_marker_outline,
               title: 'Location',
-              info: 'kEF, MIT',
+              info: widget.treasureHunt.location_name,
               trailing: Majesticons.external_link_line,
             ),
             HuntInfoCard(

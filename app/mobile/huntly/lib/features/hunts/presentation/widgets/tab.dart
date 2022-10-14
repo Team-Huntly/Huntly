@@ -13,7 +13,7 @@ class HuntTab extends StatelessWidget {
       width: 20,
       height: 20,
       decoration: BoxDecoration(
-          color: color.withAlpha(200),
+          color: color.withAlpha(100),
           borderRadius: const BorderRadius.all(Radius.circular(100))),
     );
   }

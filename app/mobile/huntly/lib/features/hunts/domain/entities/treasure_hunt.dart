@@ -10,6 +10,7 @@ class TreasureHunt extends Equatable {
   int team_size;
   dynamic theme;
   bool is_locked;
+  String location_name;
 
   TreasureHunt({
     required this.name,
@@ -21,6 +22,7 @@ class TreasureHunt extends Equatable {
     required this.team_size,
     required this.theme,
     required this.is_locked,
+    required this.location_name
   });
 
   @override

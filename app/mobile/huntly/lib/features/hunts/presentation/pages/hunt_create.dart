@@ -34,25 +34,22 @@ class _HuntCreateState extends State<HuntCreate> with TickerProviderStateMixin {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // const SizedBox(height: 10),
-          Container(
-            // padding: const EdgeInsets.only(top: 10),
-            child: TabBar(
-              indicatorSize: TabBarIndicatorSize.label,
-              indicatorPadding: const EdgeInsets.symmetric(vertical: 1),
-              // isScrollable: true,
-              tabs: _tab.map((e) => e).toList(),
-              controller: _tabController,
-              indicatorColor: Colors.transparent,
-              overlayColor:
-                  MaterialStateProperty.all<Color>(Colors.transparent),
-                indicator: BoxDecoration(
-                  color: darkTheme.highlightColor,
-                  border: Border.all(color: darkTheme.highlightColor),
-                  borderRadius: const BorderRadius.all(Radius.circular(100)),
-                  // shape: BoxShape.circle
-                ),
-            ),
+          const SizedBox(height: 14),
+          TabBar(
+            indicatorWeight: 0,
+            indicatorSize: TabBarIndicatorSize.label,
+            // indicatorPadding: const EdgeInsets.symmetric(vertical: 1),
+            // isScrollable: true,
+            tabs: _tab.map((e) => e).toList(),
+            controller: _tabController,
+            indicatorColor: Colors.transparent,
+            overlayColor:
+                MaterialStateProperty.all<Color>(Colors.transparent),
+              indicator: BoxDecoration(
+                color: darkTheme.highlightColor,
+                border: Border.all(color: darkTheme.highlightColor),
+                borderRadius: const BorderRadius.all(Radius.circular(100)),
+              ),
           ),
           Expanded(
             child: TabBarView(
@@ -74,7 +71,7 @@ class _HuntCreateState extends State<HuntCreate> with TickerProviderStateMixin {
                       children: [
                         const SizedBox(height: 20),
                         Text(
-                          "Clue #${_tabController.index + 1}/${_tab.length - 1}",
+                          "Clue #${_tabController.index + 1}",
                           style: darkTheme.textTheme.caption
                         ),
                         const ClueCreatePage()
