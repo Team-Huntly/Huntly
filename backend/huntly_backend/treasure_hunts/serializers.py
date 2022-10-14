@@ -14,11 +14,14 @@ User = get_user_model()
 DIST_BUFFER = 0.1
 ML_API = 'http://localhost:5000/predict'
 
+
+# Serializer for Treasure Hunt Model
 class TeamSerializer(serializers.ModelSerializer):
     class Meta:
         model = Team
         fields = '__all__'
 
+    # Function to change the way the object is displayed
     def to_representation(self, instance):
         team_members = UserViewSerializer(instance.team_members, many=True).data
         return {
@@ -30,11 +33,13 @@ class TeamSerializer(serializers.ModelSerializer):
         }
 
 
+# Serializer for Clue Model
 class ClueSerializer(serializers.ModelSerializer):
     class Meta:
         model = Clue
         exclude = ('created_at', 'treasure_hunt')
 
+    # Function to change the way the object is displayed
     def to_representation(self, instance):
         return {
             'id': instance.id,
@@ -47,6 +52,7 @@ class ClueSerializer(serializers.ModelSerializer):
             'is_qr_based': instance.is_qr_based,
         }
 
+    # Function to create a new clue
     def create(self, validated_data):
         treasure_hunt_id = self.context.get('treasure_hunt')
         if treasure_hunt_id:
@@ -55,6 +61,7 @@ class ClueSerializer(serializers.ModelSerializer):
         else :
             raise serializers.ValidationError('Treasure hunt id is required')
 
+    # Function to update a clue
     def update(self, instance, validated_data):
         instance.description = validated_data.get('description', instance.description)
         instance.answer_description = validated_data.get('answer_description', instance.answer_description)
@@ -65,18 +72,21 @@ class ClueSerializer(serializers.ModelSerializer):
         return instance
 
 
+# Serializer for Theme Model
 class ThemeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Theme
         fields = '__all__'
 
 
+# Serializer for Treasure Hunt Model
 class TreasureHuntSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TreasureHunt
         fields = ('name', 'started_at', 'ended_at', 'location_latitude', 'location_longitude', 'total_seats', 'team_size', 'theme', 'is_locked')
 
+    # Function to change the way the object is displayed
     def to_representation(self, instance):
         clues = Clue.objects.filter(treasure_hunt=instance)
         clues = ClueSerializer(clues, many=True).data
@@ -100,10 +110,12 @@ class TreasureHuntSerializer(serializers.ModelSerializer):
             'is_locked': instance.is_locked
         }
 
+    # Function to create a new treasure hunt
     def create(self, validated_data):
         validated_data['created_by'] = self.context.get('request').user
         return TreasureHunt.objects.create(**validated_data)
 
+    # Function to update a treasure hunt
     def update(self, instance, validated_data):
         instance.name = validated_data.get('name', instance.name)
         instance.started_at = validated_data.get('started_at', instance.started_at)
@@ -145,17 +157,20 @@ class TreasureHuntSerializer(serializers.ModelSerializer):
             instance.save()
             return instance
 
+    # Function to fetch rewards for a treasure hunt
     def get_rewards(self, instance):
         coupons =  Coupon.objects.filter(treasure_hunt=instance)
         coupons = CouponSerializer(coupons, many=True).data
         return coupons  
     
 
+# Serializer for Treasure Hunt Participants
 class TreasureHuntParticipantsSerializer(serializers.ModelSerializer):
     class Meta:
         model = TreasureHunt
         fields = ()
 
+    # Function to add a participant to a treasure hunt
     def register_participant(self, instance):
         user = self.context.get('request').user
         if user is not None:
@@ -169,6 +184,7 @@ class TreasureHuntParticipantsSerializer(serializers.ModelSerializer):
             return treasure_hunt
         raise serializers.ValidationError('User not found')
 
+    # Function to remove a participant from a treasure hunt
     def unregister_participant(self, instance):
         user = self.context.get('request').user
         if user is not None:
@@ -183,6 +199,7 @@ class TreasureHuntParticipantsSerializer(serializers.ModelSerializer):
         raise serializers.ValidationError('User not found')
 
 
+# Serializer for Team Progress Model
 class TeamProgressSerializer(serializers.ModelSerializer):
     latitude = serializers.FloatField()
     longitude = serializers.FloatField()
@@ -191,6 +208,7 @@ class TeamProgressSerializer(serializers.ModelSerializer):
         model = TeamProgress
         exclude = ('solved_at', 'team',)
 
+    # Function to change the way the object is displayed
     def to_representation(self, instance):
         return {
             'id': instance.id,
@@ -198,6 +216,8 @@ class TeamProgressSerializer(serializers.ModelSerializer):
             'clue': ClueSerializer(instance.clue).data,
             'solved_at': instance.solved_at
         }
+
+    # Function to validate the data recieved in the request
     def validate(self, data):
         latitude = data.get('latitude')
         longitude = data.get('longitude')
@@ -209,6 +229,7 @@ class TeamProgressSerializer(serializers.ModelSerializer):
         super().validate(data)
         return data
         
+    # Function to create a new team progress
     def create(self, validated_data):
         team_id = self.context.get('team_id')
         team = Team.objects.get(id=team_id)
@@ -216,6 +237,7 @@ class TeamProgressSerializer(serializers.ModelSerializer):
         validated_data.pop('longitude')
         return TeamProgress.objects.create(**validated_data, team=team)
 
+    # Function to update a team progress
     def update(self, instance, validated_data):
         instance.is_completed = validated_data.get('is_completed', instance.is_completed)
         instance.completed_at = validated_data.get('completed_at', instance.completed_at)
@@ -223,20 +245,27 @@ class TeamProgressSerializer(serializers.ModelSerializer):
         return instance
 
 
+# Serializer for Leaderboard
 class LeaderboardSerializer(serializers.ModelSerializer):
     class Meta:
         model = TreasureHunt
         fields = ()
 
+    # Function to fetch the leaderboard for a treasure hunt
     def get_leaderboard(self, instance):
         teams = Team.objects.filter(treasure_hunt=instance)
         teams = TeamSerializer(teams, many=True).data
+        leaderboard_teams = []
+        other_teams = []
         for team in teams:
             progress = TeamProgress.objects.filter(team=team['id'], clue__treasure_hunt = instance).order_by('-solved_at')
             team['no_of_clues'] = progress.count()
             if team['no_of_clues'] == 0:
                 team['last_solved_at'] = None
+                other_teams.append(team)
             else:
-                team['last_clue_solved_at'] = progress.first().solved_at
-        teams = sorted(teams, key=lambda k: (k['no_of_clues'], -k['last_clue_solved_at']), reverse=True)
+                team['last_solved_at'] = progress.first().solved_at
+                leaderboard_teams.append(team)
+        leaderboard_teams = sorted(leaderboard_teams, key=lambda k: (k['no_of_clues'], -k['last_solved_at'].timestamp()), reverse=True)
+        leaderboard_teams.extend(other_teams)
         return teams

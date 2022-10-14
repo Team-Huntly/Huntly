@@ -3,22 +3,20 @@ from .models import Coupon, Brand, CouponDescription
 from users.serializers import UserViewSerializer
 
 
+# Serializer for Brand Model
 class BrandSerializer(serializers.ModelSerializer):
     class Meta:
         model = Brand
         fields = '__all__'
-    
-    def to_representation(self, instance):
-        return super().to_representation(instance)
-    
-    def create(self, validated_data):
-        return super().create(validated_data)
 
+
+# Serializer for Coupon Description Model
 class CouponDescriptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = CouponDescription
         fields = '__all__'
 
+    # Function to change the way the object is displayed
     def to_representation(self, instance):
         codes = Coupon.objects.filter(description=instance)
         return {
@@ -30,11 +28,13 @@ class CouponDescriptionSerializer(serializers.ModelSerializer):
         }
 
 
+# Serializer for Coupon Model
 class CouponSerializer(serializers.ModelSerializer):
     class Meta:
         model = Coupon
         fields = '__all__'
     
+    # Function to change the way the object is displayed
     def to_representation(self, instance):
         return {
             'id': instance.id,

@@ -12,6 +12,7 @@ from rewards.serializers import CouponSerializer
 from treasure_hunts.models import TreasureHunt
 from rewards.models import Coupon
 
+
 #Google Auth Registration for Huntly app
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -38,8 +39,13 @@ def register_by_access_token(request, backend):
         )
 
 
-#Normal User Registration & Login for Huntly app
 class RegisterUserAPIView(generics.CreateAPIView):
+    """
+    Register a new user using email and password
+    """
+    queryset = get_user_model().objects.all()
+    serializer_class = UserRegistrationSerializer
+    permission_classes = [AllowAny]
     queryset = get_user_model().objects.all()
     serializer_class = UserRegistrationSerializer
     permission_classes = (AllowAny,)
@@ -52,8 +58,10 @@ class RegisterUserAPIView(generics.CreateAPIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
-# User Login API
 class LoginUserAPIView(generics.GenericAPIView):
+    """
+    Login a user using email and password
+    """
     queryset = get_user_model().objects.all()
     serializer_class = UserLoginSerializer
     permission_classes = (AllowAny,)
@@ -81,8 +89,16 @@ class LoginUserAPIView(generics.GenericAPIView):
             )
 
 
-#Update User Profile
 class UpdateUserAPIView(generics.UpdateAPIView):
+    """
+    Update logged in user's details
+    """
+    queryset = get_user_model().objects.all()
+    serializer_class = UpdateUserSerializer
+    permission_classes = (AllowAny,)
+
+    def get_object(self):
+        return self.request.user
     queryset = get_user_model().objects.all()
     serializer_class = UpdateUserSerializer
 
@@ -99,8 +115,10 @@ class UpdateUserAPIView(generics.UpdateAPIView):
         return Response(serializer.data)
 
 
-# Fetch User Profile
 class FetchProfileAPIView(generics.RetrieveAPIView):
+    """
+    Fetch logged in user's details
+    """
     queryset = get_user_model().objects.all()
     serializer_class = UserViewSerializer
 
@@ -110,15 +128,16 @@ class FetchProfileAPIView(generics.RetrieveAPIView):
         return self.request.user
 
 
-# Change Password
 class ChangePasswordAPIView(generics.GenericAPIView):
+    """
+    Change logged in user's password
+    """
     queryset = get_user_model().objects.all()
     serializer_class = ChangePasswordSerializer
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        # use save method from serializer
         serializer.save()
         return Response(
             {
@@ -127,7 +146,11 @@ class ChangePasswordAPIView(generics.GenericAPIView):
             status=status.HTTP_200_OK
         )
 
+
 class FetchUserHuntsAPIView(generics.ListAPIView):
+    """
+    Fetch logged in user's hunts
+    """
     serializer_class = TreasureHuntSerializer
 
     def get_queryset(self):
@@ -136,6 +159,9 @@ class FetchUserHuntsAPIView(generics.ListAPIView):
 
 
 class FetchUserRewardsAPIView(generics.ListAPIView):
+    """
+    Fetch logged in user's rewards
+    """
     serializer_class = CouponSerializer
 
     def get_queryset(self):
