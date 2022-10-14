@@ -65,6 +65,7 @@ class HuntlyScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: darkTheme.colorScheme.background,
         appBar: AppBar(
           foregroundColor: darkTheme.colorScheme.onBackground,
@@ -126,21 +127,21 @@ class HuntlyScaffold extends StatelessWidget {
               DrawerListItem(
                   icon: Ic.outline_diamond,
                   onTap: () {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const MyHuntsPage()));
                   },
                   title: 'My Hunts'),
               DrawerListItem(
                   icon: Ph.currency_circle_dollar,
                   onTap: () {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const RewardsPage()));
                   },
                   title: 'Rewards'),
               DrawerListItem(
                   icon: Bx.photo_album,
                   onTap: () {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const MemoriesMenuPage()));
                   },
                   title: 'Memories'),

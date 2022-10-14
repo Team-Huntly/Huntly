@@ -27,6 +27,8 @@ class GetTeamMates extends TreasureHuntEvent {
   const GetTeamMates(this.treasureHuntId);
 }
 
+class GetUserHunts extends TreasureHuntEvent {}
+
 class GetLeaderboard extends TreasureHuntEvent {
   final int treasureHuntId;
 

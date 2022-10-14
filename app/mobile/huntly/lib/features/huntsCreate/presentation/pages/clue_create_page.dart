@@ -1,27 +1,62 @@
 import 'package:flutter/material.dart';
 import 'package:huntly/core/theme/theme.dart';
 import 'package:huntly/core/utils/action_button.dart';
+import 'package:huntly/features/huntsCreate/presentation/pages/place_picker.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/mdi.dart';
 import 'package:iconify_flutter/icons/ic.dart';
 import 'package:iconify_flutter/icons/ph.dart';
+import 'package:place_picker/entities/location_result.dart';
 
 import '../../../../core/utils/text_field.dart';
+import '../../data/models/clue_model.dart';
 
-class ClueCreatePage extends StatelessWidget {
-  const ClueCreatePage({Key? key}) : super(key: key);
+class ClueCreatePage extends StatefulWidget {
+  // Function to call when the user presses the button
+  final Function onDelete;
+  int index;
+  final ValueNotifier<List<ClueModel>> clubs;
+  ClueCreatePage(
+      {Key? key,
+      required this.onDelete,
+      required this.index,
+      required this.clubs})
+      : super(key: key);
 
+  @override
+  State<ClueCreatePage> createState() => _ClueCreatePageState();
+}
+
+class _ClueCreatePageState extends State<ClueCreatePage>
+    with AutomaticKeepAliveClientMixin<ClueCreatePage> {
+  LocationResult? _locationResult;
+  TextEditingController _hintController = TextEditingController();
+  TextEditingController _answerController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         const SizedBox(height: 20),
-        TextField(
-            maxLines: 5,
-            maxLength: 250,
-            style: darkTheme.textTheme.bodyText2,
-            decoration: inputDecoration('Clue hint...')),
+        Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              TextField(
+                  controller: _hintController,
+                  maxLines: 5,
+                  style: darkTheme.textTheme.bodyText2,
+                  decoration: inputDecoration('Clue hint...')),
+              SizedBox(height: 20),
+              TextField(
+                  controller: _answerController,
+                  maxLines: 3,
+                  style: darkTheme.textTheme.bodyText2,
+                  decoration: inputDecoration('Answer...')),
+            ],
+          ),
+        ),
         const SizedBox(height: 15),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
@@ -39,40 +74,79 @@ class ClueCreatePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'D516 NITK',
+                    _locationResult?.name ?? "No location selected",
                     style: darkTheme.textTheme.bodyText1,
                   ),
                   const SizedBox(height: 10),
                   GestureDetector(
+                      onTap: () async {
+                        LocationResult? result = await Navigator.of(context)
+                            .push(MaterialPageRoute(
+                                builder: (context) => PlacePickerNew(
+                                    "AIzaSyDQEaVpcxfkOXMDDqdHfk0kgMUxJF5zXU0")));
+                        if (result != null) {
+                          setState(() {
+                            _locationResult = result;
+                          });
+                        }
+                      },
                       child: Text(
-                    'Edit',
-                    textAlign: TextAlign.left,
-                    style: darkTheme.textTheme.bodyText1!.copyWith(
-                        color: darkTheme.highlightColor,
-                        fontWeight: FontWeight.w700),
-                  )),
+                        'Edit',
+                        textAlign: TextAlign.left,
+                        style: darkTheme.textTheme.bodyText1!.copyWith(
+                            color: darkTheme.highlightColor,
+                            fontWeight: FontWeight.w700),
+                      )),
                 ],
               ),
             ),
           ]),
         ),
-        ActionButton(
-          text: 'Add QR',
-          onTap: () {},
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Image.asset(
-              'assets/images/qr.png',
-              width: 80,
-              height: 80,
-            ),
-            ActionButton(leading: Ph.download_simple_fill, onTap: () {}),
-            ActionButton(leading: Ic.baseline_delete_outline, onTap: () {}),
-          ],
+        Padding(
+          padding: const EdgeInsets.only(top: 18.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              ActionButton(
+                  text: "Save",
+                  leading: Ph.download_simple_fill,
+                  onTap: () {
+                    if (_formKey.currentState!.validate() &&
+                        _locationResult != null) {
+                      ClueModel club = ClueModel(
+                          stepNo: widget.index + 1,
+                          description: _hintController.text,
+                          answerDescription: _answerController.text,
+                          answerLatitude:
+                              _locationResult!.latLng!.latitude.toString(),
+                          answerLongitude:
+                              _locationResult!.latLng!.longitude.toString(),
+                          isQrBased: false);
+
+                      widget.clubs.value.add(club);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text('Please fill all the fields')));
+                    }
+                  }),
+              widget.index != 0
+                  ? ActionButton(
+                      text: "Delete",
+                      leading: Ic.baseline_delete_outline,
+                      onTap: () {
+                        setState(() {
+                          widget.onDelete(widget.index);
+                        });
+                      })
+                  : Container(),
+            ],
+          ),
         ),
       ],
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }

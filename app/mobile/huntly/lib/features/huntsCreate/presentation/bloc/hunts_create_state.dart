@@ -11,7 +11,13 @@ class HuntsCreateInitial extends HuntsCreateState {}
 
 class HuntCreated extends HuntsCreateState {
   final String message;
-  HuntCreated({required this.message});
+  final int id;
+  final String name;
+  HuntCreated({required this.message, required this.id, required this.name});
   @override
   List<Object> get props => [message];
 }
+
+class Loading extends HuntsCreateState {}
+
+class AddedClues extends HuntsCreateState {}

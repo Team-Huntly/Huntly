@@ -12,6 +12,7 @@ import 'features/authentication/presentation/pages/profile_page.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'features/huntsCreate/presentation/bloc/hunts_create_bloc.dart';
 import 'features/memories/presentation/bloc/memories_bloc.dart';
 
 void main() async {
@@ -54,19 +55,17 @@ class Huntly extends StatelessWidget {
         BlocProvider<TreasureHuntBloc>(
           create: (context) => TreasureHuntBloc(),
         ),
-        BlocProvider<RewardsBloc>(
-          create: (context) => RewardsBloc()
+        BlocProvider<HuntsCreateBloc>(
+          create: (context) => HuntsCreateBloc(),
         ),
-        BlocProvider<MemoriesBloc>(
-          create: (context) => MemoriesBloc()
-        )
+        BlocProvider<RewardsBloc>(create: (context) => RewardsBloc()),
+        BlocProvider<MemoriesBloc>(create: (context) => MemoriesBloc())
       ],
       child: MaterialApp(
         scrollBehavior: MyCustomScrollBehavior(),
         title: 'Huntly',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
+        // darkTheme
+        theme: ThemeData.dark(),
         home: const WrapperPage(),
       ),
     );
@@ -108,7 +107,8 @@ class _WrapperPageState extends State<WrapperPage> {
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
                       if ((snapshot.data as SharedPreferences)
-                            .getInt("profile") == 0) {
+                              .getInt("profile") ==
+                          0) {
                         return const ProfilePage();
                       } else {
                         return const HomePage();
