@@ -5,6 +5,7 @@ import 'package:huntly/features/authentication/domain/entities/user.dart';
 import '../../data/models/theme_model.dart';
 
 class TreasureHunt extends Equatable {
+  int id;
   String name;
   DateTime started_at;
   String ended_at;
@@ -18,6 +19,7 @@ class TreasureHunt extends Equatable {
   List<UserModel> participants;
 
   TreasureHunt({
+    required this.id,
     required this.name,
     required this.started_at,
     required this.ended_at,
@@ -33,6 +35,7 @@ class TreasureHunt extends Equatable {
 
   @override
   List<Object> get props => [
+        id,
         name,
         started_at,
         ended_at,

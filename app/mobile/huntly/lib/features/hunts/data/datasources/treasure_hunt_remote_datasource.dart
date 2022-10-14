@@ -107,12 +107,12 @@ class TreasureHuntRemoteDataSourceImpl implements TreasureHuntRemoteDataSource {
           "${url}treasure-hunts/$treasureHuntId/my-team/",
           options: await getHeaders());
       if (response.statusCode == 200) {
-        return response.data;
+        return TeamModel.fromJson(response.data);
       } else {
         throw ServerException();
       }
     } catch (e) {
-      debugPrint("error: $e");
+      debugPrint("Datasource error: $e");
       throw NetworkException();
     }
   }

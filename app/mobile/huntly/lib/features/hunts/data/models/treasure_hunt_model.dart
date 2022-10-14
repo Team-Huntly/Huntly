@@ -5,6 +5,7 @@ import '../../domain/entities/treasure_hunt.dart';
 
 class TreasureHuntModel extends TreasureHunt {
   TreasureHuntModel({
+    required int id,
     required String name,
     required DateTime started_at,
     required String ended_at,
@@ -17,6 +18,7 @@ class TreasureHuntModel extends TreasureHunt {
     required String location_name,
     required List<UserModel> participants,
   }) : super(
+          id: id,
           name: name,
           started_at: started_at,
           ended_at: ended_at,
@@ -32,6 +34,7 @@ class TreasureHuntModel extends TreasureHunt {
 
   factory TreasureHuntModel.fromJson(Map<String, dynamic> json) {
     return TreasureHuntModel(
+        id: json['id'],
         name: json['name'],
         started_at: DateTime.parse(json['started_at']),
         ended_at: json['ended_at'],

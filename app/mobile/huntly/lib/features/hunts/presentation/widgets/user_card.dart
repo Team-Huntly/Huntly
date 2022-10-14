@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:huntly/features/authentication/data/models/user_model.dart';
 
 import '../../../../core/theme/theme.dart';
+import '../../data/models/team_model.dart';
 
 class UserCard extends StatelessWidget {
-  const UserCard({Key? key}) : super(key: key);
+  UserModel user;
+  UserCard({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,11 +38,11 @@ class UserCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'John Doe',
+                user.firstName,
                 style: darkTheme.textTheme.headline2!.copyWith(fontSize: 16),
               ),
               Text(
-                'jhondoe@gmail.com',
+                user.email,
                 style: darkTheme.textTheme.headline3!.copyWith(
                     fontSize: 14, color: darkTheme.colorScheme.secondary),
               ),

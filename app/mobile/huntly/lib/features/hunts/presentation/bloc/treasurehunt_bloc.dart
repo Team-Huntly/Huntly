@@ -6,6 +6,7 @@ import 'package:huntly/features/hunts/data/datasources/treasure_hunt_remote_data
 import 'package:huntly/features/hunts/data/repositories/treasure_hunt_repository_impl.dart';
 import '../../../../core/utils/get_current_location.dart';
 
+import '../../data/models/team_model.dart';
 import '../../domain/entities/treasure_hunt.dart';
 
 import '../../domain/usecases/get_treasure_hunts.dart' as gth;
@@ -62,6 +63,20 @@ class TreasureHuntBloc extends Bloc<TreasureHuntEvent, TreasureHuntState> {
           failureOrVoid.fold((failure) => emit(Failed()), (treasureHunts) {
             emit(Done());
           });
+        } catch (e) {
+          debugPrint(e.toString());
+          emit(Failed());
+        }
+      } else if (event is getTeamMates) {
+        emit(Loading());
+        try {
+          final TreasureHuntRemoteDataSourceImpl THRDS =
+              TreasureHuntRemoteDataSourceImpl();
+          final TeamModel team =
+              await THRDS.getTeammates(treasureHuntId: event.treasureHuntId);
+          print(team);
+
+          emit(TeamLoaded(teamMates: team));
         } catch (e) {
           debugPrint(e.toString());
           emit(Failed());

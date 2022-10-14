@@ -42,7 +42,9 @@ class _HuntViewState extends State<HuntView> {
             child: TabBarView(
               children: [
                 HuntDetailPage(treasureHunt: widget.treasureHunt),
-                TeamPage(),
+                TeamPage(
+                  treasureHuntId: widget.treasureHunt.id,
+                ),
                 LeaderboardPage(),
               ],
             ),

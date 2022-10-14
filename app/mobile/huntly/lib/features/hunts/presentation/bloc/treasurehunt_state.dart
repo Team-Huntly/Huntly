@@ -21,3 +21,10 @@ class Loaded extends TreasureHuntState {
 }
 
 class Done extends TreasureHuntState {}
+
+class TeamLoaded extends TreasureHuntState {
+  final TeamModel teamMates;
+  TeamLoaded({required this.teamMates});
+  @override
+  List<Object> get props => [teamMates];
+}
