@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 import 'package:iconify_flutter/iconify_flutter.dart';
@@ -19,13 +20,16 @@ import 'package:iconify_flutter/icons/mdi.dart';
 import 'package:colorful_iconify_flutter/icons/vscode_icons.dart';
 import 'package:colorful_iconify_flutter/icons/emojione.dart';
 
-class Interests {
+class Interests extends Equatable {
   final String category;
   final String interest;
   final String icon;
 
   Interests(
       {required this.category, required this.interest, required this.icon});
+
+  @override
+  List<Object> get props => [category, interest, icon];
 }
 
 const String category1 = 'Creativity';
@@ -256,3 +260,57 @@ List<Map<String, List<Interests>>> interests = [
 ];
 
 String url = "https://huntlybackend.mixedbag.repl.co/";
+
+Interests? sendInterest(String s) {
+  if (s == "Writing") {
+    return Interests(
+        category: category1,
+        interest: "Writing",
+        icon: Twemoji.writing_hand_light_skin_tone);
+  } else if (s == "Art") {
+    return Interests(
+        category: category1, interest: "Art", icon: Noto.paintbrush);
+  } else if (s == "Crafts") {
+    return Interests(
+        category: category1, interest: "Crafts", icon: Logos.origami);
+  } else if (s == "Design") {
+    return Interests(
+        category: category1, interest: "Design", icon: IconPark.bydesign);
+  } else if (s == "Make up") {
+    return Interests(
+        category: category1, interest: "Make up", icon: Noto.lipstick);
+  } else if (s == "Photography") {
+    return Interests(
+        category: category1,
+        interest: "Photography",
+        icon: Noto.camera_with_flash);
+  } else if (s == "Singing") {
+    return Interests(
+        category: category1, interest: "Singing", icon: Noto.microphone);
+  } else if (s == "Swimming") {
+    return Interests(
+        category: category2,
+        interest: "Swimming",
+        icon: Twemoji.man_swimming_medium_light_skin_tone);
+  } else if (s == "Athetics") {
+    return Interests(
+        category: category2,
+        interest: "Athletics",
+        icon: Twemoji.man_running_light_skin_tone);
+  } else if (s == "Badminton") {
+    return Interests(
+        category: category2, interest: "Badminton", icon: Twemoji.badminton);
+  } else if (s == "Soccer") {
+    Interests(
+        category: category2, interest: "Soccer", icon: EmojioneV1.soccer_ball);
+  } else if (s == "Tennis") {
+    return Interests(
+        category: category2, interest: "Tennis", icon: Noto.tennis);
+  } else if (s == "Volleyball") {
+    return Interests(
+        category: category2, interest: "Volleyball", icon: Noto.volleyball);
+  } else {
+    print("Return null");
+    return null;
+  }
+}

@@ -17,6 +17,7 @@ import 'package:iconify_flutter/icons/bx.dart';
 import 'package:iconify_flutter/icons/uiw.dart';
 
 import '../../core/theme/theme.dart';
+import '../../features/authentication/presentation/pages/profile_page_edit.dart';
 import '../../features/hunts/presentation/pages/home_page.dart';
 
 class DrawerListItem extends StatelessWidget {
@@ -82,7 +83,7 @@ class HuntlyScaffold extends StatelessWidget {
                   icon: Healthicons.ui_user_profile,
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const ProfilePage()));
+                        builder: (context) => const ProfileEditPage()));
                   },
                   title: 'Profile'),
               DrawerListItem(

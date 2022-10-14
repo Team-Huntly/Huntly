@@ -8,6 +8,7 @@ import 'package:huntly/features/authentication/presentation/widgets/box_renderer
 import 'package:huntly/features/hunts/presentation/pages/home_page.dart';
 import '../../../../common/constants.dart';
 import '../../../../core/theme/theme.dart';
+import '../bloc/authentication_bloc.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -23,7 +24,7 @@ class _ProfilePageState extends State<ProfilePage> {
     super.initState();
   }
 
-  TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
   ValueNotifier<List<Interests>> selectedWords = ValueNotifier([]);
   @override
   Widget build(BuildContext context) {
@@ -52,15 +53,15 @@ class _ProfilePageState extends State<ProfilePage> {
             Container(
               margin: const EdgeInsets.only(top: 20),
               child: TextField(
+                  controller: _controller,
                   maxLines: 5,
                   maxLength: 150,
                   style: darkTheme.textTheme.bodyText2,
                   decoration: inputDecoration(
                       'What would you like others to know about you?')),
             ),
-            Padding(
-              padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewInsets.bottom),
+            const SizedBox(
+              height: 20,
             ),
             BoxRenderer(
               interests: creativity,
@@ -130,8 +131,30 @@ class _ProfilePageState extends State<ProfilePage> {
               selectedWords: selectedWords,
             ),
             const SizedBox(
-              height: 100,
-            )
+              height: 30,
+            ),
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.red,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10))),
+                onPressed: () {
+                  BlocProvider.of<AuthenticationBloc>(context).add(
+                      AddProfileEvent(
+                          bio: _controller.text,
+                          interests: selectedWords.value));
+                },
+                child: Text(
+                  "SUBMIT",
+                  style: GoogleFonts.poppins(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                )),
+            const SizedBox(
+              height: 30,
+            ),
           ],
         ),
       ),

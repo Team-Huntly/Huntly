@@ -21,3 +21,5 @@ class AddProfileEvent extends AuthenticationEvent {
   @override
   List<Object> get props => [bio, interests];
 }
+
+class GetProfileEvent extends AuthenticationEvent {}

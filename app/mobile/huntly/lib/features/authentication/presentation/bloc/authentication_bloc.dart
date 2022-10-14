@@ -4,10 +4,13 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:huntly/features/authentication/data/profile_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../common/constants.dart';
+import '../../data/profile_datasource.dart';
 
 part 'authentication_event.dart';
 part 'authentication_state.dart';
@@ -29,7 +32,6 @@ class AuthenticationBloc
       );
 
       if (event is AuthenticationStarted) {
-        // Authentication Started
         emit(AuthenticationLoading());
         GoogleSignInAccount? _currentUser;
         String _contactText = '';
@@ -73,6 +75,8 @@ class AuthenticationBloc
       } else if (event is AuthenticationLogOut) {
         googleSignIn.disconnect();
       } else if (event is AddProfileEvent) {
+        print("Add profile Model");
+        print(event.bio);
         emit(Loading());
         try {
           final googleUser = await googleSignIn.signIn();
@@ -89,6 +93,7 @@ class AuthenticationBloc
           });
 
           var interestParamsJson = jsonEncode(interestParams);
+          print("Interests : $interestParamsJson");
           var params = {
             "first_name": googleUser.displayName,
             "last_name": "",
@@ -98,15 +103,14 @@ class AuthenticationBloc
             "bio": event.bio,
             "interests": interestParamsJson
           };
-
+          final _prefs = await SharedPreferences.getInstance();
           Response response = await Dio().put(
             "${url}users/update/",
             options: Options(
               headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
-                "Authorization":
-                    "Token 6b4a27a545d3a191eaca78e85bcef6703f65aff3"
+                "Authorization": "Token ${_prefs.getString("token")}"
               },
             ),
             data: jsonEncode(params),
@@ -123,6 +127,21 @@ class AuthenticationBloc
 
           prefs.setInt("profile", 1);
           emit(ProfileAdded());
+        } catch (e) {
+          // Authentication Failure
+          print("Failure");
+          emit(AuthenticationFailure());
+          debugPrint(e.toString());
+        }
+      } else if (event is GetProfileEvent) {
+        print("Get Profile Event");
+        emit(Loading());
+        try {
+          // get profile from profile_datasource.dart
+          ProfileDataSourceImpl profileDataSourceImpl = ProfileDataSourceImpl();
+          ProfileModel profile = await profileDataSourceImpl.fetchProfile();
+
+          emit(ProfileLoaded(profileModel: profile));
         } catch (e) {
           // Authentication Failure
           print("Failure");

@@ -20,3 +20,9 @@ class AuthenticationLogout extends AuthenticationState {}
 class Loading extends AuthenticationState {}
 
 class ProfileAdded extends AuthenticationState {}
+
+class ProfileLoaded extends AuthenticationState {
+  ProfileModel profileModel;
+
+  ProfileLoaded({required this.profileModel});
+}

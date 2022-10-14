@@ -95,7 +95,9 @@ class _WrapperPageState extends State<WrapperPage> {
                           0) {
                         return const ProfilePage();
                       } else {
+                        // TODO CHANGE THIS TO HOME PAGE
                         return const HomePage();
+                        // return const ProfilePage();
                       }
                     }
                     return const Center(child: CircularProgressIndicator());
