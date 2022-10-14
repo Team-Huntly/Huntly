@@ -22,6 +22,17 @@ class WordButton extends StatefulWidget {
 
 class _WordButtonState extends State<WordButton> {
   @override
+  void initState() {
+    if (widget.selectedWords.value.contains(widget.word)) {
+      print("Contains");
+      setState(() {
+        widget.isSelected = true;
+      });
+    }
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
