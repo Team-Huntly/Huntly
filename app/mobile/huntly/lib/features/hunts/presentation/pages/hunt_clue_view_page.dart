@@ -27,7 +27,7 @@ class _HuntClueViewPageState extends State<HuntClueViewPage> {
                     });
                   },
                   text: 'Show QR'),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Text(widget.clue.id.toString()),
@@ -39,7 +39,7 @@ class _HuntClueViewPageState extends State<HuntClueViewPage> {
           )
         : Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               ActionButton(
@@ -54,11 +54,11 @@ class _HuntClueViewPageState extends State<HuntClueViewPage> {
                 version: QrVersions.auto,
                 size: 320,
                 gapless: false,
-                dataModuleStyle: QrDataModuleStyle(
+                dataModuleStyle: const QrDataModuleStyle(
                   color: Colors.white,
                   dataModuleShape: QrDataModuleShape.square,
                 ),
-                eyeStyle: QrEyeStyle(
+                eyeStyle: const QrEyeStyle(
                   eyeShape: QrEyeShape.square,
                   color: Colors.white,
                 ),

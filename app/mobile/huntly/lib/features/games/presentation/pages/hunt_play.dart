@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:huntly/core/theme/theme.dart';
 import 'package:huntly/core/utils/action_button.dart';
 import 'package:huntly/core/utils/scaffold.dart';
+import 'package:huntly/features/games/presentation/pages/qr_page.dart';
 import 'package:huntly/features/huntsCreate/presentation/pages/clue_create_page.dart';
 import 'package:huntly/features/hunts/presentation/pages/clue_page.dart';
 import 'package:huntly/features/huntsCreate/presentation/pages/hunt_edit_page.dart';
@@ -10,6 +12,7 @@ import 'package:huntly/features/hunts/presentation/widgets/tab.dart';
 import 'package:iconify_flutter/icons/ic.dart';
 import 'package:iconify_flutter/icons/mdi.dart';
 import 'package:colorful_iconify_flutter/icons/noto.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../bloc/game_bloc.dart';
 
@@ -27,6 +30,18 @@ class _HuntPlayState extends State<HuntPlay> with TickerProviderStateMixin {
     BlocProvider.of<GameBloc>(context)
         .add(SetUpGame(treasureHuntId: widget.treasureHuntId));
     super.initState();
+  }
+
+  final COLOR_CODE = "0xFFE0E0E0";
+
+  Future<PermissionStatus> _getCameraPermission() async {
+    var status = await Permission.camera.status;
+    if (!status.isGranted) {
+      final result = await Permission.camera.request();
+      return result;
+    } else {
+      return status;
+    }
   }
 
   @override
@@ -70,18 +85,50 @@ class _HuntPlayState extends State<HuntPlay> with TickerProviderStateMixin {
                   Text(state.clues[state.index].description,
                       style: darkTheme.textTheme.bodyText2),
                   const SizedBox(height: 15),
-                  ActionButton(
-                    leading: Mdi.map_marker_multiple,
-                    text: 'Verify',
-                    onTap: () {
-                      BlocProvider.of<GameBloc>(context).add(VerifyClue(
-                          treasureHuntId: widget.treasureHuntId,
-                          clueId: state.clues[state.index].id,
-                          clues: state.clues,
-                          teamId: state.teamId,
-                          index: state.index));
-                    },
-                  ),
+                  state.clues[state.index].isQrBased
+                      ? ActionButton(
+                          leading: Mdi.map_marker_multiple,
+                          text: 'Verify',
+                          onTap: () {
+                            BlocProvider.of<GameBloc>(context).add(VerifyClue(
+                                treasureHuntId: widget.treasureHuntId,
+                                clueId: state.clues[state.index].id,
+                                clues: state.clues,
+                                teamId: state.teamId,
+                                index: state.index));
+                          },
+                        )
+                      : ActionButton(
+                          leading: Mdi.barcode,
+                          text: 'Scan',
+                          onTap: () async {
+                            String barcodeScanRes =
+                                await FlutterBarcodeScanner.scanBarcode(
+                                    '#ff6666',
+                                    'Cancel',
+                                    true,
+                                    ScanMode.BARCODE);
+                            if (int.parse(barcodeScanRes) ==
+                                state.clues[state.index].id) {
+                              // ignore: invalid_use_of_visible_for_testing_member, use_build_context_synchronously
+                              BlocProvider.of<GameBloc>(context).emit(
+                                  ClueSolved(
+                                      clues: state.clues,
+                                      index: state.index,
+                                      teamId: state.teamId));
+                            } else {
+                              // ignore: use_build_context_synchronously
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Incorrect QR Code'),
+                                  backgroundColor: Colors.red,
+                                ),
+                              );
+                            }
+                            print(barcodeScanRes);
+                          },
+                          color: darkTheme.colorScheme.primary),
+
                   // Row(
                   //   mainAxisAlignment: MainAxisAlignment.center,
                   //   children: [
@@ -164,7 +211,6 @@ class _HuntPlayState extends State<HuntPlay> with TickerProviderStateMixin {
                     text: 'Go to next clue',
                     // leading: Noto.party_popper,
                     onTap: () {
-                      print("hello");
                       BlocProvider.of<GameBloc>(context).add(NextClue(
                           clues: state.clues,
                           teamId: state.teamId,
