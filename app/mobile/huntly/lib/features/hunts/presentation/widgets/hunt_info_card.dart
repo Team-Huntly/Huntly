@@ -30,8 +30,7 @@ class HuntInfoCard extends StatelessWidget {
           color: darkTheme.colorScheme.background,
           borderRadius: const BorderRadius.all(Radius.circular(15)),
           boxShadow: const [
-            BoxShadow(
-                color: Colors.black, blurRadius: 1, offset: Offset(2, 2)),
+            BoxShadow(color: Colors.black, blurRadius: 1, offset: Offset(2, 2)),
           ]),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

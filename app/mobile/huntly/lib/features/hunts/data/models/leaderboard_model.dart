@@ -3,18 +3,16 @@ class LeaderboardRowModel {
   final int cluesSolved;
   final DateTime lastSolved;
 
-  LeaderboardRowModel({
-    required this.cluesSolved,
-    required this.lastSolved,
-    required this.name
-  });
+  LeaderboardRowModel(
+      {required this.cluesSolved,
+      required this.lastSolved,
+      required this.name});
 
   factory LeaderboardRowModel.fromJson(Map<String, dynamic> json) {
     return LeaderboardRowModel(
-      cluesSolved: json['no_of_clues'],
-      name: json['name'],
-      lastSolved: DateTime.parse(json['last_solved_at'])
-    );
+        cluesSolved: json['no_of_clues'],
+        name: json['name'],
+        lastSolved: DateTime.parse(json['last_solved_at']));
   }
 
   Map<String, dynamic> toJson() {
@@ -37,7 +35,10 @@ class LeaderboardModel {
   factory LeaderboardModel.fromJson(Map<String, dynamic> json) {
     return LeaderboardModel(
       huntId: json['hunt_id'],
-      leaders: json['teams'].map<LeaderboardRowModel>((team) => LeaderboardRowModel.fromJson(team)).toList(),
+      leaders: json['teams']
+          .map<LeaderboardRowModel>(
+              (team) => LeaderboardRowModel.fromJson(team))
+          .toList(),
     );
   }
 

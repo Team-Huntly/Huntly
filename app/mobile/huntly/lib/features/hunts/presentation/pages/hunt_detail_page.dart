@@ -137,7 +137,8 @@ class _HuntDetailPageState extends State<HuntDetailPage> {
                           HuntPlay(treasureHuntId: widget.treasureHunt.id)));
                 },
               )
-            : isParticipant
+            : isAdmin ? Container() :
+            isParticipant
                 ? ActionButton(
                     text: 'Unregister',
                     onTap: () {
@@ -172,13 +173,6 @@ class _HuntDetailPageState extends State<HuntDetailPage> {
         const SizedBox(
           height: 10,
         ),
-        const SizedBox(width: 10),
-        isAdmin
-            ? ActionButton(
-                onTap: () {},
-                leading: Ic.twotone_edit,
-              )
-            : Container(),
       ],
     ));
   }

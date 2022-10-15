@@ -25,15 +25,14 @@ class _MemoriesMenuPageState extends State<MemoriesMenuPage> {
       body: BlocConsumer<MemoriesBloc, MemoriesState>(
         listener: (context, state) {},
         builder: (context, state) {
-          if(state is Loaded) {
+          if (state is Loaded) {
             // print(state.memories);
             // return Text(state.memories[0].images.toString());
             return ListView.builder(
-              itemCount: state.memories.length,
-              itemBuilder: (context, index) {
-                return MemoriesMenuItem(memory: state.memories[index]);
-              }
-            );
+                itemCount: state.memories.length,
+                itemBuilder: (context, index) {
+                  return MemoriesMenuItem(memory: state.memories[index]);
+                });
           } else {
             return const Center(
               child: CircularProgressIndicator(

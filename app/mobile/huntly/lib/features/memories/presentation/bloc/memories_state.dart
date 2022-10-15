@@ -15,9 +15,9 @@ class Failed extends MemoriesState {}
 
 class Loaded extends MemoriesState {
   final List<dynamic> memories;
-  
+
   const Loaded({required this.memories});
-  
+
   @override
   List<Object> get props => [memories];
 }

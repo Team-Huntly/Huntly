@@ -81,6 +81,7 @@ class _HuntCreateState extends State<HuntCreate> with TickerProviderStateMixin {
             ),
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ActionButton(
                   text: "Submit",
@@ -89,12 +90,13 @@ class _HuntCreateState extends State<HuntCreate> with TickerProviderStateMixin {
                         AddClues(huntId: widget.huntId, clue: clubs.value));
 
                     Navigator.of(context).pop();
-                  }),
+                  },
+                  color: darkTheme.indicatorColor,
+                ),
               Align(
                 alignment: Alignment.bottomRight,
                 child: ActionButton(
                   alignment: Alignment.bottomRight,
-                  // text: 'Add clue',
                   leading: Ic.baseline_plus,
                   onTap: () {
                     setState(() {

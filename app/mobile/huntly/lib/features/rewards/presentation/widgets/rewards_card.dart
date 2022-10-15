@@ -40,8 +40,7 @@ class RewardsCard extends StatelessWidget {
             decoration: const BoxDecoration(
                 border: Border(right: BorderSide(color: Colors.white))),
             child: Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.only(
                     topLeft: borderRadius, bottomLeft: borderRadius),

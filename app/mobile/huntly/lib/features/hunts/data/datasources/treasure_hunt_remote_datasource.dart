@@ -61,7 +61,7 @@ class TreasureHuntRemoteDataSourceImpl implements TreasureHuntRemoteDataSource {
       Dio dio = Dio();
       var response = await dio.get("${url}users/hunts/upcoming",
           options: await getHeaders());
-        print(response.data);
+      print(response.data);
       if (response.statusCode == 200) {
         final List<TreasureHuntModel> treasureHunts = response.data
             .map<TreasureHuntModel>((m) => TreasureHuntModel.fromJson(m))
@@ -194,8 +194,8 @@ class TreasureHuntRemoteDataSourceImpl implements TreasureHuntRemoteDataSource {
   Future<UserModel> getUser() async {
     try {
       Dio dio = Dio();
-      final response = await dio.get("${url}users/profile",
-          options: await getHeaders());
+      final response =
+          await dio.get("${url}users/profile", options: await getHeaders());
       if (response.statusCode == 200) {
         UserModel user = UserModel.fromJson(response.data);
         return user;

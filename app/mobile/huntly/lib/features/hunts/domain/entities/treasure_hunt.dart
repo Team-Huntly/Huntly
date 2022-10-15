@@ -39,17 +39,17 @@ class TreasureHunt extends Equatable {
 
   @override
   List<Object> get props => [
-    id,
-    name,
-    started_at,
-    ended_at,
-    location_latitute,
-    location_longitude,
-    total_seats,
-    team_size,
-    theme,
-    is_locked,
-    participants,
-    theme
-  ];
+        id,
+        name,
+        started_at,
+        ended_at,
+        location_latitute,
+        location_longitude,
+        total_seats,
+        team_size,
+        theme,
+        is_locked,
+        participants,
+        theme
+      ];
 }

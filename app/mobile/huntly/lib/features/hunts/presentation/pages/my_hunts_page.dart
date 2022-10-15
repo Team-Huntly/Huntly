@@ -32,70 +32,61 @@ class _MyHuntsPageState extends State<MyHuntsPage> {
   Widget build(BuildContext context) {
     return HuntlyScaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      // floatingActionButton: ExpandableFabClass(
-      //   onPressed: () {},
-      //   child:
-      // ),
-      body: Column(
-        children: [
-          BlocConsumer<TreasureHuntBloc, TreasureHuntState>(
-            listener: (context, state) {},
-            builder: (context, state) {
-              if (state is Loaded) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 30),
-                    ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: state.treasureHunts.length,
-                      itemBuilder: (context, index) {
-                        return HuntCard(
-                            treasureHunt: state.treasureHunts[index]);
-                      },
-                    ),
-                  ],
-                );
-              } else {
-                return const Center(
-                  child: CircularProgressIndicator(
-                    color: Colors.white,
-                  ),
-                );
-              }
-            },
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              ActionButton(
-                text: 'Custom',
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const HuntEditPage(),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            BlocConsumer<TreasureHuntBloc, TreasureHuntState>(
+              listener: (context, state) {},
+              builder: (context, state) {
+                if (state is Loaded) {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: state.treasureHunts.length,
+                    itemBuilder: (context, index) {
+                      return HuntCard(treasureHunt: state.treasureHunts[index]);
+                    },
+                  );
+                } else {
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
                     ),
                   );
-                },
-              ),
-              ActionButton(
-                text: 'Preset',
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const PresetsPage(),
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
-        ],
+                }
+              },
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                ActionButton(
+                  text: 'Custom',
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const HuntEditPage(),
+                      ),
+                    );
+                  },
+                ),
+                ActionButton(
+                  text: 'Preset',
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const PresetsPage(),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
       outerContext: context,
     );

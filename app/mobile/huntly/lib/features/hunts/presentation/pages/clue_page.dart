@@ -63,44 +63,6 @@ class CluePage extends StatelessWidget {
                 color: darkTheme.colorScheme.primary)
           ],
         )
-        // Container(
-        //   padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-        //   decoration: BoxDecoration(
-        //     border: Border.all(
-        //       color: Colors.white
-        //     ),
-        //     borderRadius: const BorderRadius.all(Radius.circular(10))
-        //   ),
-        //   child: Row(
-        //     crossAxisAlignment: CrossAxisAlignment.start,
-        //     children: [
-        //       const Iconify(
-        //         Mdi.map_marker_outline,
-        //         color: Colors.white,
-        //       ),
-        //       Padding(
-        //         padding: const EdgeInsets.only(left: 10),
-        //         child: Column(
-        //           crossAxisAlignment: CrossAxisAlignment.start,
-        //           children: [
-        //             Text(
-        //               'D516\nNITK Hostels\nSurathkal, Mangalore\nKarnataka',
-        //               style: darkTheme.textTheme.bodyText1,
-        //             ),
-        //             const SizedBox(height: 10),
-        //             GestureDetector(
-        //               child: Text(
-        //                 'Edit',
-        //                 textAlign: TextAlign.left,
-        //                 style: darkTheme.textTheme.bodyText1!.copyWith(color: darkTheme.highlightColor, fontWeight: FontWeight.w700),
-        //               )
-        //             ),
-        //           ],
-        //         ),
-        //       ),
-        //     ]
-        //   ),
-        // ),
       ],
     );
   }

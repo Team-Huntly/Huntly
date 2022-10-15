@@ -11,7 +11,7 @@ import '../../data/models/memory_model.dart';
 class MemoriesMenuItem extends StatelessWidget {
   final Random random = Random();
   final double angleRangeMultiplier = 0.1;
-  
+
   final MemoryModel memory;
 
   MemoriesMenuItem({Key? key, required this.memory}) : super(key: key);
@@ -20,8 +20,8 @@ class MemoriesMenuItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => GalleryPage(memory: memory)));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (context) => GalleryPage(memory: memory)));
       },
       child: Transform.rotate(
         angle: random.nextDouble() * angleRangeMultiplier,
@@ -32,15 +32,14 @@ class MemoriesMenuItem extends StatelessWidget {
           decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(10)),
               image: DecorationImage(
-                  image: NetworkImage('$url${memory.images[0]}'), fit: BoxFit.fill)),
+                  image: NetworkImage('$url${memory.images[0]}'),
+                  fit: BoxFit.fill)),
           child: Column(
             children: [
               const SizedBox(height: 100),
               Text(
                 memory.huntName,
-                style: darkTheme.textTheme.headline1!.copyWith(
-                  fontSize: 24
-                ),
+                style: darkTheme.textTheme.headline1!.copyWith(fontSize: 24),
               ),
               Text(DateFormat.yMd().format(memory.startedAt),
                   style: darkTheme.textTheme.headline3!

@@ -20,21 +20,20 @@ class TreasureHuntModel extends TreasureHunt {
     required UserModel creator,
     required String status,
   }) : super(
-          id: id,
-          name: name,
-          started_at: started_at,
-          ended_at: ended_at,
-          location_latitute: location_latitute,
-          location_longitude: location_longitude,
-          total_seats: total_seats,
-          team_size: team_size,
-          theme: theme,
-          is_locked: is_locked,
-          location_name: location_name,
-          participants: participants,
-          creator: creator,
-          status: status
-        );
+            id: id,
+            name: name,
+            started_at: started_at,
+            ended_at: ended_at,
+            location_latitute: location_latitute,
+            location_longitude: location_longitude,
+            total_seats: total_seats,
+            team_size: team_size,
+            theme: theme,
+            is_locked: is_locked,
+            location_name: location_name,
+            participants: participants,
+            creator: creator,
+            status: status);
 
   factory TreasureHuntModel.fromJson(Map<String, dynamic> json) {
     return TreasureHuntModel(
@@ -53,8 +52,7 @@ class TreasureHuntModel extends TreasureHunt {
             .toList(),
         theme: ThemeModel.fromJson(json['theme']),
         creator: UserModel.fromJson(json['created_by']),
-        status: json['status']
-      );
+        status: json['status']);
   }
 
   Map<String, dynamic> toJson() {

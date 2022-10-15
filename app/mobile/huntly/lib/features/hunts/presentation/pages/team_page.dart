@@ -35,7 +35,8 @@ class _TeamPageState extends State<TeamPage> {
             ),
           );
         } else {
-          return const Center(child: CircularProgressIndicator(color: Colors.white));
+          return const Center(
+              child: CircularProgressIndicator(color: Colors.white));
         }
       },
     );
