@@ -31,8 +31,10 @@ class HuntsCreateBloc extends Bloc<HuntsCreateEvent, HuntsCreateState> {
             "team_size": event.team_size,
             "theme": event.theme,
           };
+          print(jsonEncode(params));
           Response response = await dio.post("${url}treasure-hunts/create/",
               options: await getHeaders(), data: jsonEncode(params));
+          print(response.data);
           if (response.statusCode == 201) {
             emit(HuntCreated(
                 message: "${response.data["name"]} created",
