@@ -27,11 +27,11 @@ def form_teams():
                     interests = json.loads(participant.interests)
                 interests_string = ''
                 for i in interests:
-                    interests_string += interests[i] + ' '
-                bios.append(participant.bio+' '+ interests_string)
+                    interests_string += (interests[i] or '') + ' '
+                bios.append((participant.bio or '')+' '+ interests_string)
                 userids.append(participant.id)
             response = requests.post(ML_API, json={
-                'team_size': treasure_hunt.team_size,
+                'size': treasure_hunt.team_size,
                 'bios': bios 
             })
             if response.status_code == 200:
@@ -71,28 +71,31 @@ def distribute_rewards():
         if Coupon.objects.filter(treasure_hunt=treasure_hunt).count() == 0:
             #  Calculate Leaderboard Teams
             leaderboard_teams = []
-            for team in treasure_hunt.teams.all():
-                progress = TeamProgress.objects.filter(team=team['id'], clue__treasure_hunt = treasure_hunt).order_by('-solved_at')
-                team['no_of_clues'] = progress.count()
-                if team['no_of_clues'] != 0:
-                    team['last_solved_at'] = progress.first().solved_at
+            for team in Team.objects.filter(treasure_hunt=treasure_hunt):
+                progress = TeamProgress.objects.filter(team=team, clue__treasure_hunt = treasure_hunt).order_by('-solved_at')
+                if progress.count() != 0:
                     leaderboard_teams.append({
-                        'id': team['id'],
-                        'name': team['name'],
-                        'no_of_clues': team['no_of_clues'],
-                        'last_solved_at': team['last_solved_at']
+                        'id': team.id,
+                        'name': team.name,
+                        'no_of_clues': progress.count(),
+                        'last_solved_at': progress.first().solved_at,
+                        'members': [member.id for member in team.team_members.all()]
                     })
                 leaderboard_teams = sorted(leaderboard_teams, key=lambda k: (k['no_of_clues'], -k['last_solved_at'].timestamp()), reverse=True)
+                print(leaderboard_teams)
 
             # Allot random coupons to all members of first 3 leaderboard teams
             available_coupons = list(Coupon.objects.filter(treasure_hunt=None, user=None, expiry_date__gte=datetime.now()))
+            print(f"Available coupons: {len(available_coupons)}")
             num_teams = min(3, len(leaderboard_teams))
             if len(available_coupons) >= num_teams*treasure_hunt.team_size:
                 selected_coupons = random.sample(available_coupons, num_teams*treasure_hunt.team_size)
+                print(selected_coupons)
                 count=0
                 for team in leaderboard_teams[:num_teams]:
-                    for user in team.team_members.all():
-                        selected_coupons[count].user = user
+                    for user_id in team['members']:
+                        selected_coupons[count].user = User.objects.get(id=user_id)
+                        selected_coupons[count].treasure_hunt = treasure_hunt
                         selected_coupons[count].save()
                         count+=1
             else:
