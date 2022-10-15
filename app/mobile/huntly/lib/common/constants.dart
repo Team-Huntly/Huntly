@@ -20,6 +20,9 @@ import 'package:iconify_flutter/icons/mdi.dart';
 import 'package:colorful_iconify_flutter/icons/vscode_icons.dart';
 import 'package:colorful_iconify_flutter/icons/emojione.dart';
 
+const String OAUTH_CLIENT_ID =
+    '363088523272-orkcfiqub7hshaq29pisji796or7ohpq.apps.googleusercontent.com';
+
 class Interests extends Equatable {
   final String category;
   final String interest;
@@ -309,8 +312,76 @@ Interests? sendInterest(String s) {
   } else if (s == "Volleyball") {
     return Interests(
         category: category2, interest: "Volleyball", icon: Noto.volleyball);
-  } else {
-    print("Return null");
+  } else if(s == "Art"){
+    return 
+  Interests(
+        category: category10,
+        interest: "Art",
+        icon: Fxemoji.lowerleftpaintbrush);
+  }else if(s == "Cooking"){
+
+    return Interests(category: category10, interest: "Cooking", icon: Noto.cooking);
+  }else if(s == "Dancing"){
+    return Interests(
+        category: category10,
+        interest: "Dancing",
+        icon: NotoV1.woman_dancing_medium_light_skin_tone);
+  }else if(s == "Gaming"){
+    return Interests(category: category10, interest: "Gaming", icon: Twemoji.laptop);
+  }else if(s == "Gardening"){
+    return 
+    Interests(
+        category: category10,
+        interest: "Gardening",
+        icon: Twemoji.house_with_garden);
+  }else if(s == "Photography"){
+    return 
+    Interests(
+        category: category10, interest: "Photography", icon: Bi.camera_fill);
+  }else if(s == "Singing"){
+    return Interests(
+        category: category10, interest: "Singing", icon: NotoV1.microphone);
+
+  }else if(s == "Writing"){
+    return 
+    Interests(category: category10, interest: "Writing", icon: Noto.pencil);
+  }else if(s == "Backpacking"){
+    return 
+    Interests(
+        category: category9, interest: "Backpacking", icon: Noto.backpack);
+  }else if(s == "Beaches"){
+    return 
+    Interests(
+        category: category9,
+        interest: "Beaches",
+        icon: EmojioneV1.beach_with_umbrella);
+  }else if(s == "Camping"){
+    return 
+    Interests(category: category9, interest: "Camping", icon: Noto.camping);
+  }else if(s == "Road trips"){
+    return 
+    Interests(
+        category: category9, interest: "Road trips", icon: Mdi.car_sports);
+  }else if(s == "Trekking"){
+    return 
+    Interests(
+        category: category9, interest: "Trekking", icon: Iconoir.trekking);
+  }else if(s == "Cats"){
+    return
+    Interests(category: category3, interest: "Cats", icon: Fxemoji.catside);
+  }else if(s == "Dogs"){
+    return
+    Interests(category: category3, interest: "Dogs", icon: Fxemoji.dogside);
+  }else if(s == "Birds"){
+    return 
+    Interests(category: category3, interest: "Birds", icon: Fa6Brands.earlybirds);
+  }else if(s == "Fish"){
+    return 
+    Interests(category: category3, interest: "Fish", icon: Noto.tropical_fish);
+  }else {
     return null;
   }
+
+
 }
+

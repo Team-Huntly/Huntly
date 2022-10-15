@@ -16,16 +16,18 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
+  void initState() {
+    BlocProvider.of<TreasureHuntBloc>(context)
+        .add(GetRegisteredTreasureHunts());
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return HuntlyScaffold(
         outerContext: context,
         body: BlocConsumer<TreasureHuntBloc, TreasureHuntState>(
-          listener: (context, state) {
-            if (state is TreasureHuntInitial) {
-              BlocProvider.of<TreasureHuntBloc>(context)
-                  .add(GetTreasureHunts());
-            }
-          },
+          listener: (context, state) {},
           builder: (context, state) {
             if (state is Loading) {
               return const Center(
@@ -58,16 +60,18 @@ class _HomePageState extends State<HomePage> {
             } else if (state is TreasureHuntInitial) {
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 BlocProvider.of<TreasureHuntBloc>(context)
-                    .add(GetTreasureHunts());
+                    .add(GetRegisteredTreasureHunts());
               });
               return const Center(
                 child: CircularProgressIndicator(
                   color: Colors.white,
                 ),
               );
+            } else if (state is Failed) {
+              return const Text("Not registered for any hunts");
             } else {
               return const Center(
-                child: Text('Error'),
+                child: Text('Not registered for any hunts'),
               );
             }
           },

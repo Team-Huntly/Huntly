@@ -5,6 +5,7 @@ import '../../domain/entities/treasure_hunt.dart';
 
 class TreasureHuntModel extends TreasureHunt {
   TreasureHuntModel({
+    required int id,
     required String name,
     required DateTime started_at,
     required String ended_at,
@@ -16,22 +17,27 @@ class TreasureHuntModel extends TreasureHunt {
     required bool is_locked,
     required String location_name,
     required List<UserModel> participants,
+    required UserModel creator,
+    required String status,
   }) : super(
-          name: name,
-          started_at: started_at,
-          ended_at: ended_at,
-          location_latitute: location_latitute,
-          location_longitude: location_longitude,
-          total_seats: total_seats,
-          team_size: team_size,
-          theme: theme,
-          is_locked: is_locked,
-          location_name: location_name,
-          participants: participants,
-        );
+            id: id,
+            name: name,
+            started_at: started_at,
+            ended_at: ended_at,
+            location_latitute: location_latitute,
+            location_longitude: location_longitude,
+            total_seats: total_seats,
+            team_size: team_size,
+            theme: theme,
+            is_locked: is_locked,
+            location_name: location_name,
+            participants: participants,
+            creator: creator,
+            status: status);
 
   factory TreasureHuntModel.fromJson(Map<String, dynamic> json) {
     return TreasureHuntModel(
+        id: json['id'],
         name: json['name'],
         started_at: DateTime.parse(json['started_at']),
         ended_at: json['ended_at'],
@@ -44,7 +50,9 @@ class TreasureHuntModel extends TreasureHunt {
         participants: json['participants']
             .map<UserModel>((participant) => UserModel.fromJson(participant))
             .toList(),
-        theme: ThemeModel.fromJson(json['theme']));
+        theme: ThemeModel.fromJson(json['theme']),
+        creator: UserModel.fromJson(json['created_by']),
+        status: json['status']);
   }
 
   Map<String, dynamic> toJson() {

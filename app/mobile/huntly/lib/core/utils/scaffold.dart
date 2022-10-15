@@ -5,6 +5,7 @@ import 'package:huntly/core/utils/service.dart';
 import 'package:huntly/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:huntly/features/authentication/presentation/pages/profile_page.dart';
 import 'package:huntly/features/hunts/presentation/pages/my_hunts_page.dart';
+import 'package:huntly/features/hunts/presentation/pages/recents_page.dart';
 import 'package:huntly/features/memories/presentation/pages/memories_menu_page.dart';
 import 'package:huntly/features/rewards/presentation/pages/rewards_page.dart';
 import 'package:huntly/main.dart';
@@ -57,14 +58,24 @@ Future<GoogleSignInAccount?> getUser() async {
 class HuntlyScaffold extends StatelessWidget {
   final Widget body;
   final BuildContext outerContext;
+  final FloatingActionButtonLocation? floatingActionButtonLocation;
+  final FloatingActionButton? floatingActionButton;
+
   const HuntlyScaffold(
-      {Key? key, required this.body, required this.outerContext})
+      {Key? key,
+      required this.body,
+      required this.outerContext,
+      this.floatingActionButtonLocation,
+      this.floatingActionButton})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: darkTheme.colorScheme.background,
+        floatingActionButton: floatingActionButton,
+        floatingActionButtonLocation: floatingActionButtonLocation,
         appBar: AppBar(
           foregroundColor: darkTheme.colorScheme.onBackground,
           backgroundColor: darkTheme.colorScheme.background,
@@ -87,13 +98,13 @@ class HuntlyScaffold extends StatelessWidget {
                         borderRadius:
                             const BorderRadius.all(Radius.circular(100)),
                         child: Image.network(
-                          photoUrl_,
+                          user_.photoUrl ?? "https://picsum.photos/200",
                           width: 80,
                         ),
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        username_,
+                        user_.firstName + ' ' + user_.lastName,
                         style: darkTheme.textTheme.headline2,
                       )
                     ]),
@@ -101,6 +112,7 @@ class HuntlyScaffold extends StatelessWidget {
               DrawerListItem(
                   icon: Ri.home_2_line,
                   onTap: () {
+                    Navigator.of(context).pop();
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const HomePage()));
                   },
@@ -108,37 +120,57 @@ class HuntlyScaffold extends StatelessWidget {
               DrawerListItem(
                   icon: Healthicons.ui_user_profile,
                   onTap: () {
+                    Navigator.of(context).pop();
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const ProfileEditPage()));
                   },
                   title: 'Profile'),
               DrawerListItem(
-                  icon: Mdi.file_find_outline, onTap: () {}, title: 'Find'),
+                  icon: Mdi.file_find_outline,
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const FindHuntPage()));
+                  },
+                  title: 'Find'),
               DrawerListItem(
-                  icon: Carbon.recently_viewed, onTap: () {}, title: 'Recent'),
+                  icon: Carbon.recently_viewed,
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const RecentsPage()));
+                  },
+                  title: 'Recent'),
               DrawerListItem(
                   icon: Ic.outline_diamond,
                   onTap: () {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    Navigator.of(context).pop();
+                    Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const MyHuntsPage()));
                   },
                   title: 'My Hunts'),
               DrawerListItem(
                   icon: Ph.currency_circle_dollar,
                   onTap: () {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    Navigator.of(context).pop();
+                    Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const RewardsPage()));
                   },
                   title: 'Rewards'),
               DrawerListItem(
                   icon: Bx.photo_album,
                   onTap: () {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    Navigator.of(context).pop();
+                    Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const MemoriesMenuPage()));
                   },
                   title: 'Memories'),
               DrawerListItem(
-                  icon: Ic.round_mail_outline, onTap: () {}, title: 'Invites'),
+                  icon: Ic.round_mail_outline,
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  title: 'Invites'),
               Expanded(
                 child: Align(
                   alignment: Alignment.bottomLeft,

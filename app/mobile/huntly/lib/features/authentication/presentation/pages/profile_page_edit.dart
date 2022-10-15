@@ -3,8 +3,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:huntly/core/utils/action_button.dart';
 
 import 'package:huntly/core/utils/scaffold.dart';
+import 'package:huntly/core/utils/service.dart';
 import 'package:huntly/core/utils/text_field.dart';
 import 'package:huntly/features/authentication/presentation/widgets/box_renderer.dart';
 import 'package:huntly/features/hunts/presentation/pages/home_page.dart';
@@ -45,11 +47,9 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
 
   @override
   Widget build(BuildContext context) {
-    print("Building Profile Page");
     return BlocConsumer<AuthenticationBloc, AuthenticationState>(
       listener: (context, state) {
         if (state is ProfileAdded) {
-          print("rELOAD");
           BlocProvider.of<AuthenticationBloc>(context).add(GetProfileEvent());
         }
       },
@@ -61,21 +61,22 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
             body: SingleChildScrollView(
               child: Column(
                 children: [
-                  Container(
-                    height: 100,
-                    width: 100,
-                    decoration: const BoxDecoration(
-                        shape: BoxShape.circle, color: Colors.red),
+                  ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(100)),
+                    child: Image.network(
+                      user_.photoUrl ?? "https://picsum.photos/200",
+                      width: 80,
+                    ),
                   ),
                   Center(
                     child: Text(
-                      'John Doe',
+                      user_.firstName + " " + user_.lastName,
                       style: darkTheme.textTheme.headline2,
                     ),
                   ),
                   Center(
                     child: Text(
-                      'jhondoe@gmail.com',
+                      user_.email,
                       style: darkTheme.textTheme.headline3,
                     ),
                   ),
@@ -163,27 +164,16 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                   const SizedBox(
                     height: 30,
                   ),
-                  ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          primary: Colors.red,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10))),
-                      onPressed: () {
-                        print("Text = ${_controller.text}");
-                        BlocProvider.of<AuthenticationBloc>(context).add(
-                          AddProfileEvent(
-                              bio: _controller.text,
-                              interests: selectedWords.value),
-                        );
-                      },
-                      child: Text(
-                        "SUBMIT",
-                        style: GoogleFonts.poppins(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      )),
+                  ActionButton(
+                    onTap: () {
+                      BlocProvider.of<AuthenticationBloc>(context).add(
+                        AddProfileEvent(
+                            bio: _controller.text,
+                            interests: selectedWords.value),
+                      );
+                    },
+                    text: 'Submit',
+                  ),
                   const SizedBox(
                     height: 30,
                   ),

@@ -31,8 +31,7 @@ class TreasureHuntRepositoryImpl implements TreasureHuntRepository {
   Future<Either<Failure, List<TreasureHunt>>> fetchUserTreasureHunts(
       {required int userId}) async {
     try {
-      final treasureHunts =
-          await remoteDataSource.fetchUserTreasureHunts(userId: userId);
+      final treasureHunts = await remoteDataSource.fetchUserTreasureHunts();
       return Right(treasureHunts);
     } on ServerException {
       return Left(ServerFailure());

@@ -16,6 +16,12 @@ class FindHuntPage extends StatefulWidget {
 }
 
 class _FindHuntPageState extends State<FindHuntPage> {
+  @override
+  void initState() {
+    BlocProvider.of<TreasureHuntBloc>(context).add(GetTreasureHunts());
+    super.initState();
+  }
+
   TextEditingController _controller = TextEditingController();
 
   @override
@@ -63,25 +69,41 @@ class _FindHuntPageState extends State<FindHuntPage> {
               },
               builder: (context, state) {
                 if (state is Loading) {
-                  return const Center(
-                    child: CircularProgressIndicator(
-                      color: Colors.white,
+                  return const Padding(
+                    padding: EdgeInsets.only(top: 40),
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
                     ),
                   );
                 } else if (state is Loaded) {
-                  return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 24),
-                        ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: state.treasureHunts.length,
-                          itemBuilder: (context, index) {
-                            return HuntCard(
-                                treasureHunt: state.treasureHunts[index]);
-                          },
-                        )
-                      ]);
+                  if (state.treasureHunts.length == 0) {
+                    return Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Text(
+                          'No Treasure Hunts Found',
+                          style: GoogleFonts.poppins(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white,
+                          ),
+                        ));
+                  } else {
+                    return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 24),
+                          ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: state.treasureHunts.length,
+                            itemBuilder: (context, index) {
+                              return HuntCard(
+                                  treasureHunt: state.treasureHunts[index]);
+                            },
+                          )
+                        ]);
+                  }
                 } else if (state is TreasureHuntInitial) {
                   WidgetsBinding.instance.addPostFrameCallback((_) {
                     BlocProvider.of<TreasureHuntBloc>(context)
@@ -94,7 +116,7 @@ class _FindHuntPageState extends State<FindHuntPage> {
                   );
                 } else {
                   return const Center(
-                    child: Text('Error'),
+                    child: Text('Treasure Hunts not Found'),
                   );
                 }
               },

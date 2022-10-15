@@ -9,6 +9,8 @@ import 'package:iconify_flutter/icons/ri.dart';
 import 'package:iconify_flutter/icons/carbon.dart';
 
 import '../../../../core/theme/theme.dart';
+import '../../../../core/utils/service.dart';
+import '../../../authentication/data/models/user_model.dart';
 import '../../domain/entities/treasure_hunt.dart';
 
 class HuntView extends StatefulWidget {
@@ -28,22 +30,29 @@ class _HuntViewState extends State<HuntView> {
       body: DefaultTabController(
         length: 3,
         child: Column(children: [
-          TabBar(
-              tabs: const [
-                ViewTab(icon: AntDesign.info_circle_outlined),
-                ViewTab(icon: Ri.team_line),
-                ViewTab(icon: Carbon.trophy)
-              ],
-              indicator: BoxDecoration(
-                  color: darkTheme.highlightColor,
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  shape: BoxShape.rectangle)),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            child: TabBar(
+                tabs: const [
+                  ViewTab(icon: AntDesign.info_circle_outlined),
+                  ViewTab(icon: Ri.team_line),
+                  ViewTab(icon: Carbon.trophy)
+                ],
+                indicator: BoxDecoration(
+                    color: darkTheme.highlightColor,
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    shape: BoxShape.rectangle)),
+          ),
           Expanded(
             child: TabBarView(
               children: [
-                HuntDetailPage(treasureHunt: widget.treasureHunt),
-                TeamPage(),
-                LeaderboardPage(),
+                HuntDetailPage(treasureHunt: widget.treasureHunt, user: user_),
+                TeamPage(
+                  treasureHuntId: widget.treasureHunt.id,
+                ),
+                LeaderboardPage(
+                  treasureHunt: widget.treasureHunt,
+                ),
               ],
             ),
           ),

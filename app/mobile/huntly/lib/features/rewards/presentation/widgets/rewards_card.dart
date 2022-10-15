@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_brace_in_string_interps
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -8,6 +10,7 @@ import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:iconify_flutter/icons/ic.dart';
 
+import '../../../../common/constants.dart';
 import '../../../../core/theme/theme.dart';
 
 class RewardsCard extends StatelessWidget {
@@ -34,35 +37,32 @@ class RewardsCard extends StatelessWidget {
       child: Row(
         children: [
           Container(
+            decoration: const BoxDecoration(
+                border: Border(right: BorderSide(color: Colors.white))),
             child: Container(
-              decoration: BoxDecoration(
-                  border: Border(right: BorderSide(color: Colors.white))),
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      topLeft: borderRadius, bottomLeft: borderRadius),
-                  color: Colors.white,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        imageLocation,
-                        width: 50,
-                        height: 50,
-                      ),
-                      const SizedBox(height: 10),
-                      Text(orgName,
-                          style: GoogleFonts.poppins(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: darkTheme.colorScheme.background))
-                    ],
-                  ),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                    topLeft: borderRadius, bottomLeft: borderRadius),
+                color: Colors.white,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.network(
+                      "${url}${imageLocation}",
+                      width: 50,
+                      height: 50,
+                    ),
+                    const SizedBox(height: 10),
+                    Text(orgName,
+                        style: GoogleFonts.poppins(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: darkTheme.colorScheme.background))
+                  ],
                 ),
               ),
             ),

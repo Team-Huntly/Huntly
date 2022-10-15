@@ -8,31 +8,31 @@ abstract class HuntsCreateEvent extends Equatable {
 }
 
 class CreateHunt extends HuntsCreateEvent {
-  final String title;
-  final String description;
-  final String location;
-  final String date;
-  final String time;
-  final String duration;
-  final String maxParticipants;
-  final String minParticipants;
-  final String price;
-  final String category;
-  final String image;
-  final String userId;
+  final String name;
+  final String startedAt;
+  final String endedAt;
+  final LocationResult location;
+  final int total_seats;
+  final int team_size;
+  final int theme;
 
   CreateHunt({
-    required this.title,
-    required this.description,
+    required this.name,
+    required this.startedAt,
+    required this.endedAt,
     required this.location,
-    required this.date,
-    required this.time,
-    required this.duration,
-    required this.maxParticipants,
-    required this.minParticipants,
-    required this.price,
-    required this.category,
-    required this.image,
-    required this.userId,
+    required this.total_seats,
+    required this.team_size,
+    required this.theme,
+  });
+}
+
+class AddClues extends HuntsCreateEvent {
+  final int huntId;
+  final List<ClueModel> clue;
+
+  AddClues({
+    required this.huntId,
+    required this.clue,
   });
 }

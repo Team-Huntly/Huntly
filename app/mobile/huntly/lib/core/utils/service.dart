@@ -1,3 +1,3 @@
-String username_ = "";
-String email_ = "";
-String photoUrl_ = "";
+import '../../features/authentication/data/models/user_model.dart';
+
+late UserModel user_;
