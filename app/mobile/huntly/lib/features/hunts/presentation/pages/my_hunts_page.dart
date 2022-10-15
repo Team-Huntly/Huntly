@@ -43,8 +43,7 @@ class _MyHuntsPageState extends State<MyHuntsPage> {
                     shrinkWrap: true,
                     itemCount: state.treasureHunts.length,
                     itemBuilder: (context, index) {
-                      return HuntCard(
-                          treasureHunt: state.treasureHunts[index]);
+                      return HuntCard(treasureHunt: state.treasureHunts[index]);
                     },
                   );
                 } else {

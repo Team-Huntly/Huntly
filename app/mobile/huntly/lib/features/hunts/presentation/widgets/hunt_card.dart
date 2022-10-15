@@ -27,7 +27,7 @@ class HuntCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 10),
       child: GestureDetector(
         onTap: () {
-          Navigator.of(context).pushReplacement(MaterialPageRoute(
+          Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => HuntView(
                     treasureHunt: treasureHunt,
                   )));
@@ -77,7 +77,7 @@ class HuntCard extends StatelessWidget {
               ),
               Expanded(
                 child: Container(
-                  padding: EdgeInsets.only(left: 10),
+                  padding: const EdgeInsets.only(left: 20),
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.only(
                         topRight: borderRadius, bottomRight: borderRadius),

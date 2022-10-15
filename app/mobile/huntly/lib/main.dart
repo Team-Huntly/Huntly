@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:huntly/common/constants.dart';
 import 'package:huntly/core/utils/service.dart';
 import 'package:huntly/features/hunts/data/datasources/treasure_hunt_remote_datasource.dart';
 import 'package:huntly/features/hunts/presentation/bloc/treasurehunt_bloc.dart';
@@ -20,22 +21,22 @@ import 'features/memories/presentation/bloc/memories_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // final prefs = await SharedPreferences.getInstance();
-  // if (!prefs.containsKey("profile")) {
-  //   prefs.setInt("profile", 0);
-  // }
-  // if (!prefs.containsKey("name")) {
-  //   username_ = prefs.getString("name")!;
-  // }
-  // if (!prefs.containsKey("email")) {
-  //   email_ = prefs.getString("email")!;
-  // }
-  // if (!prefs.containsKey("photo")) {
-  //   photoUrl_ = prefs.getString("photo")!;
-  // }
-  // prefs.setInt("profile", 0);
+  final prefs = await SharedPreferences.getInstance();
+
   final thrs = TreasureHuntRemoteDataSourceImpl();
-  user_ = await thrs.getUser();
+
+  final GoogleSignIn _googleSignIn = GoogleSignIn(
+    serverClientId: OAUTH_CLIENT_ID,
+    scopes: <String>[
+      'email',
+      'profile',
+    ],
+  );
+  bool isSignedIn = await _googleSignIn.isSignedIn();
+  if (isSignedIn) {
+    user_ = await thrs.getUser();
+  }
+
   runApp(const Huntly());
 }
 
@@ -88,9 +89,6 @@ class WrapperPage extends StatefulWidget {
 }
 
 class _WrapperPageState extends State<WrapperPage> {
-  static const String OAUTH_CLIENT_ID =
-      '363088523272-orkcfiqub7hshaq29pisji796or7ohpq.apps.googleusercontent.com';
-
   final GoogleSignIn _googleSignIn = GoogleSignIn(
     serverClientId: OAUTH_CLIENT_ID,
     scopes: <String>[

@@ -94,24 +94,25 @@ class HuntlyScaffold extends StatelessWidget {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // ClipRRect(
-                      //   borderRadius:
-                      //       const BorderRadius.all(Radius.circular(100)),
-                      //   child: Image.network(
-                      //     photoUrl_,
-                      //     width: 80,
-                      //   ),
-                      // ),
-                      // const SizedBox(height: 10),
-                      // Text(
-                      //   username_,
-                      //   style: darkTheme.textTheme.headline2,
-                      // )
+                      ClipRRect(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(100)),
+                        child: Image.network(
+                          user_.photoUrl ?? "https://picsum.photos/200",
+                          width: 80,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        user_.firstName + ' ' + user_.lastName,
+                        style: darkTheme.textTheme.headline2,
+                      )
                     ]),
               ),
               DrawerListItem(
                   icon: Ri.home_2_line,
                   onTap: () {
+                    Navigator.of(context).pop();
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const HomePage()));
                   },
@@ -119,6 +120,7 @@ class HuntlyScaffold extends StatelessWidget {
               DrawerListItem(
                   icon: Healthicons.ui_user_profile,
                   onTap: () {
+                    Navigator.of(context).pop();
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const ProfileEditPage()));
                   },
@@ -126,6 +128,7 @@ class HuntlyScaffold extends StatelessWidget {
               DrawerListItem(
                   icon: Mdi.file_find_outline,
                   onTap: () {
+                    Navigator.of(context).pop();
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const FindHuntPage()));
                   },
@@ -133,6 +136,7 @@ class HuntlyScaffold extends StatelessWidget {
               DrawerListItem(
                   icon: Carbon.recently_viewed,
                   onTap: () {
+                    Navigator.of(context).pop();
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const RecentsPage()));
                   },
@@ -140,6 +144,7 @@ class HuntlyScaffold extends StatelessWidget {
               DrawerListItem(
                   icon: Ic.outline_diamond,
                   onTap: () {
+                    Navigator.of(context).pop();
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const MyHuntsPage()));
                   },
@@ -147,6 +152,7 @@ class HuntlyScaffold extends StatelessWidget {
               DrawerListItem(
                   icon: Ph.currency_circle_dollar,
                   onTap: () {
+                    Navigator.of(context).pop();
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const RewardsPage()));
                   },
@@ -154,12 +160,17 @@ class HuntlyScaffold extends StatelessWidget {
               DrawerListItem(
                   icon: Bx.photo_album,
                   onTap: () {
+                    Navigator.of(context).pop();
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const MemoriesMenuPage()));
                   },
                   title: 'Memories'),
               DrawerListItem(
-                  icon: Ic.round_mail_outline, onTap: () {}, title: 'Invites'),
+                  icon: Ic.round_mail_outline,
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  title: 'Invites'),
               Expanded(
                 child: Align(
                   alignment: Alignment.bottomLeft,

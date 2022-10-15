@@ -34,8 +34,6 @@ class HuntsCreateBloc extends Bloc<HuntsCreateEvent, HuntsCreateState> {
           Response response = await dio.post("${url}treasure-hunts/create/",
               options: await getHeaders(), data: jsonEncode(params));
           if (response.statusCode == 201) {
-            print(response.data["id"]);
-            print(response.data["name"]);
             emit(HuntCreated(
                 message: "${response.data["name"]} created",
                 id: response.data["id"],
@@ -45,7 +43,6 @@ class HuntsCreateBloc extends Bloc<HuntsCreateEvent, HuntsCreateState> {
           print("Error in CreateHunt $e");
         }
       } else if (event is AddClues) {
-        print("working");
         List<Map<String, dynamic>> clues = [];
         for (var clue in event.clue) {
           clues.add({
@@ -57,16 +54,13 @@ class HuntsCreateBloc extends Bloc<HuntsCreateEvent, HuntsCreateState> {
             "is_qr_based": true
           });
         }
+
         Dio dio = Dio();
-        print(clues);
-        print(jsonEncode(clues));
         Response response = await dio.post(
           "${url}treasure-hunts/${event.huntId}/clues/create/list/",
           options: await getHeaders(),
           data: jsonEncode(clues),
         );
-
-        print(response.data);
       }
     });
   }

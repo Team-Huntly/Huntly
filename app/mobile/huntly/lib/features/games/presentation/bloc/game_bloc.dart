@@ -36,11 +36,26 @@ class GameBloc extends Bloc<GameEvent, GameState> {
             "${url}treasure-hunts/${event.treasureHuntId}/clues/",
             options: await getHeaders());
         print(response.data);
+        int _index = 0;
+        try {
+          Response pResponse = await dio.get(
+            "${url}treasure-hunts/teams/${event.teamId}/progress/",
+            options: await getHeaders(),
+          );
+          print(pResponse.data);
+          _index = pResponse.data.length;
+        } catch (e) {
+          _index = 0;
+        }
+        print("progress");
+        print(_index);
+
         List<GameClueModel> clues = [];
         for (var clue in response.data) {
           clues.add(GameClueModel.fromJson(clue));
         }
-        emit(CluesLoaded(clues: clues, index: 0, teamId: event.teamId));
+        print(clues.length);
+        emit(CluesLoaded(clues: clues, index: _index, teamId: event.teamId));
       } else if (event is VerifyClue) {
         emit(Loading());
         print("Verifying clue");

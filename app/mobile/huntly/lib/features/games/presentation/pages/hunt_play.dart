@@ -1,3 +1,4 @@
+import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,6 +27,7 @@ class HuntPlay extends StatefulWidget {
 }
 
 class _HuntPlayState extends State<HuntPlay> with TickerProviderStateMixin {
+  final controller = ConfettiController();
   @override
   void initState() {
     BlocProvider.of<GameBloc>(context)
@@ -62,12 +64,22 @@ class _HuntPlayState extends State<HuntPlay> with TickerProviderStateMixin {
             ),
           );
         } else if (state is LocationVerified) {
+          controller.play();
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('Location verified'),
               backgroundColor: Colors.green,
             ),
           );
+          Future.delayed(Duration(seconds: 2), () {
+            controller.stop();
+          });
+        } else if (state is ClueSolved) {
+          controller.play();
+
+          Future.delayed(Duration(seconds: 2), () {
+            controller.stop();
+          });
         }
       },
       builder: (context, state) {
@@ -152,32 +164,26 @@ class _HuntPlayState extends State<HuntPlay> with TickerProviderStateMixin {
             ),
           );
         } else if (state is ClueSolved) {
-          return HuntlyScaffold(
-              outerContext: context,
-              body: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const SizedBox(height: 70),
-                  Text(
-                      'Clue #${state.clues[state.index].stepNo}/${state.clues.length}',
-                      style: darkTheme.textTheme.caption),
-                  const SizedBox(height: 50),
-                  Text(state.clues[state.index].description,
-                      style: darkTheme.textTheme.bodyText2),
-                  const SizedBox(height: 15),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ActionButton(
-                        text: 'Success',
-                        leading: Noto.party_popper,
-                        onTap: () {},
-                        colorIcon: false,
-                        color: darkTheme.colorScheme.secondary,
-                      ),
-                      const SizedBox(width: 10),
-                      ActionButton(
-                          leading: Mdi.camera_wireless_outline,
+          return Stack(children: [
+            HuntlyScaffold(
+                outerContext: context,
+                body: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(height: 70),
+                    Text(
+                        'Clue #${state.clues[state.index].stepNo}/${state.clues.length}',
+                        style: darkTheme.textTheme.caption),
+                    const SizedBox(height: 50),
+                    Text(state.clues[state.index].description,
+                        style: darkTheme.textTheme.bodyText2),
+                    const SizedBox(height: 15),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ActionButton(
+                          text: 'Success',
+                          leading: Noto.party_popper,
                           onTap: () {},
                           color: darkTheme.colorScheme.primary)
                     ],
@@ -199,7 +205,12 @@ class _HuntPlayState extends State<HuntPlay> with TickerProviderStateMixin {
                     },
                   ),
                 ],
-              ));
+              )),Center(
+                child: ConfettiWidget(
+              confettiController: controller,
+              blastDirectionality: BlastDirectionality.explosive,
+              numberOfParticles: 100,
+            ))]);
         } else if(state is GameEnded) {
           return Center(
             child: ActionButton(
@@ -210,7 +221,7 @@ class _HuntPlayState extends State<HuntPlay> with TickerProviderStateMixin {
                 },
             ),
           );
-        }  else {
+        } else {
           return const Center(child: CircularProgressIndicator());
         }
       },

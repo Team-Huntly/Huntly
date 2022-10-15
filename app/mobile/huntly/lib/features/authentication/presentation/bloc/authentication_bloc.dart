@@ -13,6 +13,7 @@ import 'package:huntly/core/utils/get_headers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../common/constants.dart';
+import '../../../hunts/data/datasources/treasure_hunt_remote_datasource.dart';
 import '../../data/profile_datasource.dart';
 
 part 'authentication_event.dart';
@@ -54,15 +55,6 @@ class AuthenticationBloc
             data: jsonEncode(params),
           );
 
-          SharedPreferences prefs = await SharedPreferences.getInstance();
-          prefs.setString("token", response.data["token"]);
-          prefs.setString("name", googleUser.displayName!);
-          prefs.setString("email", googleUser.email);
-          prefs.setString("photo", googleUser.photoUrl!);
-          username_ = googleUser.displayName!;
-          email_ = googleUser.email;
-          photoUrl_ = googleUser.photoUrl!;
-
           emit(AuthenticationSuccess());
         } catch (e) {
           // Authentication Failure
@@ -93,7 +85,6 @@ class AuthenticationBloc
           });
 
           var interestParamsJson = jsonEncode(interestParams);
-          print("Interests : $interestParamsJson");
           var params = {
             "first_name": googleUser.displayName,
             "last_name": "",
@@ -103,6 +94,7 @@ class AuthenticationBloc
             "bio": event.bio,
             "interests": interestParamsJson
           };
+
           final _prefs = await SharedPreferences.getInstance();
           Response response = await Dio().put(
             "${url}users/update/",
@@ -111,6 +103,9 @@ class AuthenticationBloc
           );
           final prefs = await SharedPreferences.getInstance();
           prefs.setInt("profile", 1);
+
+          final thrs = TreasureHuntRemoteDataSourceImpl();
+          user_ = await thrs.getUser();
           emit(ProfileAdded());
         } catch (e) {
           // Authentication Failure

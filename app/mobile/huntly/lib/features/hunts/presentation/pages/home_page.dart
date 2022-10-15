@@ -68,10 +68,10 @@ class _HomePageState extends State<HomePage> {
                 ),
               );
             } else if (state is Failed) {
-              return Text("No hunts found");
+              return const Text("Not registered for any hunts");
             } else {
               return const Center(
-                child: Text('Error'),
+                child: Text('Not registered for any hunts'),
               );
             }
           },

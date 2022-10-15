@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:huntly/core/utils/scaffold.dart';
+import 'package:huntly/core/utils/service.dart';
 import 'package:huntly/core/utils/text_field.dart';
+import 'package:huntly/features/authentication/domain/entities/user.dart';
 import 'package:huntly/features/authentication/presentation/widgets/box_renderer.dart';
 import 'package:huntly/features/hunts/presentation/pages/home_page.dart';
 import '../../../../common/constants.dart';
@@ -40,21 +42,22 @@ class _ProfilePageState extends State<ProfilePage> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                height: 100,
-                width: 100,
-                decoration: const BoxDecoration(
-                    shape: BoxShape.circle, color: Colors.red),
+              ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(100)),
+                child: Image.network(
+                  user_.photoUrl ?? "https://picsum.photos/200",
+                  width: 80,
+                ),
               ),
               Center(
                 child: Text(
-                  'John Doe',
+                  user_.firstName,
                   style: darkTheme.textTheme.headline2,
                 ),
               ),
               Center(
                 child: Text(
-                  'jhondoe@gmail.com',
+                  user_.email,
                   style: darkTheme.textTheme.headline3,
                 ),
               ),

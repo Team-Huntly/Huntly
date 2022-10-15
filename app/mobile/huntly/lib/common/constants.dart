@@ -20,6 +20,9 @@ import 'package:iconify_flutter/icons/mdi.dart';
 import 'package:colorful_iconify_flutter/icons/vscode_icons.dart';
 import 'package:colorful_iconify_flutter/icons/emojione.dart';
 
+const String OAUTH_CLIENT_ID =
+    '363088523272-orkcfiqub7hshaq29pisji796or7ohpq.apps.googleusercontent.com';
+
 class Interests extends Equatable {
   final String category;
   final String interest;
