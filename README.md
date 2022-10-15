@@ -121,6 +121,7 @@ Team-Name-404/
 
 ## Network Diagram
 
+![Huntly Diagram with Django Q](https://user-images.githubusercontent.com/76661350/195968741-6ec66ac0-b2e9-47a6-b844-af2cee31be9a.png)
 
-![Huntly Network Diagram without Redis](https://user-images.githubusercontent.com/76661350/195947815-5499aecf-b457-40be-b8c5-8fd9be131f88.png)
+
 
