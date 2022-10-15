@@ -12,6 +12,7 @@ import 'features/authentication/presentation/pages/profile_page.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'features/games/presentation/bloc/game_bloc.dart';
 import 'features/huntsCreate/presentation/bloc/hunts_create_bloc.dart';
 import 'features/memories/presentation/bloc/memories_bloc.dart';
 
@@ -57,6 +58,9 @@ class Huntly extends StatelessWidget {
         ),
         BlocProvider<HuntsCreateBloc>(
           create: (context) => HuntsCreateBloc(),
+        ),
+        BlocProvider<GameBloc>(
+          create: (context) => GameBloc(),
         ),
         BlocProvider<RewardsBloc>(create: (context) => RewardsBloc()),
         BlocProvider<MemoriesBloc>(create: (context) => MemoriesBloc())

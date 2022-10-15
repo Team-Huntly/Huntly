@@ -14,7 +14,7 @@ abstract class TreasureHuntRemoteDataSource {
 
   Future<List<TreasureHuntModel>> fetchRecentTreasureHunts();
 
-  Future<List<TreasureHuntModel>> fetchUserTreasureHunts({required int userId});
+  Future<List<TreasureHuntModel>> fetchUserTreasureHunts();
 
   Future<void> registerUser({required int treasureHuntId});
 
@@ -23,6 +23,8 @@ abstract class TreasureHuntRemoteDataSource {
   Future<TeamModel> getTeammates({required int treasureHuntId});
 
   Future<LeaderboardModel> getLeaderboard({required int treasureHuntId});
+
+  Future<List<TreasureHuntModel>> getUserHunts();
 }
 
 class TreasureHuntRemoteDataSourceImpl implements TreasureHuntRemoteDataSource {
@@ -50,8 +52,7 @@ class TreasureHuntRemoteDataSourceImpl implements TreasureHuntRemoteDataSource {
   }
 
   @override
-  Future<List<TreasureHuntModel>> fetchUserTreasureHunts(
-      {required int userId}) async {
+  Future<List<TreasureHuntModel>> fetchUserTreasureHunts() async {
     try {
       Dio dio = Dio();
       var response = await dio.get("${url}user/treasure-hunts/upcoming",
@@ -160,24 +161,26 @@ class TreasureHuntRemoteDataSourceImpl implements TreasureHuntRemoteDataSource {
       throw NetworkException();
     }
   }
-  // TODO:
-  // @override
-  // Future<List<TreasureHuntModel>> getUserHunts() async {
-  //   try {
-  //     Dio dio = Dio();
-  //     final response = await dio.get("${url}users/hunts/created/",
-  //         options: await getHeaders());
-  //     if (response.statusCode == 200) {
-  //       List<TreasureHuntModel> treasureHunts = response.data
-  //           .map<TreasureHuntModel>((m) => TreasureHuntModel.fromJson(m))
-  //           .toList();
-  //       return treasureHunts;
-  //     } else {
-  //       throw ServerException();
-  //     }
-  //   } catch (e) {
-  //     debugPrint("Datasource error: $e");
-  //     throw NetworkException();
-  //   }
-  // }
+
+  @override
+  Future<List<TreasureHuntModel>> getUserHunts() async {
+    try {
+      Dio dio = Dio();
+      final response = await dio.get("${url}users/hunts/created/",
+          options: await getHeaders());
+      print("--------");
+      print(response.data);
+      if (response.statusCode == 200) {
+        List<TreasureHuntModel> treasureHunts = response.data
+            .map<TreasureHuntModel>((m) => TreasureHuntModel.fromJson(m))
+            .toList();
+        return treasureHunts;
+      } else {
+        throw ServerException();
+      }
+    } catch (e) {
+      debugPrint("herror: $e");
+      throw NetworkException();
+    }
+  }
 }

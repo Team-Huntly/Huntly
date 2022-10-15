@@ -58,8 +58,15 @@ Future<GoogleSignInAccount?> getUser() async {
 class HuntlyScaffold extends StatelessWidget {
   final Widget body;
   final BuildContext outerContext;
+  final FloatingActionButtonLocation? floatingActionButtonLocation;
+  final FloatingActionButton? floatingActionButton;
+
   const HuntlyScaffold(
-      {Key? key, required this.body, required this.outerContext})
+      {Key? key,
+      required this.body,
+      required this.outerContext,
+      this.floatingActionButtonLocation,
+      this.floatingActionButton})
       : super(key: key);
 
   @override
@@ -67,6 +74,8 @@ class HuntlyScaffold extends StatelessWidget {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: darkTheme.colorScheme.background,
+        floatingActionButton: floatingActionButton,
+        floatingActionButtonLocation: floatingActionButtonLocation,
         appBar: AppBar(
           foregroundColor: darkTheme.colorScheme.onBackground,
           backgroundColor: darkTheme.colorScheme.background,
@@ -115,15 +124,19 @@ class HuntlyScaffold extends StatelessWidget {
                   },
                   title: 'Profile'),
               DrawerListItem(
-                  icon: Mdi.file_find_outline, onTap: () {
+                  icon: Mdi.file_find_outline,
+                  onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const FindHuntPage()));
-                  }, title: 'Find'),
+                  },
+                  title: 'Find'),
               DrawerListItem(
-                  icon: Carbon.recently_viewed, onTap: () {
+                  icon: Carbon.recently_viewed,
+                  onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const RecentsPage()));
-                  }, title: 'Recent'),
+                  },
+                  title: 'Recent'),
               DrawerListItem(
                   icon: Ic.outline_diamond,
                   onTap: () {

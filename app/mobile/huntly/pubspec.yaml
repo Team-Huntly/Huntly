@@ -46,6 +46,7 @@ dependencies:
   geolocator: ^9.0.2
   place_picker: ^0.10.0
   flutter_datetime_picker: ^1.5.1
+  flutter_expandable_fab: ^1.5.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
