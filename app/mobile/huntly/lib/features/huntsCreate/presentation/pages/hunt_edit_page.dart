@@ -265,7 +265,7 @@ class _HuntEditPageState extends State<HuntEditPage> {
                                   location: _locationResult!,
                                   endedAt: _endDate.toString(),
                                   startedAt: _startDate.toString(),
-                                  theme: 1,
+                                  theme: 2,
                                 ),
                               );
                             }
