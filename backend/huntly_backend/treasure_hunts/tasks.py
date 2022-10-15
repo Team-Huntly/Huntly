@@ -1,5 +1,3 @@
-from django_q.tasks import async_task, result
-from django_q.models import Schedule
 import requests
 import random
 from django.contrib.auth import get_user_model
