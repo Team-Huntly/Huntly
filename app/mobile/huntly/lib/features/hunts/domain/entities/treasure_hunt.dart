@@ -17,6 +17,8 @@ class TreasureHunt extends Equatable {
   bool is_locked;
   String location_name;
   List<UserModel> participants;
+  UserModel creator;
+  String status;
 
   TreasureHunt({
     required this.id,
@@ -31,21 +33,23 @@ class TreasureHunt extends Equatable {
     required this.is_locked,
     required this.location_name,
     required this.participants,
+    required this.creator,
+    required this.status,
   });
 
   @override
   List<Object> get props => [
-        id,
-        name,
-        started_at,
-        ended_at,
-        location_latitute,
-        location_longitude,
-        total_seats,
-        team_size,
-        theme,
-        is_locked,
-        participants,
-        theme
-      ];
+    id,
+    name,
+    started_at,
+    ended_at,
+    location_latitute,
+    location_longitude,
+    total_seats,
+    team_size,
+    theme,
+    is_locked,
+    participants,
+    theme
+  ];
 }

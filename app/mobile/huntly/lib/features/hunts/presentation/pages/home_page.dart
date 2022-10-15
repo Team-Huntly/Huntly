@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     BlocProvider.of<TreasureHuntBloc>(context)
-                  .add(GetTreasureHunts());
+                  .add(GetRegisteredTreasureHunts());
     super.initState();
   }
   
@@ -60,14 +60,17 @@ class _HomePageState extends State<HomePage> {
             } else if (state is TreasureHuntInitial) {
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 BlocProvider.of<TreasureHuntBloc>(context)
-                    .add(GetTreasureHunts());
+                    .add(GetRegisteredTreasureHunts());
               });
               return const Center(
                 child: CircularProgressIndicator(
                   color: Colors.white,
                 ),
               );
-            } else {
+            } else if(state is Failed) {
+              return Text("No hunts found");
+            }
+            else {
               return const Center(
                 child: Text('Error'),
               );

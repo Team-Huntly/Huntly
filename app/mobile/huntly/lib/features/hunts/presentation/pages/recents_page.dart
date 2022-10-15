@@ -62,7 +62,7 @@ class _RecentsPageState extends State<RecentsPage> {
               );
             } else {
               return const Center(
-                child: Text('Error'),
+                child: Text(''),
               );
             }
           },

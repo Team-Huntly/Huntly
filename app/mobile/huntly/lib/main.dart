@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:huntly/core/utils/service.dart';
+import 'package:huntly/features/hunts/data/datasources/treasure_hunt_remote_datasource.dart';
 import 'package:huntly/features/hunts/presentation/bloc/treasurehunt_bloc.dart';
 import 'package:huntly/features/hunts/presentation/pages/home_page.dart';
 import 'package:huntly/features/rewards/presentation/bloc/rewards_bloc.dart';
 
+import 'features/authentication/data/models/user_model.dart';
 import 'features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'features/authentication/presentation/pages/authentication_page.dart';
 import 'features/authentication/presentation/pages/profile_page.dart';
@@ -32,6 +34,8 @@ void main() async {
   //   photoUrl_ = prefs.getString("photo")!;
   // }
   // prefs.setInt("profile", 0);
+  final thrs = TreasureHuntRemoteDataSourceImpl(); 
+  user_ = await thrs.getUser();
   runApp(const Huntly());
 }
 

@@ -17,6 +17,8 @@ class TreasureHuntModel extends TreasureHunt {
     required bool is_locked,
     required String location_name,
     required List<UserModel> participants,
+    required UserModel creator,
+    required String status,
   }) : super(
           id: id,
           name: name,
@@ -30,6 +32,8 @@ class TreasureHuntModel extends TreasureHunt {
           is_locked: is_locked,
           location_name: location_name,
           participants: participants,
+          creator: creator,
+          status: status
         );
 
   factory TreasureHuntModel.fromJson(Map<String, dynamic> json) {
@@ -47,7 +51,10 @@ class TreasureHuntModel extends TreasureHunt {
         participants: json['participants']
             .map<UserModel>((participant) => UserModel.fromJson(participant))
             .toList(),
-        theme: ThemeModel.fromJson(json['theme']));
+        theme: ThemeModel.fromJson(json['theme']),
+        creator: UserModel.fromJson(json['created_by']),
+        status: json['status']
+      );
   }
 
   Map<String, dynamic> toJson() {
