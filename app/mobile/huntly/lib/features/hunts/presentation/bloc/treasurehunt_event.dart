@@ -9,6 +9,8 @@ abstract class TreasureHuntEvent extends Equatable {
 
 class GetTreasureHunts extends TreasureHuntEvent {}
 
+class GetRegisteredTreasureHunts extends TreasureHuntEvent {}
+
 class RegisterUser extends TreasureHuntEvent {
   final int treasureHuntId;
 

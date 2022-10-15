@@ -8,6 +8,7 @@ import 'package:huntly/features/hunts/presentation/pages/hunt_view.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/theme/theme.dart';
+import '../../../authentication/data/models/user_model.dart';
 
 class HuntCard extends StatelessWidget {
   // final String title;

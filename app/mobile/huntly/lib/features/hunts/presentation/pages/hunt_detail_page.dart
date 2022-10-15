@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:huntly/core/utils/action_button.dart';
+import 'package:huntly/features/hunts/data/datasources/treasure_hunt_remote_datasource.dart';
 import 'package:huntly/features/hunts/domain/entities/treasure_hunt.dart';
 import 'package:huntly/features/hunts/presentation/pages/hunt_edit_page_after.dart';
 import 'package:huntly/features/hunts/presentation/widgets/hunt_info_card.dart';
@@ -8,19 +9,21 @@ import 'package:iconify_flutter/icons/ic.dart';
 import 'package:iconify_flutter/icons/mdi.dart';
 import 'package:iconify_flutter/icons/majesticons.dart';
 import 'package:iconify_flutter/icons/ri.dart';
-import 'package:colorful_iconify_flutter/icons/twemoji.dart';
 
 import 'package:intl/intl.dart';
 
 import '../../../../core/theme/theme.dart';
+import '../../../../core/utils/service.dart';
 import '../../../authentication/data/models/user_model.dart';
 import '../../../games/presentation/pages/hunt_play.dart';
 import '../../../huntsCreate/presentation/pages/hunt_edit_page.dart';
 
 class HuntDetailPage extends StatefulWidget {
   final TreasureHunt treasureHunt;
+  final UserModel user;
 
-  const HuntDetailPage({Key? key, required this.treasureHunt})
+  const HuntDetailPage(
+      {Key? key, required this.treasureHunt, required this.user})
       : super(key: key);
 
   @override
@@ -29,6 +32,8 @@ class HuntDetailPage extends StatefulWidget {
 
 class _HuntDetailPageState extends State<HuntDetailPage> {
   bool isParticipant(int userId) {
+    print(widget.treasureHunt.participants);
+    print(userId);
     for (final UserModel participant in widget.treasureHunt.participants) {
       if (participant.id == userId) {
         return true;
@@ -37,8 +42,17 @@ class _HuntDetailPageState extends State<HuntDetailPage> {
     return false;
   }
 
+  bool isAdmin(int userId) {
+    return widget.treasureHunt.creator.id == user_.id;
+  }
+
   @override
   Widget build(BuildContext context) {
+    bool isParticipant = this.isParticipant(user_.id);
+    bool isAdmin = this.isAdmin(user_.id);
+
+    print(widget.treasureHunt.toString());
+
     return SingleChildScrollView(
         child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -114,27 +128,33 @@ class _HuntDetailPageState extends State<HuntDetailPage> {
         const SizedBox(
           height: 25,
         ),
-        ActionButton(
-          text: 'Start',
-          onTap: () {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) =>
-                    HuntPlay(treasureHuntId: widget.treasureHunt.id)));
-          },
-        ),
-        ActionButton(
-          text: 'Register',
-          onTap: () {},
-          color: darkTheme.indicatorColor,
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        ActionButton(
-          text: 'Unregister',
-          onTap: () {},
-          color: darkTheme.colorScheme.secondary,
-        ),
+        widget.treasureHunt.started_at.isBefore(DateTime.now())
+            ? ActionButton(
+                text: 'Start',
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) =>
+                          HuntPlay(treasureHuntId: widget.treasureHunt.id)));
+                },
+              )
+            : isParticipant
+                ? ActionButton(
+                    text: 'Unregister',
+                    onTap: () {
+                      final thrs = TreasureHuntRemoteDataSourceImpl();
+                      thrs.unregisterUser(
+                          treasureHuntId: widget.treasureHunt.id);
+                    },
+                    color: darkTheme.colorScheme.secondary,
+                  )
+                : ActionButton(
+                    text: 'Register',
+                    onTap: () {
+                      final thrs = TreasureHuntRemoteDataSourceImpl();
+                      thrs.registerUser(treasureHuntId: widget.treasureHunt.id);
+                    },
+                    color: darkTheme.indicatorColor,
+                  ),
         const SizedBox(
           height: 10,
         ),
@@ -156,13 +176,13 @@ class _HuntDetailPageState extends State<HuntDetailPage> {
         const SizedBox(
           height: 10,
         ),
-        ActionButton(
-          text: 'Teams locked',
-          onTap: () {},
-          color: darkTheme.colorScheme.secondary,
-          leading: Twemoji.locked_with_key,
-          colorIcon: false,
-        )
+        const SizedBox(width: 10),
+        isAdmin
+            ? ActionButton(
+                onTap: () {},
+                leading: Ic.twotone_edit,
+              )
+            : Container(),
       ],
     ));
   }

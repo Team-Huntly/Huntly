@@ -22,6 +22,7 @@ part 'treasurehunt_state.dart';
 class TreasureHuntBloc extends Bloc<TreasureHuntEvent, TreasureHuntState> {
   TreasureHuntBloc() : super(TreasureHuntInitial()) {
     on<TreasureHuntEvent>((event, emit) async {
+
       if (event is GetTreasureHunts) {
         emit(Loading());
 
@@ -42,6 +43,17 @@ class TreasureHuntBloc extends Bloc<TreasureHuntEvent, TreasureHuntState> {
           debugPrint(e.toString());
           emit(Failed());
         }
+      } else if(event is GetRegisteredTreasureHunts) {
+        final _thrs = TreasureHuntRemoteDataSourceImpl();
+        List<TreasureHunt> treasureHunts;
+        try {
+          treasureHunts = await _thrs.fetchUserTreasureHunts();
+        }
+        catch (e) {
+          treasureHunts = [];
+        }
+        print(treasureHunts);
+        emit(Loaded(treasureHunts: treasureHunts));
       } else if (event is RegisterUser) {
         emit(Loading());
         try {
