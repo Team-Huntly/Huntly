@@ -148,6 +148,8 @@ class TreasureHuntParticipantsSerializer(serializers.ModelSerializer):
             treasure_hunt = instance
             if treasure_hunt.participants.filter(id=user.id).exists():
                 raise serializers.ValidationError('User is already registered')
+            if treasure_hunt.status != 'O':
+                raise serializers.ValidationError('Registration is closed')
             # if treasure_hunt.is_locked:
             #     raise serializers.ValidationError('Registration is closed')
             treasure_hunt.participants.add(user)
@@ -162,6 +164,8 @@ class TreasureHuntParticipantsSerializer(serializers.ModelSerializer):
             treasure_hunt = instance
             if not treasure_hunt.participants.filter(id=user.id).exists():
                 raise serializers.ValidationError('User is not registered')
+            if treasure_hunt.status != 'O':
+                raise serializers.ValidationError('Registration is closed')
             # if treasure_hunt.is_locked:
             #     raise serializers.ValidationError('Registration is locked')
             treasure_hunt.participants.remove(user)
