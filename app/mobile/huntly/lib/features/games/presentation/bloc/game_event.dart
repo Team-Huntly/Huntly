@@ -37,3 +37,10 @@ class VerifyClue extends GameEvent {
       required this.teamId,
       required this.index});
 }
+
+class NextClue extends GameEvent {
+  final int index;
+  final List<GameClueModel> clues;
+  final int teamId;
+  NextClue({required this.index, required this.clues, required this.teamId});
+}

@@ -43,6 +43,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         }
         emit(CluesLoaded(clues: clues, index: 0, teamId: event.teamId));
       } else if (event is VerifyClue) {
+        emit(Loading());
         print("Verifying clue");
         Position pos = await determinePosition();
         Dio dio = Dio();
@@ -69,17 +70,20 @@ class GameBloc extends Bloc<GameEvent, GameState> {
           if (response.data["clue"]["id"] == event.clues.length) {
             emit(GameEnded());
           }
-          Future.delayed(Duration(seconds: 1), () {});
-          emit(CluesLoaded(
-              clues: event.clues,
-              index: event.index + 1,
-              teamId: event.teamId));
+          Future.delayed(const Duration(seconds: 1), () {});
+
+          emit(ClueSolved(
+              clues: event.clues, index: event.index, teamId: event.teamId));
         } else if (response.statusCode == 400) {
           print("Unverified");
           emit(LocationUnverified());
           emit(CluesLoaded(
               clues: event.clues, index: event.index, teamId: event.teamId));
         }
+      } else if (event is NextClue) {
+        print("hhllo");
+        emit(CluesLoaded(
+            clues: event.clues, index: event.index + 1, teamId: event.teamId));
       }
     });
   }

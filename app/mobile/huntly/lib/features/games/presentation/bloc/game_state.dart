@@ -37,3 +37,10 @@ class GameEnded extends GameState {}
 class GameError extends GameState {}
 
 class Loading extends GameState {}
+
+class ClueSolved extends GameState {
+  List<GameClueModel> clues;
+  int index;
+  int teamId;
+  ClueSolved({required this.clues, required this.index, required this.teamId});
+}
