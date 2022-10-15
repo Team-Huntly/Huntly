@@ -2,16 +2,17 @@
 
 ## Table of Contents 📁
 
-1. [Team Details](https://github.com/Manipal-Hackathon-2022/Team-Name-404/blob/main/README.md#team-details)
-2. [Description of project](https://github.com/Manipal-Hackathon-2022/Team-Name-404/blob/main/README.md#description-of-project)
-3. [What we have built](https://github.com/Manipal-Hackathon-2022/Team-Name-404/blob/main/README.md#what-we-have-built)
-4. [Directory Structure](https://github.com/Manipal-Hackathon-2022/Team-Name-404/blob/main/README.md#directory-structure)
+1. [Team Details](https://github.com/Manipal-Hackathon-2022/Team-Name-404/blob/main/README.md#team-details-)
+2. [Description of project](https://github.com/Manipal-Hackathon-2022/Team-Name-404/blob/main/README.md#description-of-project-)
+3. [What we have built](https://github.com/Manipal-Hackathon-2022/Team-Name-404/blob/main/README.md#what-we-have-built-)
+4. [Directory Structure](https://github.com/Manipal-Hackathon-2022/Team-Name-404/blob/main/README.md#directory-structure-)
 5. [Network Diagram](https://github.com/Manipal-Hackathon-2022/Team-Name-404/blob/main/README.md#network-diagram)
 
 <br/>
 
 ## Team Details 👥
 - Name: Name 404
+- College: National Institute of Technology Karnataka Surathkal
 - Members
     - Parth Mittal (Leader)
     - Pranav Agarwal
