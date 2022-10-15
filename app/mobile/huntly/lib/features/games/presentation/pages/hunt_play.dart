@@ -111,11 +111,12 @@ class _HuntPlayState extends State<HuntPlay> with TickerProviderStateMixin {
                             if (int.parse(barcodeScanRes) ==
                                 state.clues[state.index].id) {
                               // ignore: invalid_use_of_visible_for_testing_member, use_build_context_synchronously
-                              BlocProvider.of<GameBloc>(context).emit(
-                                  ClueSolved(
-                                      clues: state.clues,
-                                      index: state.index,
-                                      teamId: state.teamId));
+                              BlocProvider.of<GameBloc>(context).add(VerifyClue(
+                                  treasureHuntId: widget.treasureHuntId,
+                                  clueId: state.clues[state.index].id,
+                                  clues: state.clues,
+                                  teamId: state.teamId,
+                                  index: state.index));
                             } else {
                               // ignore: use_build_context_synchronously
                               ScaffoldMessenger.of(context).showSnackBar(

@@ -158,21 +158,17 @@ class _HuntDetailPageState extends State<HuntDetailPage> {
         const SizedBox(
           height: 10,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ActionButton(onTap: () {}, text: 'Lock teams'),
-            const SizedBox(width: 10),
-            ActionButton(
-              onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) =>
-                        HuntAfterEditPage(treasureHunt: widget.treasureHunt)));
-              },
-              leading: Ic.twotone_edit,
-            )
-          ],
-        ),
+        const SizedBox(width: 10),
+        isAdmin
+            ? ActionButton(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => HuntAfterEditPage(
+                          treasureHunt: widget.treasureHunt)));
+                },
+                leading: Ic.twotone_edit,
+              )
+            : Container(),
         const SizedBox(
           height: 10,
         ),
