@@ -42,14 +42,12 @@ class _ProfilePageState extends State<ProfilePage> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                height: 100,
-                width: 100,
+              ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(100)),
                 child: Image.network(
                   user_.photoUrl ?? "https://picsum.photos/200",
+                  width: 80,
                 ),
-                decoration: const BoxDecoration(
-                    shape: BoxShape.circle, color: Colors.red),
               ),
               Center(
                 child: Text(

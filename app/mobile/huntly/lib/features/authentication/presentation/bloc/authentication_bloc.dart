@@ -85,7 +85,6 @@ class AuthenticationBloc
           });
 
           var interestParamsJson = jsonEncode(interestParams);
-          print("Interests : $interestParamsJson");
           var params = {
             "first_name": googleUser.displayName,
             "last_name": "",
@@ -95,6 +94,7 @@ class AuthenticationBloc
             "bio": event.bio,
             "interests": interestParamsJson
           };
+
           final _prefs = await SharedPreferences.getInstance();
           Response response = await Dio().put(
             "${url}users/update/",

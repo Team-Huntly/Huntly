@@ -65,50 +65,6 @@ class _MyHuntsPageState extends State<MyHuntsPage> {
               }
             },
           ),
-          // GestureDetector(
-          //   child: const Text(
-          //     'Custom',
-          //     style: TextStyle(fontSize: 40),
-          //   ),
-          //   onTap: () {
-          //     // TODO: Navigate to custom hunt edit page
-          //     Navigator.of(context).pushReplacement(MaterialPageRoute(
-          //         builder: (context) => const HuntEditPage()));
-          //     // TODO remove this
-          //     // Navigator.of(context).pushReplacement(MaterialPageRoute(
-          //     //     builder: (context) => const HuntCreate(
-          //     //           huntId: 3,
-          //     //         )));
-          //   },
-          // ),
-          // Padding(
-          //   padding: const EdgeInsets.all(8.0),
-          //   child: GestureDetector(
-          //     child: const Text('Presets'),
-          //     onTap: () {
-          //       Navigator.of(context).pushReplacement(MaterialPageRoute(
-          //           builder: (context) => const PresetsPage()));
-          //     },
-          //   ),
-          // ),
-          // DropdownButton(
-          //   items: <DropdownMenuItem<int>>[
-          //     DropdownMenuItem(
-          //       child: Text('Custom'),
-          //       value: 0,
-          //     ),
-          //     DropdownMenuItem(
-          //       child: Text('Presets'),
-          //       value: 42,
-          //     ),
-          //   ],
-          //   onChanged: (int? value) {},
-          //   // onChanged: (int value) {
-          //   //   setState(() {
-          //   //     _value = value;
-          //   //   });
-          //   // },
-          // ),
           SizedBox(
             height: 30,
           ),
