@@ -32,114 +32,62 @@ class _MyHuntsPageState extends State<MyHuntsPage> {
   Widget build(BuildContext context) {
     return HuntlyScaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      // floatingActionButton: ExpandableFabClass(
-      //   onPressed: () {},
-      //   child:
-      // ),
-      body: Column(
-        children: [
-          BlocConsumer<TreasureHuntBloc, TreasureHuntState>(
-            listener: (context, state) {},
-            builder: (context, state) {
-              if (state is Loaded) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 30),
-                    ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: state.treasureHunts.length,
-                      itemBuilder: (context, index) {
-                        return HuntCard(
-                            treasureHunt: state.treasureHunts[index]);
-                      },
-                    ),
-                  ],
-                );
-              } else {
-                return const Center(
-                  child: CircularProgressIndicator(
-                    color: Colors.white,
-                  ),
-                );
-              }
-            },
-          ),
-          // GestureDetector(
-          //   child: const Text(
-          //     'Custom',
-          //     style: TextStyle(fontSize: 40),
-          //   ),
-          //   onTap: () {
-          //     // TODO: Navigate to custom hunt edit page
-          //     Navigator.of(context).pushReplacement(MaterialPageRoute(
-          //         builder: (context) => const HuntEditPage()));
-          //     // TODO remove this
-          //     // Navigator.of(context).pushReplacement(MaterialPageRoute(
-          //     //     builder: (context) => const HuntCreate(
-          //     //           huntId: 3,
-          //     //         )));
-          //   },
-          // ),
-          // Padding(
-          //   padding: const EdgeInsets.all(8.0),
-          //   child: GestureDetector(
-          //     child: const Text('Presets'),
-          //     onTap: () {
-          //       Navigator.of(context).pushReplacement(MaterialPageRoute(
-          //           builder: (context) => const PresetsPage()));
-          //     },
-          //   ),
-          // ),
-          // DropdownButton(
-          //   items: <DropdownMenuItem<int>>[
-          //     DropdownMenuItem(
-          //       child: Text('Custom'),
-          //       value: 0,
-          //     ),
-          //     DropdownMenuItem(
-          //       child: Text('Presets'),
-          //       value: 42,
-          //     ),
-          //   ],
-          //   onChanged: (int? value) {},
-          //   // onChanged: (int value) {
-          //   //   setState(() {
-          //   //     _value = value;
-          //   //   });
-          //   // },
-          // ),
-          SizedBox(
-            height: 30,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              ActionButton(
-                text: 'Custom',
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const HuntEditPage(),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            BlocConsumer<TreasureHuntBloc, TreasureHuntState>(
+              listener: (context, state) {},
+              builder: (context, state) {
+                if (state is Loaded) {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: state.treasureHunts.length,
+                    itemBuilder: (context, index) {
+                      return HuntCard(
+                          treasureHunt: state.treasureHunts[index]);
+                    },
+                  );
+                } else {
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
                     ),
                   );
-                },
-              ),
-              ActionButton(
-                text: 'Preset',
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const PresetsPage(),
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
-        ],
+                }
+              },
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                ActionButton(
+                  text: 'Custom',
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const HuntEditPage(),
+                      ),
+                    );
+                  },
+                ),
+                ActionButton(
+                  text: 'Preset',
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const PresetsPage(),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
       outerContext: context,
     );

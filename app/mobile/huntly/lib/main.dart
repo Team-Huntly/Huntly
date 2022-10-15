@@ -34,7 +34,7 @@ void main() async {
   //   photoUrl_ = prefs.getString("photo")!;
   // }
   // prefs.setInt("profile", 0);
-  final thrs = TreasureHuntRemoteDataSourceImpl(); 
+  final thrs = TreasureHuntRemoteDataSourceImpl();
   user_ = await thrs.getUser();
   runApp(const Huntly());
 }

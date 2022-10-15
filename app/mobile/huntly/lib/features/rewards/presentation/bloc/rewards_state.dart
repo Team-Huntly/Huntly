@@ -15,9 +15,9 @@ class Failed extends RewardsState {}
 
 class Loaded extends RewardsState {
   final List<RewardModel> rewards;
-  
+
   const Loaded({required this.rewards});
-  
+
   @override
   List<Object> get props => [rewards];
 }

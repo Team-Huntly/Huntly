@@ -17,12 +17,11 @@ class GalleryPage extends StatelessWidget {
         child: Column(children: [
           const SizedBox(height: 30),
           ListView.builder(
-            shrinkWrap: true,
-            itemCount: memory.images.length,
-            itemBuilder: (context, index) {
-              return GalleryImage(image: memory.images[index]);
-            }
-          ),
+              shrinkWrap: true,
+              itemCount: memory.images.length,
+              itemBuilder: (context, index) {
+                return GalleryImage(image: memory.images[index]);
+              }),
         ]),
       ),
     );

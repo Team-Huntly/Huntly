@@ -6,18 +6,12 @@ abstract class User extends Equatable {
   final String lastName;
   final String email;
 
-  const User({
-    required this.id,
-    required this.firstName,
-    required this.lastName,
-    required this.email
-  });
+  const User(
+      {required this.id,
+      required this.firstName,
+      required this.lastName,
+      required this.email});
 
   @override
-  List<Object> get props => [
-        id,
-        firstName,
-        lastName,
-        email
-      ];
+  List<Object> get props => [id, firstName, lastName, email];
 }

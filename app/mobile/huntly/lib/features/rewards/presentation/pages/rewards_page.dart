@@ -27,19 +27,18 @@ class _RewardsPageState extends State<RewardsPage> {
       body: BlocConsumer<RewardsBloc, RewardsState>(
         listener: (context, state) {},
         builder: (context, state) {
-          if(state is Loaded) {
+          if (state is Loaded) {
             return ListView.builder(
-              itemCount: state.rewards.length,
-              itemBuilder: (context, index) {
-                return RewardsCard(
-                  code: state.rewards[index].code,
-                  link: state.rewards[index].url,
-                  description: state.rewards[index].description,
-                  orgName: state.rewards[index].orgName,
-                  imageLocation: state.rewards[index].imageLink,
-                );
-              }
-            );
+                itemCount: state.rewards.length,
+                itemBuilder: (context, index) {
+                  return RewardsCard(
+                    code: state.rewards[index].code,
+                    link: state.rewards[index].url,
+                    description: state.rewards[index].description,
+                    orgName: state.rewards[index].orgName,
+                    imageLocation: state.rewards[index].imageLink,
+                  );
+                });
           } else {
             return const Center(
               child: CircularProgressIndicator(

@@ -18,10 +18,10 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     BlocProvider.of<TreasureHuntBloc>(context)
-                  .add(GetRegisteredTreasureHunts());
+        .add(GetRegisteredTreasureHunts());
     super.initState();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return HuntlyScaffold(
@@ -67,10 +67,9 @@ class _HomePageState extends State<HomePage> {
                   color: Colors.white,
                 ),
               );
-            } else if(state is Failed) {
+            } else if (state is Failed) {
               return Text("No hunts found");
-            }
-            else {
+            } else {
               return const Center(
                 child: Text('Error'),
               );

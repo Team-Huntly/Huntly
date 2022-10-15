@@ -13,7 +13,9 @@ class MemoryModel {
     return MemoryModel(
       huntName: json['name'],
       startedAt: DateTime.parse(json['started_at']),
-      images: json['memories'].map<String>((memory) => memory['image'].toString()).toList(),
+      images: json['memories']
+          .map<String>((memory) => memory['image'].toString())
+          .toList(),
       // images: json['memories']
     );
   }

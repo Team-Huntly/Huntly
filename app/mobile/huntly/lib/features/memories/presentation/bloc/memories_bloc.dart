@@ -14,7 +14,8 @@ class MemoriesBloc extends Bloc<MemoriesEvent, MemoriesState> {
       if (event is GetUserMemories) {
         emit(Loading());
         try {
-          final MemoriesRemoteDatasourceImpl mrds = MemoriesRemoteDatasourceImpl();
+          final MemoriesRemoteDatasourceImpl mrds =
+              MemoriesRemoteDatasourceImpl();
           final memories = await mrds.fetchUserMemories();
           emit(Loaded(memories: memories));
         } catch (e) {

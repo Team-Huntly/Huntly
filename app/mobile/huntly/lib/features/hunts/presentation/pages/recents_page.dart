@@ -18,10 +18,10 @@ class RecentsPage extends StatefulWidget {
 class _RecentsPageState extends State<RecentsPage> {
   @override
   void initState() {
-    BlocProvider.of<TreasureHuntBloc>(context)
-                  .add(GetRecentTreasureHunts());
+    BlocProvider.of<TreasureHuntBloc>(context).add(GetRecentTreasureHunts());
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return HuntlyScaffold(

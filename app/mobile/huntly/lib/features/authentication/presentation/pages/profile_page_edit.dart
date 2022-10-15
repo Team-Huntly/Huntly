@@ -165,10 +165,10 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                   ActionButton(
                     onTap: () {
                       BlocProvider.of<AuthenticationBloc>(context).add(
-                          AddProfileEvent(
-                              bio: _controller.text,
-                              interests: selectedWords.value),
-                        );
+                        AddProfileEvent(
+                            bio: _controller.text,
+                            interests: selectedWords.value),
+                      );
                     },
                     text: 'Submit',
                   ),

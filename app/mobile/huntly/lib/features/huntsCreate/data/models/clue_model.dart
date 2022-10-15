@@ -4,7 +4,7 @@ class ClueModel {
   final String answerDescription;
   final String answerLatitude;
   final String answerLongitude;
-  final bool isQrBased; 
+  final bool isQrBased;
 
   const ClueModel({
     required this.stepNo,
@@ -26,4 +26,3 @@ class ClueModel {
     );
   }
 }
-

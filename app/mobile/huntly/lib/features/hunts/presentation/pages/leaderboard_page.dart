@@ -7,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:iconify_flutter/icons/mi.dart';
 
-
 import '../../../../core/theme/theme.dart';
 import '../widgets/leaderboard_data.dart';
 import '../widgets/leaderboard_row.dart';
@@ -16,7 +15,8 @@ import '../bloc/treasurehunt_bloc.dart';
 class LeaderboardPage extends StatefulWidget {
   final TreasureHunt treasureHunt;
 
-  const LeaderboardPage({Key? key, required this.treasureHunt}) : super(key: key);
+  const LeaderboardPage({Key? key, required this.treasureHunt})
+      : super(key: key);
 
   @override
   State<LeaderboardPage> createState() => _LeaderboardPageState();
@@ -58,28 +58,35 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
                     shrinkWrap: true,
                     itemCount: state.leaderboard.leaders.length,
                     itemBuilder: (context, index) {
-                    final Duration duration = widget.treasureHunt.started_at.difference(state.leaderboard.leaders[index].lastSolved);
+                      final Duration duration = widget.treasureHunt.started_at
+                          .difference(
+                              state.leaderboard.leaders[index].lastSolved);
                       return LeaderboardRow(attributes: [
                         LeaderboardData(text: index.toString()),
-                        LeaderboardData(text: state.leaderboard.leaders[index].name),
-                        LeaderboardData(text: state.leaderboard.leaders[index].cluesSolved.toString()),
-                        LeaderboardData(text: "${duration.inHours}:${duration.inMinutes.remainder(minutesInHours)}")
+                        LeaderboardData(
+                            text: state.leaderboard.leaders[index].name),
+                        LeaderboardData(
+                            text: state.leaderboard.leaders[index].cluesSolved
+                                .toString()),
+                        LeaderboardData(
+                            text:
+                                "${duration.inHours}:${duration.inMinutes.remainder(minutesInHours)}")
                       ]);
                     },
                   ),
                 );
               } else {
                 return Container(
-                  padding: const EdgeInsets.only(top: 30),
-                  child: const Center(child: CircularProgressIndicator(color: Colors.white))
-                );
+                    padding: const EdgeInsets.only(top: 30),
+                    child: const Center(
+                        child: CircularProgressIndicator(color: Colors.white)));
               }
             },
           ),
           ActionButton(
             onTap: () {
               BlocProvider.of<TreasureHuntBloc>(context)
-                .add(GetLeaderboard(widget.treasureHunt.id));
+                  .add(GetLeaderboard(widget.treasureHunt.id));
             },
             alignment: FractionalOffset.bottomRight,
             leading: Mi.refresh,
@@ -89,4 +96,3 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
     );
   }
 }
-

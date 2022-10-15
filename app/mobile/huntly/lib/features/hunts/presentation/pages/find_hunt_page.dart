@@ -18,8 +18,7 @@ class FindHuntPage extends StatefulWidget {
 class _FindHuntPageState extends State<FindHuntPage> {
   @override
   void initState() {
-    BlocProvider.of<TreasureHuntBloc>(context)
-                      .add(GetTreasureHunts());
+    BlocProvider.of<TreasureHuntBloc>(context).add(GetTreasureHunts());
     super.initState();
   }
 
