@@ -70,6 +70,8 @@ A cross-platform mobile application that brings people closer to the physical en
 - [Prototype](https://www.figma.com/proto/34xqq0Ii1HqNhvHG96Xbdw/Huntly?node-id=9%3A1387&scaling=scale-down&page-id=0%3A1&starting-point-node-id=9%3A1387)
 - [Round 1 Presentation](https://www.canva.com/design/DAFNQ-Sl_Tk/5dQygaIQbtfVF_hr6U3QvQ/view)
 - [Schema](https://docs.google.com/spreadsheets/d/1BzMs2MS1AXaRoZVw4cRbG1WbLlOfXzyGl_XpG2UcQr0/edit?usp=sharing)
+- [Name 404 Project Report.pdf](https://github.com/Manipal-Hackathon-2022/Team-Name-404/files/9791478/Name.404.Project.Report.pdf)
+- [Round 2 Presentation](https://www.canva.com/design/DAFOweGQoDo/MX3FJIbg5ULSZlZeeE6l2g/view?utm_content=DAFOweGQoDo&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink)
 
 - <b> Features Planned: </b>
     - Authenticaion
