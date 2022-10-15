@@ -54,8 +54,13 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         for (var clue in response.data) {
           clues.add(GameClueModel.fromJson(clue));
         }
+        if(_index == clues.length){
+          emit(GameEnded());
+        }
+        else{
+         emit(CluesLoaded(clues: clues, index: _index, teamId: event.teamId));
+        }
         print(clues.length);
-        emit(CluesLoaded(clues: clues, index: _index, teamId: event.teamId));
       } else if (event is VerifyClue) {
         emit(Loading());
         print("Verifying clue");
