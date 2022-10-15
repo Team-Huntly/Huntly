@@ -94,19 +94,19 @@ class HuntlyScaffold extends StatelessWidget {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // ClipRRect(
-                      //   borderRadius:
-                      //       const BorderRadius.all(Radius.circular(100)),
-                      //   child: Image.network(
-                      //     photoUrl_,
-                      //     width: 80,
-                      //   ),
-                      // ),
-                      // const SizedBox(height: 10),
-                      // Text(
-                      //   username_,
-                      //   style: darkTheme.textTheme.headline2,
-                      // )
+                      ClipRRect(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(100)),
+                        child: Image.network(
+                          user_.photoUrl ?? "https://picsum.photos/200",
+                          width: 80,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        user_.firstName + ' ' + user_.lastName,
+                        style: darkTheme.textTheme.headline2,
+                      )
                     ]),
               ),
               DrawerListItem(
