@@ -44,7 +44,7 @@ class UserCard extends StatelessWidget {
               Text(
                 user.email,
                 style: darkTheme.textTheme.headline3!.copyWith(
-                    fontSize: 14, color: darkTheme.colorScheme.secondary),
+                    fontSize: 10, color: darkTheme.colorScheme.secondary),
               ),
             ],
           ),

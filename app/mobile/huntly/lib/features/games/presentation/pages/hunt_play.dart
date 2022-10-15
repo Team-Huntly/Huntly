@@ -14,6 +14,7 @@ import 'package:iconify_flutter/icons/mdi.dart';
 import 'package:colorful_iconify_flutter/icons/noto.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../../../hunts/presentation/pages/home_page.dart';
 import '../bloc/game_bloc.dart';
 
 class HuntPlay extends StatefulWidget {
@@ -71,7 +72,6 @@ class _HuntPlayState extends State<HuntPlay> with TickerProviderStateMixin {
       },
       builder: (context, state) {
         if (state is CluesLoaded) {
-          print("hellooooooooooooo");
           return HuntlyScaffold(
               outerContext: context,
               body: Column(
@@ -129,24 +129,6 @@ class _HuntPlayState extends State<HuntPlay> with TickerProviderStateMixin {
                             print(barcodeScanRes);
                           },
                           color: darkTheme.colorScheme.primary),
-
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: [
-                  //     ActionButton(
-                  //       text: 'Success',
-                  //       leading: Noto.party_popper,
-                  //       onTap: () {},
-                  //       colorIcon: false,
-                  //       color: darkTheme.colorScheme.secondary,
-                  //     ),
-                  //     const SizedBox(width: 10),
-                  //     ActionButton(
-                  //         leading: Mdi.camera_wireless_outline,
-                  //         onTap: () {},
-                  //         color: darkTheme.colorScheme.primary)
-                  //   ],
-                  // ),
                 ],
               ));
         } else if (state is Loading) {
@@ -157,17 +139,15 @@ class _HuntPlayState extends State<HuntPlay> with TickerProviderStateMixin {
             body: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Congratulations!', style: darkTheme.textTheme.headline5),
-                const SizedBox(height: 20),
-                Text('You have completed the hunt',
-                    style: darkTheme.textTheme.bodyText1),
-                const SizedBox(height: 20),
                 ActionButton(
-                  text: 'Finish',
+                  text: 'Congratulations!',
+                  leading: Noto.party_popper,
                   onTap: () {
                     Navigator.of(context).pop();
                   },
-                )
+                  colorIcon: false,
+                  color: darkTheme.colorScheme.secondary,
+                ),
               ],
             ),
           );
@@ -220,7 +200,17 @@ class _HuntPlayState extends State<HuntPlay> with TickerProviderStateMixin {
                   ),
                 ],
               ));
-        } else {
+        } else if(state is GameEnded) {
+          return Center(
+            child: ActionButton(
+              text: 'Finish',
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const HomePage()));
+                },
+            ),
+          );
+        }  else {
           return const Center(child: CircularProgressIndicator());
         }
       },

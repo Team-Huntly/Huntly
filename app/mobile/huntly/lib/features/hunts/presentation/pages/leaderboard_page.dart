@@ -58,9 +58,9 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
                     shrinkWrap: true,
                     itemCount: state.leaderboard.leaders.length,
                     itemBuilder: (context, index) {
-                      final Duration duration = widget.treasureHunt.started_at
-                          .difference(
-                              state.leaderboard.leaders[index].lastSolved);
+                      final Duration duration = state.leaderboard.leaders[index].lastSolved.difference(
+                        widget.treasureHunt.started_at
+                      );
                       return LeaderboardRow(attributes: [
                         LeaderboardData(text: index.toString()),
                         LeaderboardData(

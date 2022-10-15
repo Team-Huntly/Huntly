@@ -21,7 +21,6 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   GameBloc() : super(GameInitial()) {
     on<GameEvent>((event, emit) async {
       if (event is SetUpGame) {
-        print('SETUP GAME');
         final TreasureHuntRemoteDataSourceImpl THRDS =
             TreasureHuntRemoteDataSourceImpl();
         final TeamModel team =
@@ -47,7 +46,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         print("Verifying clue");
         Position pos = await determinePosition();
         Dio dio = Dio();
-        var params = {"latitude": 1, "longitude": 1, "clue": event.clueId};
+        var params = {"latitude": pos.latitude, "longitude": pos.longitude, "clue": event.clueId};
         print("${url}/treasure-hunts/teams/${event.teamId}/progress/create/");
         print(jsonEncode(params));
         final prefs = await SharedPreferences.getInstance();
@@ -63,25 +62,24 @@ class GameBloc extends Bloc<GameEvent, GameState> {
                 "Authorization": "Token ${prefs.getString("token")}",
               },
             ));
-        print(response.data);
-        print(response.statusCode);
         if (response.statusCode == 201) {
           emit(LocationVerified());
-          if (response.data["clue"]["id"] == event.clues.length) {
-            emit(GameEnded());
-          }
-          Future.delayed(const Duration(seconds: 1), () {});
-
+          
           emit(ClueSolved(
               clues: event.clues, index: event.index, teamId: event.teamId));
+
+          Future.delayed(const Duration(seconds: 1), () {});
+
+          print(response.data['clue']['step_no']);
+          if (response.data['clue']['step_no'].toInt() == event.clues.length) {
+            emit(GameEnded());
+          }
         } else if (response.statusCode == 400) {
-          print("Unverified");
           emit(LocationUnverified());
           emit(CluesLoaded(
               clues: event.clues, index: event.index, teamId: event.teamId));
         }
       } else if (event is NextClue) {
-        print("hhllo");
         emit(CluesLoaded(
             clues: event.clues, index: event.index + 1, teamId: event.teamId));
       }
