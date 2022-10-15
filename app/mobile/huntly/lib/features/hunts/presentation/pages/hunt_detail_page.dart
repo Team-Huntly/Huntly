@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:huntly/core/utils/action_button.dart';
 import 'package:huntly/features/hunts/domain/entities/treasure_hunt.dart';
+import 'package:huntly/features/hunts/presentation/pages/hunt_edit_page_after.dart';
 import 'package:huntly/features/hunts/presentation/widgets/hunt_info_card.dart';
 import 'package:iconify_flutter/icons/carbon.dart';
 import 'package:iconify_flutter/icons/ic.dart';
@@ -14,6 +15,7 @@ import 'package:intl/intl.dart';
 import '../../../../core/theme/theme.dart';
 import '../../../authentication/data/models/user_model.dart';
 import '../../../games/presentation/pages/hunt_play.dart';
+import '../../../huntsCreate/presentation/pages/hunt_edit_page.dart';
 
 class HuntDetailPage extends StatefulWidget {
   final TreasureHunt treasureHunt;
@@ -142,7 +144,11 @@ class _HuntDetailPageState extends State<HuntDetailPage> {
             ActionButton(onTap: () {}, text: 'Lock teams'),
             const SizedBox(width: 10),
             ActionButton(
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) =>
+                        HuntAfterEditPage(treasureHunt: widget.treasureHunt)));
+              },
               leading: Ic.twotone_edit,
             )
           ],

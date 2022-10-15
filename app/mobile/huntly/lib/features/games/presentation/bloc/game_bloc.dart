@@ -34,7 +34,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         print("Loading clues");
         Dio dio = Dio();
         Response response = await dio.get(
-            "${url}/treasure-hunts/${event.treasureHuntId}/clues/",
+            "${url}treasure-hunts/${event.treasureHuntId}/clues/",
             options: await getHeaders());
         print(response.data);
         List<GameClueModel> clues = [];

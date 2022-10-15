@@ -1,10 +1,14 @@
 import 'package:bloc/bloc.dart';
+import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:huntly/features/hunts/data/datasources/treasure_hunt_remote_datasource.dart';
 import 'package:huntly/features/hunts/data/models/leaderboard_model.dart';
 import 'package:huntly/features/hunts/data/repositories/treasure_hunt_repository_impl.dart';
 
+import '../../../../common/constants.dart';
+import '../../../../core/utils/get_headers.dart';
+import '../../../games/domain/models/game_clue_model.dart';
 import '../../data/models/team_model.dart';
 import '../../domain/entities/treasure_hunt.dart';
 
@@ -109,6 +113,24 @@ class TreasureHuntBloc extends Bloc<TreasureHuntEvent, TreasureHuntState> {
               TreasureHuntRemoteDataSourceImpl();
           final treasureHunts = await thrds.getUserHunts();
           emit(Loaded(treasureHunts: treasureHunts));
+        } catch (e) {
+          debugPrint(e.toString());
+          emit(Failed());
+        }
+      } else if (event is GetClues) {
+        try {
+          emit(Loading());
+          print("Loading clues");
+          Dio dio = Dio();
+          Response response = await dio.get(
+              "${url}treasure-hunts/${event.treasureHuntId}/clues/",
+              options: await getHeaders());
+          print(response.data);
+          List<GameClueModel> clues = [];
+          for (var clue in response.data) {
+            clues.add(GameClueModel.fromJson(clue));
+          }
+          emit(CluesLoaded(clues: clues));
         } catch (e) {
           debugPrint(e.toString());
           emit(Failed());

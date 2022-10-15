@@ -36,3 +36,8 @@ class GetLeaderboard extends TreasureHuntEvent {
 }
 
 class GetRecentTreasureHunts extends TreasureHuntEvent {}
+
+class GetClues extends TreasureHuntEvent {
+  final int treasureHuntId;
+  GetClues({required this.treasureHuntId});
+}
