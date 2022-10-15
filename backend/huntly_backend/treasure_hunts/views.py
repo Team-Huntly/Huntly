@@ -82,9 +82,6 @@ class TreasureHuntUpdateAPIView(generics.UpdateAPIView):
     queryset = TreasureHunt.objects.all()
     serializer_class = TreasureHuntSerializer
     lookup_field = 'id'
-    queryset = TreasureHunt.objects.all()
-    serializer_class = TreasureHuntSerializer
-    lookup_field = 'id'
 
 
 class TreasureHuntDeleteAPIView(generics.DestroyAPIView):
@@ -102,8 +99,6 @@ class ThemeListAPIView(generics.ListAPIView):
     """
     serializer_class = ThemeSerializer
     queryset = Theme.objects.all()
-    queryset = Theme.objects.all()
-    serializer_class = ThemeSerializer
 
 
 class ClueListAPIView(generics.ListAPIView):
@@ -111,12 +106,10 @@ class ClueListAPIView(generics.ListAPIView):
     List all clues for a treasure hunt
     """
     serializer_class = ClueSerializer
-    queryset = Clue.objects.all()
-    queryset = Clue.objects.all()
-    serializer_class = ClueSerializer
-    queryset = Clue.objects.all()
-    serializer_class = ClueSerializer
     lookup_field = 'treasure_hunt'
+
+    def get_queryset(self):
+        return Clue.objects.filter(treasure_hunt=self.kwargs['treasure_hunt']).order_by('step_no')
 
 
 class ClueCreateAPIView(generics.CreateAPIView):
@@ -157,21 +150,12 @@ class ClueRetrieveAPIView(generics.RetrieveAPIView):
     queryset = Clue.objects.all()
     serializer_class = ClueSerializer
     lookup_field = 'id'
-    queryset = Clue.objects.all()
-    serializer_class = ClueSerializer
-    lookup_field = 'id'
 
 
 class ClueUpdateAPIView(generics.UpdateAPIView):
     """
     Update a clue by id
     """
-    queryset = Clue.objects.all()
-    serializer_class = ClueSerializer
-    lookup_field = 'id'
-    queryset = Clue.objects.all()
-    serializer_class = ClueSerializer
-    lookup_field = 'id'
     queryset = Clue.objects.all()
     serializer_class = ClueSerializer
     lookup_field = 'id'
