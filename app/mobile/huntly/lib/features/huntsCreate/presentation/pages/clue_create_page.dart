@@ -60,7 +60,6 @@ class _ClueCreatePageState extends State<ClueCreatePage>
                 children: [
                   Checkbox(value: isQrBased, onChanged: (bool? value) {
                     setState(() {
-//save checkbox value to variable that store terms and notify form that state changed
                       isQrBased = value!;
                     });
                   },

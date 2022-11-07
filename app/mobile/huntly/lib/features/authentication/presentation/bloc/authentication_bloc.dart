@@ -19,13 +19,12 @@ import '../../data/profile_datasource.dart';
 part 'authentication_event.dart';
 part 'authentication_state.dart';
 
-class AuthenticationBloc
-    extends Bloc<AuthenticationEvent, AuthenticationState> {
+class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
   AuthenticationBloc() : super(AuthenticationInitial()) {
     on<AuthenticationEvent>((event, emit) async {
       final GoogleSignIn googleSignIn = getGoogleSignin();
-
       if (event is AuthenticationStarted) {
+        print("Starting auth");
         emit(AuthenticationLoading());
         GoogleSignInAccount? _currentUser;
         String _contactText = '';
@@ -54,6 +53,17 @@ class AuthenticationBloc
             ),
             data: jsonEncode(params),
           );
+
+          print("===============");
+          print(response.data['token']);
+          print("===============");
+
+
+          final prefs = await SharedPreferences.getInstance();
+          prefs.setString('token', response.data['token']);
+
+          final thrs = TreasureHuntRemoteDataSourceImpl();
+          user_ = await thrs.getUser();
 
           emit(AuthenticationSuccess());
         } catch (e) {

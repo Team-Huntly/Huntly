@@ -50,7 +50,6 @@ class _RecentsPageState extends State<RecentsPage> {
                 ],
               );
             } else if (state is TreasureHuntInitial) {
-              print("hellldodsjkf");
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 BlocProvider.of<TreasureHuntBloc>(context)
                     .add(GetRecentTreasureHunts());

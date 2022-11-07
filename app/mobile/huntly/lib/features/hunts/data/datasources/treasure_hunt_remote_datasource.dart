@@ -174,8 +174,6 @@ class TreasureHuntRemoteDataSourceImpl implements TreasureHuntRemoteDataSource {
       Dio dio = Dio();
       final response = await dio.get("${url}users/hunts/created/",
           options: await getHeaders());
-      print("--------");
-      print(response.data);
       if (response.statusCode == 200) {
         List<TreasureHuntModel> treasureHunts = response.data
             .map<TreasureHuntModel>((m) => TreasureHuntModel.fromJson(m))
@@ -194,8 +192,10 @@ class TreasureHuntRemoteDataSourceImpl implements TreasureHuntRemoteDataSource {
   Future<UserModel> getUser() async {
     try {
       Dio dio = Dio();
+      final options = await getHeaders();
+      print(options.headers);
       final response =
-          await dio.get("${url}users/profile", options: await getHeaders());
+          await dio.get("${url}users/profile", options: await options);
       if (response.statusCode == 200) {
         UserModel user = UserModel.fromJson(response.data);
         return user;
@@ -203,7 +203,7 @@ class TreasureHuntRemoteDataSourceImpl implements TreasureHuntRemoteDataSource {
         throw ServerException();
       }
     } catch (e) {
-      debugPrint("herror: $e");
+      debugPrint("error: $e");
       throw NetworkException();
     }
   }

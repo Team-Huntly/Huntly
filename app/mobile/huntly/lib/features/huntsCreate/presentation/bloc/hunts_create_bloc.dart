@@ -53,7 +53,7 @@ class HuntsCreateBloc extends Bloc<HuntsCreateEvent, HuntsCreateState> {
             "answer_description": clue.answerDescription,
             "answer_latitude": clue.answerLatitude,
             "answer_longitude": clue.answerLongitude,
-            "is_qr_based": true
+            "is_qr_based": clue.isQrBased
           });
         }
 

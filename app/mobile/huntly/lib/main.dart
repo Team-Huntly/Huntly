@@ -7,14 +7,11 @@ import 'package:huntly/features/hunts/data/datasources/treasure_hunt_remote_data
 import 'package:huntly/features/hunts/presentation/bloc/treasurehunt_bloc.dart';
 import 'package:huntly/features/hunts/presentation/pages/home_page.dart';
 import 'package:huntly/features/rewards/presentation/bloc/rewards_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import 'features/authentication/data/models/user_model.dart';
 import 'features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'features/authentication/presentation/pages/authentication_page.dart';
 import 'features/authentication/presentation/pages/profile_page.dart';
-
-import 'package:shared_preferences/shared_preferences.dart';
-
 import 'features/games/presentation/bloc/game_bloc.dart';
 import 'features/huntsCreate/presentation/bloc/hunts_create_bloc.dart';
 import 'features/memories/presentation/bloc/memories_bloc.dart';
@@ -33,8 +30,11 @@ void main() async {
     ],
   );
   bool isSignedIn = await _googleSignIn.isSignedIn();
+  
   if (isSignedIn) {
-    user_ = await thrs.getUser();
+    try {
+      user_ = await thrs.getUser();
+    } catch(e) {}
   }
 
   runApp(const Huntly());
@@ -76,6 +76,7 @@ class Huntly extends StatelessWidget {
         // darkTheme
         theme: ThemeData.dark(),
         home: const WrapperPage(),
+        // home: AuthenticationPage()
       ),
     );
   }

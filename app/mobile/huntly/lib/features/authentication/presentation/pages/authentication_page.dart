@@ -45,7 +45,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // const SizedBox(height: 30),
-              Image.asset('assets/images/map.png'),
+              // Image.asset('assets/images/map.png'),
               Positioned(
                 top: 350,
                 child: Text(

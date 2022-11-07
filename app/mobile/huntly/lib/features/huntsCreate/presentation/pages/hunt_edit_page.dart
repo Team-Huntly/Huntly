@@ -114,6 +114,7 @@ class _HuntEditPageState extends State<HuntEditPage> {
                                     const SizedBox(height: 10),
                                     GestureDetector(
                                         onTap: () async {
+                                          print("Hello");
                                           LocationResult? result = await Navigator
                                                   .of(context)
                                               .push(MaterialPageRoute(
