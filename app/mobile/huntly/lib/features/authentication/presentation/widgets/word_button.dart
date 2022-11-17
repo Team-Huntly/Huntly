@@ -39,7 +39,11 @@ class _WordButtonState extends State<WordButton> {
         if (!widget.isSelected) {
           widget.selectedWords.value.add(widget.word);
         } else {
-          widget.selectedWords.value.remove(widget.word);
+          widget.selectedWords.value.forEach((element) {
+            if (element.interest == widget.word.interest) {
+              widget.selectedWords.value.remove(element);
+            }
+          });
         }
         setState(() {
           widget.isSelected = !widget.isSelected;
