@@ -144,7 +144,11 @@ class _HuntPlayState extends State<HuntPlay> with TickerProviderStateMixin {
                 ],
               ));
         } else if (state is Loading) {
-          return const Center(child: CircularProgressIndicator());
+          return HuntlyScaffold(
+            outerContext: context,
+            body: const Center(child: CircularProgressIndicator()),
+            showDrawer: false,
+          );
         } else if (state is GameEnded) {
           return HuntlyScaffold(
             outerContext: context,
@@ -182,47 +186,53 @@ class _HuntPlayState extends State<HuntPlay> with TickerProviderStateMixin {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         ActionButton(
-                          text: 'Success',
-                          leading: Noto.party_popper,
-                          onTap: () {},
-                          color: darkTheme.colorScheme.primary)
-                    ],
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(vertical: 30),
-                    child: Text(state.clues[state.index].answerDescription,
-                        style: darkTheme.textTheme.bodyText2!.copyWith(
-                            fontSize: 12, color: darkTheme.disabledColor)),
-                  ),
-                  ActionButton(
-                    text: 'Go to next clue',
-                    // leading: Noto.party_popper,
-                    onTap: () {
-                      BlocProvider.of<GameBloc>(context).add(NextClue(
-                          clues: state.clues,
-                          teamId: state.teamId,
-                          index: state.index));
-                    },
-                  ),
-                ],
-              )),Center(
+                            text: 'Success',
+                            leading: Noto.party_popper,
+                            onTap: () {},
+                            color: darkTheme.colorScheme.primary)
+                      ],
+                    ),
+                    Container(
+                      margin: const EdgeInsets.symmetric(vertical: 30),
+                      child: Text(state.clues[state.index].answerDescription,
+                          style: darkTheme.textTheme.bodyText2!.copyWith(
+                              fontSize: 12, color: darkTheme.disabledColor)),
+                    ),
+                    ActionButton(
+                      text: 'Go to next clue',
+                      // leading: Noto.party_popper,
+                      onTap: () {
+                        BlocProvider.of<GameBloc>(context).add(NextClue(
+                            clues: state.clues,
+                            teamId: state.teamId,
+                            index: state.index));
+                      },
+                    ),
+                  ],
+                )),
+            Center(
                 child: ConfettiWidget(
               confettiController: controller,
               blastDirectionality: BlastDirectionality.explosive,
               numberOfParticles: 100,
-            ))]);
-        } else if(state is GameEnded) {
+            ))
+          ]);
+        } else if (state is GameEnded) {
           return Center(
             child: ActionButton(
               text: 'Finish',
               onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const HomePage()));
-                },
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const HomePage()));
+              },
             ),
           );
         } else {
-          return const Center(child: CircularProgressIndicator());
+          return HuntlyScaffold(
+            outerContext: context,
+            body: const Center(child: CircularProgressIndicator()),
+            showDrawer: false,
+          );
         }
       },
     );

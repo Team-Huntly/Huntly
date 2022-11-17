@@ -47,151 +47,165 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AuthenticationBloc, AuthenticationState>(
-      listener: (context, state) {
-        if (state is ProfileAdded) {
-          BlocProvider.of<AuthenticationBloc>(context).add(GetProfileEvent());
-        }
+    return WillPopScope(
+      onWillPop: () {
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => HomePage()));
+        return Future.value(true);
       },
-      builder: (context, state) {
-        if (state is ProfileLoaded) {
-          updateSelectedWords(state.profileModel.interests ?? "");
-          _controller = TextEditingController(text: state.profileModel.bio);
-          return HuntlyScaffold(
-            body: SingleChildScrollView(
-              child: Column(
-                children: [
-                  ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(100)),
-                    child: Image.network(
-                      user_.photoUrl ?? "https://picsum.photos/200",
-                      width: 80,
+      child: BlocConsumer<AuthenticationBloc, AuthenticationState>(
+        listener: (context, state) {
+          if (state is ProfileAdded) {
+            BlocProvider.of<AuthenticationBloc>(context).add(GetProfileEvent());
+          }
+        },
+        builder: (context, state) {
+          if (state is ProfileLoaded) {
+            updateSelectedWords(state.profileModel.interests ?? "");
+            _controller = TextEditingController(text: state.profileModel.bio);
+            return HuntlyScaffold(
+              body: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(100)),
+                      child: Image.network(
+                        state.profileModel.profilePic ??
+                            "https://picsum.photos/200",
+                        width: 80,
+                      ),
                     ),
-                  ),
-                  Center(
-                    child: Text(
-                      user_.firstName + " " + user_.lastName,
-                      style: darkTheme.textTheme.headline2,
+                    Center(
+                      child: Text(
+                        state.profileModel.firstName + " " + user_.lastName,
+                        style: darkTheme.textTheme.headline2,
+                      ),
                     ),
-                  ),
-                  Center(
-                    child: Text(
-                      user_.email,
-                      style: darkTheme.textTheme.headline3,
+                    Center(
+                      child: Text(
+                        state.profileModel.email,
+                        style: darkTheme.textTheme.headline3,
+                      ),
                     ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 20),
-                    child: TextField(
-                        controller: _controller,
-                        maxLines: 5,
-                        maxLength: 150,
-                        style: darkTheme.textTheme.bodyText2,
-                        decoration: inputDecoration(state.profileModel.bio == ''
-                            ? 'What would you like others to know about you?'
-                            : state.profileModel.bio.toString())),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  BoxRenderer(
-                    interests: creativity,
-                    selectedWords: selectedWords,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  BoxRenderer(
-                    interests: sports,
-                    selectedWords: selectedWords,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  BoxRenderer(
-                    interests: pets,
-                    selectedWords: selectedWords,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  BoxRenderer(
-                    interests: values,
-                    selectedWords: selectedWords,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  BoxRenderer(
-                    interests: food,
-                    selectedWords: selectedWords,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  BoxRenderer(
-                    interests: music,
-                    selectedWords: selectedWords,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  BoxRenderer(
-                    interests: films,
-                    selectedWords: selectedWords,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  BoxRenderer(
-                    interests: reading,
-                    selectedWords: selectedWords,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  BoxRenderer(
-                    interests: travel,
-                    selectedWords: selectedWords,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  BoxRenderer(
-                    interests: hobbies,
-                    selectedWords: selectedWords,
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  ActionButton(
-                    onTap: () {
-                      BlocProvider.of<AuthenticationBloc>(context).add(
-                        AddProfileEvent(
-                            bio: _controller.text,
-                            interests: selectedWords.value),
-                      );
-                    },
-                    text: 'Submit',
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                ],
+                    Container(
+                      margin: const EdgeInsets.only(top: 20),
+                      child: TextField(
+                          controller: _controller,
+                          maxLines: 5,
+                          maxLength: 150,
+                          style: darkTheme.textTheme.bodyText2,
+                          decoration: inputDecoration(state.profileModel.bio ==
+                                  ''
+                              ? 'What would you like others to know about you?'
+                              : state.profileModel.bio.toString())),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    BoxRenderer(
+                      interests: creativity,
+                      selectedWords: selectedWords,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    BoxRenderer(
+                      interests: sports,
+                      selectedWords: selectedWords,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    BoxRenderer(
+                      interests: pets,
+                      selectedWords: selectedWords,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    BoxRenderer(
+                      interests: values,
+                      selectedWords: selectedWords,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    BoxRenderer(
+                      interests: food,
+                      selectedWords: selectedWords,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    BoxRenderer(
+                      interests: music,
+                      selectedWords: selectedWords,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    BoxRenderer(
+                      interests: films,
+                      selectedWords: selectedWords,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    BoxRenderer(
+                      interests: reading,
+                      selectedWords: selectedWords,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    BoxRenderer(
+                      interests: travel,
+                      selectedWords: selectedWords,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    BoxRenderer(
+                      interests: hobbies,
+                      selectedWords: selectedWords,
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    ActionButton(
+                      onTap: () {
+                        BlocProvider.of<AuthenticationBloc>(context).add(
+                          AddProfileEvent(
+                              bio: _controller.text,
+                              interests: selectedWords.value),
+                        );
+                      },
+                      text: 'Submit',
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            outerContext: context,
-          );
-        } else if (state is Loading) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        } else {
-          return const Center(
-            child: Text("Something went wrong"),
-          );
-        }
-      },
+              outerContext: context,
+            );
+          } else if (state is Loading) {
+            return HuntlyScaffold(
+              outerContext: context,
+              body: const Center(child: CircularProgressIndicator()),
+              showDrawer: false,
+            );
+          } else {
+            return HuntlyScaffold(
+              outerContext: context,
+              body: const Center(child: CircularProgressIndicator()),
+              showDrawer: false,
+            );
+          }
+        },
+      ),
     );
   }
 }

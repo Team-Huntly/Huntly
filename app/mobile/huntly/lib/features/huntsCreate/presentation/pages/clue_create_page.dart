@@ -58,13 +58,16 @@ class _ClueCreatePageState extends State<ClueCreatePage>
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Checkbox(value: isQrBased, onChanged: (bool? value) {
-                    setState(() {
+                  Checkbox(
+                    value: isQrBased,
+                    onChanged: (bool? value) {
+                      setState(() {
 //save checkbox value to variable that store terms and notify form that state changed
-                      isQrBased = value!;
-                    });
-                  },
-                  activeColor: darkTheme.highlightColor,),
+                        isQrBased = value!;
+                      });
+                    },
+                    activeColor: darkTheme.highlightColor,
+                  ),
                   Text('QR based', style: darkTheme.textTheme.bodyText2),
                 ],
               )
@@ -118,34 +121,33 @@ class _ClueCreatePageState extends State<ClueCreatePage>
         ),
         const SizedBox(height: 20),
         ActionButton(
-          text: "Save",
-          leading: Ph.download_simple_fill,
-          onTap: () {
-            if (_formKey.currentState!.validate() &&
-                _locationResult != null) {
-              ClueModel club = ClueModel(
-                  stepNo: widget.index + 1,
-                  description: _hintController.text,
-                  answerDescription: _answerController.text,
-                  answerLatitude:
-                      _locationResult!.latLng!.latitude.toString(),
-                  answerLongitude:
-                      _locationResult!.latLng!.longitude.toString(),
-                  isQrBased: isQrBased);
+            text: "Save",
+            leading: Ph.download_simple_fill,
+            onTap: () {
+              if (_formKey.currentState!.validate() &&
+                  _locationResult != null) {
+                print(isQrBased);
+                ClueModel club = ClueModel(
+                    stepNo: widget.index + 1,
+                    description: _hintController.text,
+                    answerDescription: _answerController.text,
+                    answerLatitude:
+                        _locationResult!.latLng!.latitude.toString(),
+                    answerLongitude:
+                        _locationResult!.latLng!.longitude.toString(),
+                    isQrBased: isQrBased);
 
-              widget.clubs.value.add(club);
-            } else {
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                  content: Text('Please fill all the fields')));
-            }
-          }
-        ),
+                widget.clubs.value.add(club);
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text('Please fill all the fields')));
+              }
+            }),
         Padding(
           padding: const EdgeInsets.only(top: 18.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              
               widget.index != 0
                   ? ActionButton(
                       text: "Delete",

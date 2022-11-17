@@ -31,14 +31,22 @@ class _ProfilePageState extends State<ProfilePage> {
   ValueNotifier<List<Interests>> selectedWords = ValueNotifier([]);
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthenticationBloc, AuthenticationState>(
-      listener: (context, state) {
-        if (state is ProfileAdded) {
-          Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => const HomePage()));
-        }
-      },
-      child: HuntlyScaffold(
+    return BlocConsumer<AuthenticationBloc, AuthenticationState>(
+        listener: (context, state) {
+      if (state is ProfileAdded) {
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const HomePage()));
+      }
+    }, builder: (context, state) {
+      if (state is Loading) {
+        print("its Loading");
+        return HuntlyScaffold(
+          outerContext: context,
+          body: const Center(child: CircularProgressIndicator()),
+          showDrawer: false,
+        );
+      }
+      return HuntlyScaffold(
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -158,7 +166,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ),
         outerContext: context,
-      ),
-    );
+      );
+    });
   }
 }

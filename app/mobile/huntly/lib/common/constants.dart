@@ -248,7 +248,144 @@ Map<String, List<Interests>> hobbies = {
     Interests(category: category10, interest: "Writing", icon: Noto.pencil),
   ]
 };
-
+List<Interests> allInterests = [
+  Interests(
+      category: category1,
+      interest: "Writing",
+      icon: Twemoji.writing_hand_light_skin_tone),
+  Interests(category: category1, interest: "Art", icon: Noto.paintbrush),
+  Interests(category: category1, interest: "Crafts", icon: Logos.origami),
+  Interests(
+      category: category1,
+      interest: "Dancing",
+      icon: Noto.woman_dancing_medium_light_skin_tone),
+  Interests(category: category1, interest: "Design", icon: IconPark.bydesign),
+  Interests(category: category1, interest: "Make up", icon: Noto.lipstick),
+  Interests(
+      category: category1,
+      interest: "Photography",
+      icon: Noto.camera_with_flash),
+  Interests(category: category1, interest: "Singing", icon: Noto.microphone),
+  Interests(
+      category: category2,
+      interest: "Swimming",
+      icon: Twemoji.man_swimming_medium_light_skin_tone),
+  Interests(
+      category: category2,
+      interest: "Athletics",
+      icon: Twemoji.man_running_light_skin_tone),
+  Interests(
+      category: category2, interest: "Badminton", icon: Twemoji.badminton),
+  Interests(
+      category: category2, interest: "Soccer", icon: EmojioneV1.soccer_ball),
+  Interests(category: category2, interest: "Tennis", icon: Noto.tennis),
+  Interests(
+      category: category2, interest: "Volleyball", icon: Twemoji.volleyball),
+  Interests(category: category3, interest: "Birds", icon: Fa6Brands.earlybirds),
+  Interests(category: category3, interest: "Cats", icon: Fxemoji.catside),
+  Interests(category: category3, interest: "Dogs", icon: Fxemoji.dogside),
+  Interests(category: category3, interest: "Fish", icon: Noto.tropical_fish),
+  Interests(
+      category: category4, interest: "Ambition", icon: Noto.thought_balloon),
+  Interests(
+      category: category4,
+      interest: "Being Active",
+      icon: Twemoji.person_running_medium_skin_tone),
+  Interests(
+      category: category4,
+      interest: "Family Oriented",
+      icon: Twemoji.family_man_man_girl_girl),
+  Interests(category: category4, interest: "Romantic", icon: Noto.heart_suit),
+  Interests(
+      category: category4,
+      interest: "Empathetic",
+      icon: Noto.heart_hands_medium_light_skin_tone),
+  Interests(
+      category: category4, interest: "Travelling", icon: Twemoji.baggage_claim),
+  Interests(
+      category: category4,
+      interest: "Beaches",
+      icon: Twemoji.beach_with_umbrella),
+  Interests(category: category4, interest: "Camping", icon: Twemoji.camping),
+  Interests(
+      category: category4,
+      interest: "Backpacking",
+      icon: Emojione.shopping_bags),
+  Interests(
+      category: category4, interest: "Road trips", icon: Noto.pickup_truck),
+  Interests(
+      category: category4, interest: "Trekking", icon: Twemoji.baggage_claim),
+  Interests(category: category5, interest: "Beer", icon: NotoV1.beer_mug),
+  Interests(category: category5, interest: "Biryani", icon: Fxemoji.cookedrice),
+  Interests(
+      category: category5,
+      interest: "Coffee",
+      icon: VscodeIcons.file_type_coffeelint),
+  Interests(category: category5, interest: "Maggi", icon: Mdi.noodles),
+  Interests(category: category5, interest: "Pizza", icon: EmojioneV1.pizza),
+  Interests(category: category5, interest: "Wine", icon: Twemoji.wine_glass),
+  Interests(category: category5, interest: "Foodie", icon: Noto.pot_of_food),
+  Interests(category: category6, interest: "Country", icon: Emojione.world_map),
+  Interests(category: category6, interest: "EDM", icon: Noto.musical_keyboard),
+  Interests(
+      category: category6, interest: "Electronic", icon: NotoV1.musical_score),
+  Interests(
+      category: category6, interest: "Classic", icon: Noto.musical_keyboard),
+  Interests(category: category6, interest: "Jazz", icon: Twemoji.saxophone),
+  Interests(category: category6, interest: "Desi", icon: NotoV1.musical_score),
+  Interests(
+      category: category6, interest: "Textbox", icon: Noto.musical_keyboard),
+  Interests(
+      category: category7,
+      interest: "Thriller & Crime",
+      icon: Fxemoji.daggerknife),
+  Interests(category: category7, interest: "Action", icon: Fa6Solid.gun),
+  Interests(
+      category: category7, interest: "Animated", icon: Twemoji.teddy_bear),
+  Interests(
+      category: category7,
+      interest: "Comedy",
+      icon: Twemoji.rolling_on_the_floor_laughing),
+  Interests(category: category7, interest: "Horror", icon: Noto.ghost),
+  Interests(
+      category: category7, interest: "Bollywood", icon: Twemoji.movie_camera),
+  Interests(category: category8, interest: "Biographies", icon: Noto.blue_book),
+  Interests(
+      category: category8, interest: "Business", icon: Twemoji.orange_book),
+  Interests(
+      category: category8, interest: "Cookbooks", icon: Fxemoji.closedbook),
+  Interests(category: category8, interest: "Fiction", icon: Noto.blue_book),
+  Interests(category: category8, interest: "History", icon: Fxemoji.openbook),
+  Interests(category: category8, interest: "Mystery", icon: Noto.notebook),
+  Interests(category: category8, interest: "Non-fiction", icon: Noto.blue_book),
+  Interests(category: category8, interest: "Romance", icon: Noto.heart_suit),
+  Interests(category: category8, interest: "Self-help", icon: Noto.notebook),
+  Interests(category: category8, interest: "Textbooks", icon: Fxemoji.books),
+  Interests(category: category9, interest: "Backpacking", icon: Noto.backpack),
+  Interests(
+      category: category9,
+      interest: "Beaches",
+      icon: EmojioneV1.beach_with_umbrella),
+  Interests(category: category9, interest: "Camping", icon: Noto.camping),
+  Interests(category: category9, interest: "Road trips", icon: Mdi.car_sports),
+  Interests(category: category9, interest: "Trekking", icon: Iconoir.trekking),
+  Interests(
+      category: category10, interest: "Art", icon: Fxemoji.lowerleftpaintbrush),
+  Interests(category: category10, interest: "Cooking", icon: Noto.cooking),
+  Interests(
+      category: category10,
+      interest: "Dancing",
+      icon: NotoV1.woman_dancing_medium_light_skin_tone),
+  Interests(category: category10, interest: "Gaming", icon: Twemoji.laptop),
+  Interests(
+      category: category10,
+      interest: "Gardening",
+      icon: Twemoji.house_with_garden),
+  Interests(
+      category: category10, interest: "Photography", icon: Bi.camera_fill),
+  Interests(category: category10, interest: "Singing", icon: NotoV1.microphone),
+  Interests(category: category10, interest: "Writing", icon: Noto.pencil),
+];
 List<Map<String, List<Interests>>> interests = [
   creativity,
   sports,
@@ -261,127 +398,22 @@ List<Map<String, List<Interests>>> interests = [
   travel,
   hobbies
 ];
+Interests? getInterest(String s) {
+  for (Interests interest in allInterests) {
+    if (interest.interest == s) {
+      return interest;
+    }
+  }
+  return null;
+}
 
 String url = "https://huntly-backend.mixedbag.repl.co/";
 
 Interests? sendInterest(String s) {
-  if (s == "Writing") {
-    return Interests(
-        category: category1,
-        interest: "Writing",
-        icon: Twemoji.writing_hand_light_skin_tone);
-  } else if (s == "Art") {
-    return Interests(
-        category: category1, interest: "Art", icon: Noto.paintbrush);
-  } else if (s == "Crafts") {
-    return Interests(
-        category: category1, interest: "Crafts", icon: Logos.origami);
-  } else if (s == "Design") {
-    return Interests(
-        category: category1, interest: "Design", icon: IconPark.bydesign);
-  } else if (s == "Make up") {
-    return Interests(
-        category: category1, interest: "Make up", icon: Noto.lipstick);
-  } else if (s == "Photography") {
-    return Interests(
-        category: category1,
-        interest: "Photography",
-        icon: Noto.camera_with_flash);
-  } else if (s == "Singing") {
-    return Interests(
-        category: category1, interest: "Singing", icon: Noto.microphone);
-  } else if (s == "Swimming") {
-    return Interests(
-        category: category2,
-        interest: "Swimming",
-        icon: Twemoji.man_swimming_medium_light_skin_tone);
-  } else if (s == "Athetics") {
-    return Interests(
-        category: category2,
-        interest: "Athletics",
-        icon: Twemoji.man_running_light_skin_tone);
-  } else if (s == "Badminton") {
-    return Interests(
-        category: category2, interest: "Badminton", icon: Twemoji.badminton);
-  } else if (s == "Soccer") {
-    Interests(
-        category: category2, interest: "Soccer", icon: EmojioneV1.soccer_ball);
-  } else if (s == "Tennis") {
-    return Interests(
-        category: category2, interest: "Tennis", icon: Noto.tennis);
-  } else if (s == "Volleyball") {
-    return Interests(
-        category: category2, interest: "Volleyball", icon: Noto.volleyball);
-  } else if(s == "Art"){
-    return 
-  Interests(
-        category: category10,
-        interest: "Art",
-        icon: Fxemoji.lowerleftpaintbrush);
-  }else if(s == "Cooking"){
-
-    return Interests(category: category10, interest: "Cooking", icon: Noto.cooking);
-  }else if(s == "Dancing"){
-    return Interests(
-        category: category10,
-        interest: "Dancing",
-        icon: NotoV1.woman_dancing_medium_light_skin_tone);
-  }else if(s == "Gaming"){
-    return Interests(category: category10, interest: "Gaming", icon: Twemoji.laptop);
-  }else if(s == "Gardening"){
-    return 
-    Interests(
-        category: category10,
-        interest: "Gardening",
-        icon: Twemoji.house_with_garden);
-  }else if(s == "Photography"){
-    return 
-    Interests(
-        category: category10, interest: "Photography", icon: Bi.camera_fill);
-  }else if(s == "Singing"){
-    return Interests(
-        category: category10, interest: "Singing", icon: NotoV1.microphone);
-
-  }else if(s == "Writing"){
-    return 
-    Interests(category: category10, interest: "Writing", icon: Noto.pencil);
-  }else if(s == "Backpacking"){
-    return 
-    Interests(
-        category: category9, interest: "Backpacking", icon: Noto.backpack);
-  }else if(s == "Beaches"){
-    return 
-    Interests(
-        category: category9,
-        interest: "Beaches",
-        icon: EmojioneV1.beach_with_umbrella);
-  }else if(s == "Camping"){
-    return 
-    Interests(category: category9, interest: "Camping", icon: Noto.camping);
-  }else if(s == "Road trips"){
-    return 
-    Interests(
-        category: category9, interest: "Road trips", icon: Mdi.car_sports);
-  }else if(s == "Trekking"){
-    return 
-    Interests(
-        category: category9, interest: "Trekking", icon: Iconoir.trekking);
-  }else if(s == "Cats"){
-    return
-    Interests(category: category3, interest: "Cats", icon: Fxemoji.catside);
-  }else if(s == "Dogs"){
-    return
-    Interests(category: category3, interest: "Dogs", icon: Fxemoji.dogside);
-  }else if(s == "Birds"){
-    return 
-    Interests(category: category3, interest: "Birds", icon: Fa6Brands.earlybirds);
-  }else if(s == "Fish"){
-    return 
-    Interests(category: category3, interest: "Fish", icon: Noto.tropical_fish);
-  }else {
-    return null;
+  for (Interests interest in allInterests) {
+    if (interest.interest == s) {
+      return interest;
+    }
   }
-
-
+  return null;
 }
-

@@ -44,14 +44,10 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // const SizedBox(height: 30),
               Image.asset('assets/images/map.png'),
-              Positioned(
-                top: 350,
-                child: Text(
-                  'Huntly'.toUpperCase(),
-                  style: darkTheme.textTheme.headline1,
-                ),
+              Text(
+                'Huntly'.toUpperCase(),
+                style: darkTheme.textTheme.headline1,
               ),
               const SizedBox(
                 height: 30,

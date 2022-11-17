@@ -60,13 +60,14 @@ class HuntlyScaffold extends StatelessWidget {
   final BuildContext outerContext;
   final FloatingActionButtonLocation? floatingActionButtonLocation;
   final FloatingActionButton? floatingActionButton;
-
-  const HuntlyScaffold(
+  bool? showDrawer;
+  HuntlyScaffold(
       {Key? key,
       required this.body,
       required this.outerContext,
       this.floatingActionButtonLocation,
-      this.floatingActionButton})
+      this.floatingActionButton,
+      this.showDrawer})
       : super(key: key);
 
   @override
@@ -82,115 +83,130 @@ class HuntlyScaffold extends StatelessWidget {
           elevation: 0,
           leadingWidth: 80,
         ),
-        drawer: Drawer(
-          backgroundColor: darkTheme.colorScheme.background,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              DrawerHeader(
-                decoration: BoxDecoration(
-                  color: darkTheme.colorScheme.background,
-                ),
+        drawer: showDrawer == false
+            ? Container()
+            : Drawer(
+                backgroundColor: darkTheme.colorScheme.background,
                 child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ClipRRect(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(100)),
-                        child: Image.network(
-                          user_.photoUrl ?? "https://picsum.photos/200",
-                          width: 80,
-                        ),
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    DrawerHeader(
+                      decoration: BoxDecoration(
+                        color: darkTheme.colorScheme.background,
                       ),
-                      const SizedBox(height: 10),
-                      Text(
-                        user_.firstName + ' ' + user_.lastName,
-                        style: darkTheme.textTheme.headline2,
-                      )
-                    ]),
-              ),
-              DrawerListItem(
-                  icon: Ri.home_2_line,
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const HomePage()));
-                  },
-                  title: 'Home'),
-              DrawerListItem(
-                  icon: Healthicons.ui_user_profile,
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const ProfileEditPage()));
-                  },
-                  title: 'Profile'),
-              DrawerListItem(
-                  icon: Mdi.file_find_outline,
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const FindHuntPage()));
-                  },
-                  title: 'Find'),
-              DrawerListItem(
-                  icon: Carbon.recently_viewed,
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const RecentsPage()));
-                  },
-                  title: 'Recent'),
-              DrawerListItem(
-                  icon: Ic.outline_diamond,
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const MyHuntsPage()));
-                  },
-                  title: 'My Hunts'),
-              DrawerListItem(
-                  icon: Ph.currency_circle_dollar,
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const RewardsPage()));
-                  },
-                  title: 'Rewards'),
-              DrawerListItem(
-                  icon: Bx.photo_album,
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const MemoriesMenuPage()));
-                  },
-                  title: 'Memories'),
-              DrawerListItem(
-                  icon: Ic.round_mail_outline,
-                  onTap: () {
-                    Navigator.of(context).pop();
-                  },
-                  title: 'Invites'),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.bottomLeft,
-                  child: DrawerListItem(
-                      icon: Uiw.logout,
-                      onTap: () {
-                        BlocProvider.of<AuthenticationBloc>(outerContext)
-                            .add(AuthenticationLogOut());
-                        Future.delayed(Duration(seconds: 1));
-                        Navigator.of(outerContext)
-                            .popUntil((route) => route.isFirst);
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => const Huntly()));
-                      },
-                      title: 'Logout'),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ClipRRect(
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(100)),
+                              child: Image.network(
+                                user_.photoUrl ?? "https://picsum.photos/200",
+                                width: 80,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              user_.firstName + ' ' + user_.lastName,
+                              style: darkTheme.textTheme.headline2,
+                            )
+                          ]),
+                    ),
+                    DrawerListItem(
+                        icon: Ri.home_2_line,
+                        onTap: () {
+                          Navigator.of(context).pop();
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => const HomePage()));
+                        },
+                        title: 'Home'),
+                    DrawerListItem(
+                        icon: Healthicons.ui_user_profile,
+                        onTap: () {
+                          // CHECK if we are currently on homepage
+                          // if true don't pop
+                          // else pop
+                          Navigator.of(context).pop();
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ProfileEditPage()));
+                        },
+                        title: 'Profile'),
+                    DrawerListItem(
+                        icon: Mdi.file_find_outline,
+                        onTap: () {
+                          Navigator.of(context).pop();
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => const FindHuntPage()));
+                        },
+                        title: 'Find'),
+                    DrawerListItem(
+                        icon: Carbon.recently_viewed,
+                        onTap: () {
+                          Navigator.of(context).pop();
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => const RecentsPage()));
+                        },
+                        title: 'Recent'),
+                    DrawerListItem(
+                        icon: Ic.outline_diamond,
+                        onTap: () {
+                          Navigator.of(context).pop();
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => const MyHuntsPage()));
+                        },
+                        title: 'My Hunts'),
+                    DrawerListItem(
+                        icon: Ph.currency_circle_dollar,
+                        onTap: () {
+                          Navigator.of(context).pop();
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => const RewardsPage()));
+                        },
+                        title: 'Rewards'),
+                    DrawerListItem(
+                        icon: Bx.photo_album,
+                        onTap: () {
+                          Navigator.of(context).pop();
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const MemoriesMenuPage()));
+                        },
+                        title: 'Memories'),
+                    DrawerListItem(
+                        icon: Ic.round_mail_outline,
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                        title: 'Invites'),
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.bottomLeft,
+                        child: DrawerListItem(
+                            icon: Uiw.logout,
+                            onTap: () {
+                              BlocProvider.of<AuthenticationBloc>(outerContext)
+                                  .add(AuthenticationLogOut());
+                              Future.delayed(Duration(seconds: 1));
+                              Navigator.of(outerContext)
+                                  .popUntil((route) => route.isFirst);
+                              Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (context) => const Huntly()));
+                            },
+                            title: 'Logout'),
+                      ),
+                    )
+                  ],
                 ),
-              )
-            ],
-          ),
-        ),
+              ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30),
           child: body,

@@ -81,8 +81,9 @@ class TreasureHuntRemoteDataSourceImpl implements TreasureHuntRemoteDataSource {
   Future<List<TreasureHuntModel>> fetchRecentTreasureHunts() async {
     try {
       Dio dio = Dio();
+      print("${url}user/hunts/past");
       var response =
-          await dio.get("${url}user/hunts/past", options: await getHeaders());
+          await dio.get("${url}users/hunts/past", options: await getHeaders());
       if (response.statusCode == 200) {
         List<TreasureHuntModel> treasureHunts = response.data
             .map<TreasureHuntModel>((m) => TreasureHuntModel.fromJson(m))

@@ -25,6 +25,8 @@ class _HuntEditPageState extends State<HuntEditPage> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _totalSeatsController = TextEditingController();
   final TextEditingController _teamSizeController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+
   LocationResult? _locationResult;
   DateTime? _startDate;
   DateTime? _endDate;
@@ -173,8 +175,8 @@ class _HuntEditPageState extends State<HuntEditPage> {
                                             onConfirm: (datetime) {
                                           setState(() {
                                             _startDate = datetime;
-                                            _endDate = datetime.add(
-                                                const Duration(days: 1));
+                                            _endDate = datetime
+                                                .add(const Duration(days: 1));
                                           });
                                         },
                                             currentTime: DateTime.now(),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:huntly/common/constants.dart';
+import 'package:huntly/core/utils/scaffold.dart';
 import 'package:huntly/core/utils/service.dart';
 import 'package:huntly/features/hunts/data/datasources/treasure_hunt_remote_datasource.dart';
 import 'package:huntly/features/hunts/presentation/bloc/treasurehunt_bloc.dart';
@@ -71,6 +72,7 @@ class Huntly extends StatelessWidget {
         BlocProvider<MemoriesBloc>(create: (context) => MemoriesBloc())
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         scrollBehavior: MyCustomScrollBehavior(),
         title: 'Huntly',
         // darkTheme
@@ -120,11 +122,19 @@ class _WrapperPageState extends State<WrapperPage> {
                         return const HomePage();
                       }
                     }
-                    return const Center(child: CircularProgressIndicator());
+                    return HuntlyScaffold(
+                      outerContext: context,
+                      body: const Center(child: CircularProgressIndicator()),
+                      showDrawer: false,
+                    );
                   });
             }
           } else {
-            return const CircularProgressIndicator();
+            return HuntlyScaffold(
+              outerContext: context,
+              body: const Center(child: CircularProgressIndicator()),
+              showDrawer: false,
+            );
           }
         });
   }

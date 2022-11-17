@@ -3,6 +3,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:huntly/core/utils/scaffold.dart';
+import 'package:huntly/features/hunts/presentation/pages/home_page.dart';
 import 'package:huntly/features/huntsCreate/presentation/pages/hunt_create.dart';
 import 'package:huntly/features/hunts/presentation/pages/presets_page.dart';
 import 'package:huntly/features/huntsCreate/presentation/pages/hunt_edit_page.dart';
@@ -30,65 +31,73 @@ class _MyHuntsPageState extends State<MyHuntsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return HuntlyScaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            BlocConsumer<TreasureHuntBloc, TreasureHuntState>(
-              listener: (context, state) {},
-              builder: (context, state) {
-                if (state is Loaded) {
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: state.treasureHunts.length,
-                    itemBuilder: (context, index) {
-                      return HuntCard(treasureHunt: state.treasureHunts[index]);
+    return WillPopScope(
+      onWillPop: () {
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const HomePage()));
+        return Future.value(true);
+      },
+      child: HuntlyScaffold(
+        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              BlocConsumer<TreasureHuntBloc, TreasureHuntState>(
+                listener: (context, state) {},
+                builder: (context, state) {
+                  if (state is Loaded) {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: state.treasureHunts.length,
+                      itemBuilder: (context, index) {
+                        return HuntCard(
+                            treasureHunt: state.treasureHunts[index]);
+                      },
+                    );
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
+                    );
+                  }
+                },
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ActionButton(
+                    text: 'Custom',
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const HuntEditPage(),
+                        ),
+                      );
                     },
-                  );
-                } else {
-                  return const Center(
-                    child: CircularProgressIndicator(
-                      color: Colors.white,
-                    ),
-                  );
-                }
-              },
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                ActionButton(
-                  text: 'Custom',
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const HuntEditPage(),
-                      ),
-                    );
-                  },
-                ),
-                ActionButton(
-                  text: 'Preset',
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const PresetsPage(),
-                      ),
-                    );
-                  },
-                ),
-              ],
-            ),
-          ],
+                  ),
+                  ActionButton(
+                    text: 'Preset',
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const PresetsPage(),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
+        outerContext: context,
       ),
-      outerContext: context,
     );
   }
 }

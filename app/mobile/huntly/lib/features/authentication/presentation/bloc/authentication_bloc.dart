@@ -55,6 +55,13 @@ class AuthenticationBloc
             data: jsonEncode(params),
           );
 
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs.setString("token", response.data["token"]);
+          prefs.setString("name", googleUser.displayName!);
+          prefs.setString("email", googleUser.email);
+          prefs.setString("photo", googleUser.photoUrl!);
+          final thrs = TreasureHuntRemoteDataSourceImpl();
+          user_ = await thrs.getUser();
           emit(AuthenticationSuccess());
         } catch (e) {
           // Authentication Failure

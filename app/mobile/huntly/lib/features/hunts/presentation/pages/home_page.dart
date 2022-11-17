@@ -30,11 +30,7 @@ class _HomePageState extends State<HomePage> {
           listener: (context, state) {},
           builder: (context, state) {
             if (state is Loading) {
-              return const Center(
-                child: CircularProgressIndicator(
-                  color: Colors.white,
-                ),
-              );
+              return const Center(child: CircularProgressIndicator());
             } else if (state is Loaded) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,16 +58,12 @@ class _HomePageState extends State<HomePage> {
                 BlocProvider.of<TreasureHuntBloc>(context)
                     .add(GetRegisteredTreasureHunts());
               });
-              return const Center(
-                child: CircularProgressIndicator(
-                  color: Colors.white,
-                ),
-              );
+              return const Center(child: CircularProgressIndicator());
             } else if (state is Failed) {
-              return const Text("Not registered for any hunts");
+              return const Center(child: Text("Some error has occured"));
             } else {
               return const Center(
-                child: Text('Not registered for any hunts'),
+                child: Center(child: Text('Not registered for any hunts')),
               );
             }
           },

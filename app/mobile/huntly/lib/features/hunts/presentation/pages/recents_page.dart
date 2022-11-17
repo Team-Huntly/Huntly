@@ -30,11 +30,7 @@ class _RecentsPageState extends State<RecentsPage> {
           listener: (context, state) {},
           builder: (context, state) {
             if (state is Loading) {
-              return const Center(
-                child: CircularProgressIndicator(
-                  color: Colors.white,
-                ),
-              );
+              return const Center(child: CircularProgressIndicator());
             } else if (state is Loaded) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,16 +46,11 @@ class _RecentsPageState extends State<RecentsPage> {
                 ],
               );
             } else if (state is TreasureHuntInitial) {
-              print("hellldodsjkf");
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 BlocProvider.of<TreasureHuntBloc>(context)
                     .add(GetRecentTreasureHunts());
               });
-              return const Center(
-                child: CircularProgressIndicator(
-                  color: Colors.white,
-                ),
-              );
+              return const Center(child: CircularProgressIndicator());
             } else {
               return const Center(
                 child: Text(''),

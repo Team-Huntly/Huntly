@@ -43,6 +43,8 @@ class TreasureHuntBloc extends Bloc<TreasureHuntEvent, TreasureHuntState> {
           emit(Failed());
         }
       } else if (event is GetRegisteredTreasureHunts) {
+        emit(Loading());
+
         final _thrs = TreasureHuntRemoteDataSourceImpl();
         List<TreasureHunt> treasureHunts;
         try {
