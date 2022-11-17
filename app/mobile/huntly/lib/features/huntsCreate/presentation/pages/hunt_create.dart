@@ -84,15 +84,15 @@ class _HuntCreateState extends State<HuntCreate> with TickerProviderStateMixin {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ActionButton(
-                  text: "Submit",
-                  onTap: () {
-                    BlocProvider.of<HuntsCreateBloc>(context).add(
-                        AddClues(huntId: widget.huntId, clue: clubs.value));
+                text: "Submit",
+                onTap: () {
+                  BlocProvider.of<HuntsCreateBloc>(context)
+                      .add(AddClues(huntId: widget.huntId, clue: clubs.value));
 
-                    Navigator.of(context).pop();
-                  },
-                  color: darkTheme.indicatorColor,
-                ),
+                  Navigator.of(context).pop();
+                },
+                color: darkTheme.indicatorColor,
+              ),
               Align(
                 alignment: Alignment.bottomRight,
                 child: ActionButton(

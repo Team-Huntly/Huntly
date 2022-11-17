@@ -38,6 +38,7 @@ class AuthenticationBloc
 
         try {
           final googleUser = await googleSignIn.signIn();
+          print("googleUser: $googleUser");
           final googleAuth = await googleUser!.authentication;
 
           var params = {
@@ -56,10 +57,15 @@ class AuthenticationBloc
           );
 
           SharedPreferences prefs = await SharedPreferences.getInstance();
+          print("response.data: ${response.data}");
+          print(googleUser.photoUrl);
+          print(googleUser.displayName);
+          print(googleUser.email);
+          print(googleUser.id);
           prefs.setString("token", response.data["token"]);
           prefs.setString("name", googleUser.displayName!);
           prefs.setString("email", googleUser.email);
-          prefs.setString("photo", googleUser.photoUrl!);
+          prefs.setString("photo", googleUser.photoUrl ?? "null");
           final thrs = TreasureHuntRemoteDataSourceImpl();
           user_ = await thrs.getUser();
           emit(AuthenticationSuccess());

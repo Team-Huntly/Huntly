@@ -2,11 +2,13 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:huntly/features/hunts/data/datasources/treasure_hunt_remote_datasource.dart';
 import 'package:huntly/features/hunts/data/models/leaderboard_model.dart';
 import 'package:huntly/features/hunts/data/repositories/treasure_hunt_repository_impl.dart';
 
 import '../../../../common/constants.dart';
+import '../../../../common/getLocation.dart';
 import '../../../../core/utils/get_headers.dart';
 import '../../../games/domain/models/game_clue_model.dart';
 import '../../data/models/team_model.dart';
@@ -24,14 +26,18 @@ class TreasureHuntBloc extends Bloc<TreasureHuntEvent, TreasureHuntState> {
     on<TreasureHuntEvent>((event, emit) async {
       if (event is GetTreasureHunts) {
         emit(Loading());
-
         try {
+          print("Printing the location");
+          Position position = await determinePosition();
+          double latitude = position.latitude;
+          double longitude = position.longitude;
+
           final failureOrTreasureHunts = await gth.FetchTreasureHunt(
                   TreasureHuntRepositoryImpl(
                       remoteDataSource: TreasureHuntRemoteDataSourceImpl()))
-              .call(const gth.Params(
-            latitude: "11212",
-            longitude: "2323232",
+              .call(gth.Params(
+            latitude: latitude.toString(),
+            longitude: longitude.toString(),
           ));
 
           failureOrTreasureHunts.fold((failure) => emit(Failed()),

@@ -120,47 +120,49 @@ class _ClueCreatePageState extends State<ClueCreatePage>
           ]),
         ),
         const SizedBox(height: 20),
-        ActionButton(
-            text: "Save",
-            leading: Ph.download_simple_fill,
-            onTap: () {
-              if (_formKey.currentState!.validate() &&
-                  _locationResult != null) {
-                print(isQrBased);
-                ClueModel club = ClueModel(
-                    stepNo: widget.index + 1,
-                    description: _hintController.text,
-                    answerDescription: _answerController.text,
-                    answerLatitude:
-                        _locationResult!.latLng!.latitude.toString(),
-                    answerLongitude:
-                        _locationResult!.latLng!.longitude.toString(),
-                    isQrBased: isQrBased);
+        Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+          ActionButton(
+              text: "Save",
+              leading: Ph.download_simple_fill,
+              onTap: () {
+                if (_formKey.currentState!.validate() &&
+                    _locationResult != null) {
+                  print(isQrBased);
+                  ClueModel club = ClueModel(
+                      stepNo: widget.index + 1,
+                      description: _hintController.text,
+                      answerDescription: _answerController.text,
+                      answerLatitude:
+                          _locationResult!.latLng!.latitude.toString(),
+                      answerLongitude:
+                          _locationResult!.latLng!.longitude.toString(),
+                      isQrBased: isQrBased);
 
-                widget.clubs.value.add(club);
-              } else {
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text('Please fill all the fields')));
-              }
-            }),
-        Padding(
-          padding: const EdgeInsets.only(top: 18.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              widget.index != 0
-                  ? ActionButton(
-                      text: "Delete",
-                      leading: Ic.baseline_delete_outline,
-                      onTap: () {
-                        setState(() {
-                          widget.onDelete(widget.index);
-                        });
-                      })
-                  : Container(),
-            ],
+                  widget.clubs.value.add(club);
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text('Please fill all the fields')));
+                }
+              }),
+          Padding(
+            padding: const EdgeInsets.only(top: 0.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                widget.index != 0
+                    ? ActionButton(
+                        text: "Delete",
+                        leading: Ic.baseline_delete_outline,
+                        onTap: () {
+                          setState(() {
+                            widget.onDelete(widget.index);
+                          });
+                        })
+                    : Container(),
+              ],
+            ),
           ),
-        ),
+        ]),
       ],
     );
   }

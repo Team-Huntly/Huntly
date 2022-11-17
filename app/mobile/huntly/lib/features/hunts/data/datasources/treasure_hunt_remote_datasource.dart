@@ -36,8 +36,9 @@ class TreasureHuntRemoteDataSourceImpl implements TreasureHuntRemoteDataSource {
       {required String latitude, required String longitude}) async {
     try {
       Dio dio = Dio();
+      print("fetching treasure hunts");
       var response = await dio.get(
-        "${url}treasure-hunts/?latitude=1&longitude=1",
+        "${url}treasure-hunts/?latitude=${latitude}&longitude=${longitude}",
         options: await getHeaders(),
       );
       if (response.statusCode == 200) {
@@ -45,6 +46,7 @@ class TreasureHuntRemoteDataSourceImpl implements TreasureHuntRemoteDataSource {
         List<TreasureHuntModel> treasureHunts = response.data
             .map<TreasureHuntModel>((m) => TreasureHuntModel.fromJson(m))
             .toList();
+        print(treasureHunts);
         return treasureHunts;
       } else {
         throw ServerException();
@@ -81,13 +83,13 @@ class TreasureHuntRemoteDataSourceImpl implements TreasureHuntRemoteDataSource {
   Future<List<TreasureHuntModel>> fetchRecentTreasureHunts() async {
     try {
       Dio dio = Dio();
-      print("${url}user/hunts/past");
       var response =
           await dio.get("${url}users/hunts/past", options: await getHeaders());
       if (response.statusCode == 200) {
         List<TreasureHuntModel> treasureHunts = response.data
             .map<TreasureHuntModel>((m) => TreasureHuntModel.fromJson(m))
             .toList();
+        print(treasureHunts);
         return treasureHunts;
       } else {
         throw ServerException();

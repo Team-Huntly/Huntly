@@ -45,7 +45,7 @@ class HuntCard extends StatelessWidget {
                   width: 5,
                 ))),
                 child: Container(
-                  width: 90,
+                  width: 95,
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   decoration: BoxDecoration(
@@ -58,19 +58,21 @@ class HuntCard extends StatelessWidget {
                     children: [
                       Text(treasureHunt.started_at.day.toString(),
                           style: GoogleFonts.poppins(
-                            fontSize: 40,
-                            fontWeight: FontWeight.w600,
-                          )),
+                              fontSize: 40,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black)),
                       Text(DateFormat('MMM').format(treasureHunt.started_at),
                           style: GoogleFonts.poppins(
-                              fontSize: 20, fontWeight: FontWeight.w400)),
+                              fontSize: 20,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black)),
                       const SizedBox(height: 10),
-                      Text(DateFormat('HH:MM').format(treasureHunt.started_at),
+                      Text(DateFormat('h:mm a').format(treasureHunt.started_at),
                           style: GoogleFonts.poppins(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            fontStyle: FontStyle.italic,
-                          )),
+                              fontSize: 12.5,
+                              fontWeight: FontWeight.w500,
+                              fontStyle: FontStyle.italic,
+                              color: Colors.black)),
                     ],
                   ),
                 ),
@@ -87,30 +89,33 @@ class HuntCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Container(
-                          child: Text(
-                            treasureHunt.name,
-                            style: darkTheme.textTheme.headline3,
-                          ),
-                        ),
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
+                            Text(
+                              treasureHunt.name,
+                              style: darkTheme.textTheme.headline3,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8),
                               child: Text(
-                                // treasureHu``,
-                                'hello',
-                                style: TextStyle(
-                                  color: darkTheme.colorScheme.secondary,
-                                  fontSize: 14,
+                                treasureHunt.theme.name,
+                                style: const TextStyle(
+                                  color: Color.fromARGB(255, 201, 198, 198),
+                                  fontSize: 15,
                                 ),
                               ),
                             ),
+                          ],
+                        ),
+                        Column(
+                          children: [
                             const SizedBox(height: 10),
                             Text(
                               "${treasureHunt.total_seats - treasureHunt.participants.length} seats left",
                               style: TextStyle(
                                 color: darkTheme.colorScheme.secondary,
-                                fontSize: 12,
+                                fontSize: 13,
                               ),
                             ),
                           ],

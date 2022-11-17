@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:huntly/features/hunts/presentation/widgets/hunt_card.dart';
 import 'package:huntly/core/utils/scaffold.dart';
-
+import 'package:lottie/lottie.dart';
 import '../../../../core/theme/theme.dart';
 import '../../../../core/utils/scaffold.dart';
 import '../bloc/treasurehunt_bloc.dart';
@@ -35,22 +35,20 @@ class _HomePageState extends State<HomePage> {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Hello!",
-                          style: darkTheme.textTheme.overline,
+                  state.treasureHunts.length == 0
+                      ? Padding(
+                          padding: const EdgeInsets.only(top: 48.0),
+                          child: Lottie.asset(
+                              'assets/images/home-place-holder.json'),
+                        )
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: state.treasureHunts.length,
+                          itemBuilder: (context, index) {
+                            return HuntCard(
+                                treasureHunt: state.treasureHunts[index]);
+                          },
                         ),
-                      ]),
-                  const SizedBox(height: 30),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: state.treasureHunts.length,
-                    itemBuilder: (context, index) {
-                      return HuntCard(treasureHunt: state.treasureHunts[index]);
-                    },
-                  ),
                 ],
               );
             } else if (state is TreasureHuntInitial) {

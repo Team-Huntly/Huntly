@@ -59,7 +59,7 @@ class HuntlyScaffold extends StatelessWidget {
   final Widget body;
   final BuildContext outerContext;
   final FloatingActionButtonLocation? floatingActionButtonLocation;
-  final FloatingActionButton? floatingActionButton;
+  final Widget? floatingActionButton;
   bool? showDrawer;
   HuntlyScaffold(
       {Key? key,
