@@ -11,5 +11,5 @@ class Memory(models.Model):
     added_at = models.DateTimeField(auto_now_add = True)
     clicked_by = models.ForeignKey(User, blank=False, null=False, on_delete=models.CASCADE)
 
-    def _str_(self):
+    def __str__(self):
         return self.treasure_hunt.name + ' ' + self.added_at

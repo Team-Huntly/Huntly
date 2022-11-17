@@ -10,7 +10,7 @@ class Brand(models.Model):
     logo = models.ImageField(upload_to='brand_logos', blank=True, null=True)
     added_at = models.DateTimeField(auto_now_add = True)
 
-    def _str_(self):
+    def __str__(self):
         return self.name
 
 class CouponDescription(models.Model):
@@ -19,7 +19,7 @@ class CouponDescription(models.Model):
     title = models.CharField(max_length = 256)
     description = models.TextField(blank=True, null=True)
 
-    def _str_(self):
+    def __str__(self):
         return self.title
 
 class Coupon(models.Model):
@@ -30,5 +30,5 @@ class Coupon(models.Model):
     created_at = models.DateTimeField(auto_now_add = True)
     expiry_date = models.DateTimeField()
 
-    def _str_(self):
+    def __str__(self):
         return self.code

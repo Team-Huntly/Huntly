@@ -10,7 +10,7 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-DIST_BUFFER = 0.1
+DIST_BUFFER = 0.035
 
 
 # Serializer for Treasure Hunt Model
