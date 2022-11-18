@@ -35,97 +35,96 @@ class _FindHuntPageState extends State<FindHuntPage> {
       },
       child: HuntlyScaffold(
         outerContext: context,
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              // Create a search bar with a search icon
-              Container(
-                child: TextField(
-                  controller: _controller,
-                  style: GoogleFonts.poppins(
-                      fontSize: 16, fontWeight: FontWeight.w500),
-                  decoration: InputDecoration(
-                    filled: true,
-                    hintText: 'Search',
-                    suffixIcon: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: const [
-                          Icon(Icons.search),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Icon(Icons.filter_list),
-                        ],
-                      ),
+        body: Column(
+          children: [
+            // Create a search bar with a search icon
+            Padding(
+              padding: const EdgeInsets.only(bottom: 18.0),
+              child: TextField(
+                controller: _controller,
+                style: GoogleFonts.poppins(
+                    fontSize: 16, fontWeight: FontWeight.w500),
+                decoration: InputDecoration(
+                  filled: true,
+                  hintText: 'Search',
+                  suffixIcon: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: const [
+                        Icon(Icons.search, color: Colors.black),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Icon(
+                          Icons.filter_list,
+                          color: Colors.black,
+                        ),
+                      ],
                     ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    fillColor: Colors.white,
                   ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  fillColor: Colors.white,
                 ),
               ),
-              BlocConsumer<TreasureHuntBloc, TreasureHuntState>(
-                listener: (context, state) {
-                  if (state is TreasureHuntInitial) {
-                    BlocProvider.of<TreasureHuntBloc>(context)
-                        .add(GetTreasureHunts());
-                  }
-                },
-                builder: (context, state) {
-                  if (state is Loading) {
-                    return const Padding(
-                      padding: EdgeInsets.only(top: 40),
-                      child: Center(
-                        child: CircularProgressIndicator(
-                          color: Colors.white,
-                        ),
+            ),
+            BlocConsumer<TreasureHuntBloc, TreasureHuntState>(
+              listener: (context, state) {
+                if (state is TreasureHuntInitial) {
+                  BlocProvider.of<TreasureHuntBloc>(context)
+                      .add(GetTreasureHunts());
+                }
+              },
+              builder: (context, state) {
+                if (state is Loading) {
+                  return const Padding(
+                    padding: EdgeInsets.only(top: 40),
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
+                    ),
+                  );
+                } else if (state is Loaded) {
+                  if (state.treasureHunts.isEmpty) {
+                    return Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Text(
+                          'No Treasure Hunts Found',
+                          style: GoogleFonts.poppins(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white,
+                          ),
+                        ));
+                  } else {
+                    return Expanded(
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: state.treasureHunts.length,
+                        itemBuilder: (context, index) {
+                          return HuntCard(
+                              treasureHunt: state.treasureHunts[index]);
+                        },
                       ),
                     );
-                  } else if (state is Loaded) {
-                    if (state.treasureHunts.length == 0) {
-                      return Padding(
-                          padding: const EdgeInsets.all(8),
-                          child: Text(
-                            'No Treasure Hunts Found',
-                            style: GoogleFonts.poppins(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.white,
-                            ),
-                          ));
-                    } else {
-                      return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(height: 24),
-                            ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: state.treasureHunts.length,
-                              itemBuilder: (context, index) {
-                                return HuntCard(
-                                    treasureHunt: state.treasureHunts[index]);
-                              },
-                            )
-                          ]);
-                    }
-                  } else if (state is TreasureHuntInitial) {
-                    WidgetsBinding.instance.addPostFrameCallback((_) {
-                      BlocProvider.of<TreasureHuntBloc>(context)
-                          .add(GetTreasureHunts());
-                    });
-                    return const Center(child: CircularProgressIndicator());
-                  } else {
-                    return const Center(
-                      child: Text('Treasure Hunts not Found'),
-                    );
                   }
-                },
-              )
-            ],
-          ),
+                } else if (state is TreasureHuntInitial) {
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    BlocProvider.of<TreasureHuntBloc>(context)
+                        .add(GetTreasureHunts());
+                  });
+                  return const Center(child: CircularProgressIndicator());
+                } else {
+                  return const Center(
+                    child: Text('Treasure Hunts not Found'),
+                  );
+                }
+              },
+            )
+          ],
         ),
       ),
     );

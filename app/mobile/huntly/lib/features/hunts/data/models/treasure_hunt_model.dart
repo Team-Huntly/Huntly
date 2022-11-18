@@ -39,7 +39,7 @@ class TreasureHuntModel extends TreasureHunt {
     return TreasureHuntModel(
         id: json['id'],
         name: json['name'],
-        started_at: DateTime.parse(json['started_at']),
+        started_at: DateTime.parse(json['started_at']).toLocal(),
         ended_at: json['ended_at'],
         location_latitute: json['location_latitute'] ?? "asd",
         location_longitude: json['location_longitude'],

@@ -31,9 +31,7 @@ class HuntDetailPage extends StatefulWidget {
 }
 
 class _HuntDetailPageState extends State<HuntDetailPage> {
-  bool isParticipant(int userId) {
-    print(widget.treasureHunt.participants);
-    print(userId);
+  bool checkIfParticipant(int userId) {
     for (final UserModel participant in widget.treasureHunt.participants) {
       if (participant.id == userId) {
         return true;
@@ -42,91 +40,112 @@ class _HuntDetailPageState extends State<HuntDetailPage> {
     return false;
   }
 
-  bool isAdmin(int userId) {
+  bool checkIfAdmin(int userId) {
     return widget.treasureHunt.creator.id == user_.id;
+  }
+
+  late bool isLoading;
+  late bool isParticipant;
+  late bool isAdmin;
+
+  @override
+  void initState() {
+    super.initState();
+
+    isLoading = false;
+    isParticipant = checkIfParticipant(user_.id);
+    isAdmin = checkIfAdmin(user_.id);
   }
 
   @override
   Widget build(BuildContext context) {
-    bool isParticipant = this.isParticipant(user_.id);
-    bool isAdmin = this.isAdmin(user_.id);
-
-    print(widget.treasureHunt.toString());
-
-    return SingleChildScrollView(
-        child: Column(
-      mainAxisAlignment: MainAxisAlignment.start,
+    return ListView(
+      shrinkWrap: true,
       children: [
         const SizedBox(height: 50),
-        Row(
-          children: [
-            ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
-              child: SizedBox(
-                height: 120,
-                width: 100,
-                child: Image.asset(
-                  'assets/images/0.jpg',
-                  fit: BoxFit.fill,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30),
+          child: Row(
+            children: [
+              ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                child: SizedBox(
+                  height: 120,
+                  width: 100,
+                  child: Image.asset(
+                    'assets/images/0.jpg',
+                    fit: BoxFit.fill,
+                  ),
                 ),
               ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Text(widget.treasureHunt.name,
-                    style:
-                        darkTheme.textTheme.headline2!.copyWith(height: 1.2)),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Text(
+                    widget.treasureHunt.name,
+                    style: darkTheme.textTheme.headline2!.copyWith(height: 1.2),
+                    textAlign: TextAlign.right,
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+        const SizedBox(
+          height: 25,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5),
+          child: GridView.count(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            crossAxisCount: 2,
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
+            childAspectRatio: 1.5,
+            children: [
+              HuntInfoCard(
+                icon: Ic.baseline_calendar_today,
+                title: 'On',
+                info: DateFormat.yMd().format(widget.treasureHunt.started_at),
+                // fontSize: 8,
               ),
-            )
-          ],
+              HuntInfoCard(
+                icon: Ic.baseline_alarm,
+                title: 'Starts at',
+                info:
+                    DateFormat("h:mm a").format(widget.treasureHunt.started_at),
+              ),
+              HuntInfoCard(
+                icon: Mdi.map_marker_outline,
+                title: 'Location',
+                info: widget.treasureHunt.location_name,
+                trailing: Majesticons.external_link_line,
+                fontSize: 14,
+              ),
+              HuntInfoCard(
+                icon: Ri.team_line,
+                title: 'Team size',
+                info: widget.treasureHunt.team_size.toString(),
+              ),
+              HuntInfoCard(
+                icon: Carbon.paint_brush,
+                title: 'Theme',
+                info: widget.treasureHunt.theme.name,
+                fontSize: 14,
+              ),
+              HuntInfoCard(
+                icon: Carbon.cabin_care_alert,
+                title: 'Seats left',
+                info: (widget.treasureHunt.total_seats -
+                        widget.treasureHunt.participants.length)
+                    .toString(),
+              ),
+            ],
+          ),
         ),
         const SizedBox(
-          height: 25,
-        ),
-        Wrap(
-          alignment: WrapAlignment.center,
-          runSpacing: 10,
-          spacing: 10,
-          children: [
-            HuntInfoCard(
-              icon: Ic.baseline_calendar_today,
-              title: 'On',
-              info: DateFormat.yMd().format(widget.treasureHunt.started_at),
-              // fontSize: 8,
-            ),
-            HuntInfoCard(
-              icon: Ic.baseline_alarm,
-              title: 'Starts at',
-              info: DateFormat('HH:MM').format(widget.treasureHunt.started_at),
-            ),
-            HuntInfoCard(
-              icon: Mdi.map_marker_outline,
-              title: 'Location',
-              info: widget.treasureHunt.location_name,
-              trailing: Majesticons.external_link_line,
-            ),
-            HuntInfoCard(
-              icon: Ri.team_line,
-              title: 'Team size',
-              info: widget.treasureHunt.team_size.toString(),
-            ),
-            HuntInfoCard(
-              icon: Carbon.paint_brush,
-              title: 'Theme',
-              info: widget.treasureHunt.theme.name,
-            ),
-            HuntInfoCard(
-              icon: Carbon.cabin_care_alert,
-              title: 'Seats left',
-              info: (widget.treasureHunt.total_seats -
-                      widget.treasureHunt.participants.length)
-                  .toString(),
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 25,
+          height: 20,
         ),
         widget.treasureHunt.started_at.isBefore(DateTime.now())
             ? ActionButton(
@@ -137,25 +156,55 @@ class _HuntDetailPageState extends State<HuntDetailPage> {
                           HuntPlay(treasureHuntId: widget.treasureHunt.id)));
                 },
               )
-            : isAdmin ? Container() :
-            isParticipant
-                ? ActionButton(
-                    text: 'Unregister',
-                    onTap: () {
-                      final thrs = TreasureHuntRemoteDataSourceImpl();
-                      thrs.unregisterUser(
-                          treasureHuntId: widget.treasureHunt.id);
-                    },
-                    color: darkTheme.colorScheme.secondary,
-                  )
-                : ActionButton(
-                    text: 'Register',
-                    onTap: () {
-                      final thrs = TreasureHuntRemoteDataSourceImpl();
-                      thrs.registerUser(treasureHuntId: widget.treasureHunt.id);
-                    },
-                    color: darkTheme.indicatorColor,
-                  ),
+            : isAdmin
+                ? Container()
+                : isLoading
+                    ? CircularProgressIndicator()
+                    : isParticipant
+                        ? ActionButton(
+                            text: 'Unregister',
+                            onTap: () async {
+                              try {
+                                final thrs = TreasureHuntRemoteDataSourceImpl();
+                                setState(() {
+                                  isLoading = true;
+                                });
+                                await thrs.unregisterUser(
+                                    treasureHuntId: widget.treasureHunt.id);
+                                setState(() {
+                                  isLoading = false;
+                                  isParticipant = false;
+                                });
+                              } catch (e) {
+                                setState(() {
+                                  isLoading = false;
+                                });
+                              }
+                            },
+                            color: darkTheme.colorScheme.secondary,
+                          )
+                        : ActionButton(
+                            text: 'Register',
+                            onTap: () async {
+                              try {
+                                final thrs = TreasureHuntRemoteDataSourceImpl();
+                                setState(() {
+                                  isLoading = true;
+                                });
+                                await thrs.registerUser(
+                                    treasureHuntId: widget.treasureHunt.id);
+                                setState(() {
+                                  isParticipant = true;
+                                  isLoading = false;
+                                });
+                              } catch (e) {
+                                setState(() {
+                                  isLoading = false;
+                                });
+                              }
+                            },
+                            color: darkTheme.indicatorColor,
+                          ),
         const SizedBox(
           height: 10,
         ),
@@ -173,7 +222,10 @@ class _HuntDetailPageState extends State<HuntDetailPage> {
         const SizedBox(
           height: 10,
         ),
+        const SizedBox(
+          height: 25,
+        ),
       ],
-    ));
+    );
   }
 }

@@ -257,6 +257,8 @@ class _HuntEditPageState extends State<HuntEditPage> {
                                 _startDate != null &&
                                 _endDate != null &&
                                 _locationResult != null) {
+                              // print("Hello");
+                              // print(_startDate!.toUtc().toString());
                               BlocProvider.of<HuntsCreateBloc>(context).add(
                                 CreateHunt(
                                   name: _nameController.text,
@@ -265,8 +267,8 @@ class _HuntEditPageState extends State<HuntEditPage> {
                                   team_size:
                                       int.parse(_teamSizeController.text),
                                   location: _locationResult!,
-                                  endedAt: _endDate.toString(),
-                                  startedAt: _startDate.toString(),
+                                  endedAt: _endDate!.toUtc().toString(),
+                                  startedAt: _startDate!.toUtc().toString(),
                                   theme: 2,
                                 ),
                               );

@@ -54,9 +54,9 @@ class _MyHuntsPageState extends State<MyHuntsPage> {
                     ),
                   );
                 } else {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: const Center(
+                  return const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Center(
                       child: CircularProgressIndicator(
                         color: Colors.white,
                       ),

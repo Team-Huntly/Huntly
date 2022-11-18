@@ -77,7 +77,7 @@ class _HuntPlayState extends State<HuntPlay> with TickerProviderStateMixin {
         } else if (state is ClueSolved) {
           controller.play();
 
-          Future.delayed(Duration(seconds: 2), () {
+          Future.delayed(const Duration(seconds: 2), () {
             controller.stop();
           });
         }
@@ -97,7 +97,7 @@ class _HuntPlayState extends State<HuntPlay> with TickerProviderStateMixin {
                   Text(state.clues[state.index].description,
                       style: darkTheme.textTheme.bodyText2),
                   const SizedBox(height: 15),
-                  state.clues[state.index].isQrBased
+                  !state.clues[state.index].isQrBased
                       ? ActionButton(
                           leading: Mdi.map_marker_multiple,
                           text: 'Verify',
@@ -122,7 +122,7 @@ class _HuntPlayState extends State<HuntPlay> with TickerProviderStateMixin {
                                     ScanMode.BARCODE);
                             if (int.parse(barcodeScanRes) ==
                                 state.clues[state.index].id) {
-                              // ignore: invalid_use_of_visible_for_testing_member, use_build_context_synchronously
+                              // ignore: use_build_context_synchronously
                               BlocProvider.of<GameBloc>(context).add(VerifyClue(
                                   treasureHuntId: widget.treasureHuntId,
                                   clueId: state.clues[state.index].id,

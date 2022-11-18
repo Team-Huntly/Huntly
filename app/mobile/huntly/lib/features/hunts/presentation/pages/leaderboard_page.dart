@@ -29,11 +29,42 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
         .add(GetLeaderboard(widget.treasureHunt.id));
     super.initState();
   }
+// Padding(
+//                       padding: const EdgeInsets.only(top: 8.0),
+//                       child: ListView.builder(
+//                         shrinkWrap: true,
+//                         itemCount: state.leaderboard.leaders.length,
+//                         itemBuilder: (context, index) {
+//                           final Duration duration = state
+//                               .leaderboard.leaders[index].lastSolved
+//                               .difference(widget.treasureHunt.started_at);
+//                           return LeaderboardRow(attributes: [
+//                             LeaderboardData(text: index.toString()),
+//                             LeaderboardData(
+//                                 text: state.leaderboard.leaders[index].name),
+//                             LeaderboardData(
+//                                 text: state
+//                                     .leaderboard.leaders[index].cluesSolved
+//                                     .toString()),
+//                             LeaderboardData(
+//                                 text:
+//                                     "${duration.inHours}:${duration.inMinutes.remainder(minutesInHours)}")
+//                           ]);
+//                         },
+//                       ),
+//                     );
 
   @override
   Widget build(BuildContext context) {
     const int minutesInHours = 60;
-    return Expanded(
+    return RefreshIndicator(
+      color: Colors.white,
+      backgroundColor: darkTheme.highlightColor,
+      onRefresh: () {
+        BlocProvider.of<TreasureHuntBloc>(context)
+            .add(GetLeaderboard(widget.treasureHunt.id));
+        return Future.value();
+      },
       child: Column(
         children: [
           const SizedBox(height: 30),
@@ -52,29 +83,32 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
           BlocBuilder<TreasureHuntBloc, TreasureHuntState>(
             builder: (context, state) {
               if (state is LeaderboardLoaded) {
-                return Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: state.leaderboard.leaders.length,
-                    itemBuilder: (context, index) {
-                      final Duration duration = state.leaderboard.leaders[index].lastSolved.difference(
-                        widget.treasureHunt.started_at
+                return state.leaderboard.leaders.length == 0
+                    ? Container()
+                    : Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: state.leaderboard.leaders.length,
+                          itemBuilder: (context, index) {
+                            final Duration duration = state
+                                .leaderboard.leaders[index].lastSolved
+                                .difference(widget.treasureHunt.started_at);
+                            return LeaderboardRow(attributes: [
+                              LeaderboardData(text: index.toString()),
+                              LeaderboardData(
+                                  text: state.leaderboard.leaders[index].name),
+                              LeaderboardData(
+                                  text: state
+                                      .leaderboard.leaders[index].cluesSolved
+                                      .toString()),
+                              LeaderboardData(
+                                  text:
+                                      "${duration.inHours}:${duration.inMinutes.remainder(minutesInHours)}")
+                            ]);
+                          },
+                        ),
                       );
-                      return LeaderboardRow(attributes: [
-                        LeaderboardData(text: index.toString()),
-                        LeaderboardData(
-                            text: state.leaderboard.leaders[index].name),
-                        LeaderboardData(
-                            text: state.leaderboard.leaders[index].cluesSolved
-                                .toString()),
-                        LeaderboardData(
-                            text:
-                                "${duration.inHours}:${duration.inMinutes.remainder(minutesInHours)}")
-                      ]);
-                    },
-                  ),
-                );
               } else {
                 return Container(
                     padding: const EdgeInsets.only(top: 30),
@@ -83,14 +117,6 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
               }
             },
           ),
-          ActionButton(
-            onTap: () {
-              BlocProvider.of<TreasureHuntBloc>(context)
-                  .add(GetLeaderboard(widget.treasureHunt.id));
-            },
-            alignment: FractionalOffset.bottomRight,
-            leading: Mi.refresh,
-          )
         ],
       ),
     );

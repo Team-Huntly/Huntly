@@ -24,13 +24,13 @@ class HuntInfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      width: MediaQuery.of(context).size.width * 0.39,
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+      // width: MediaQuery.of(context).size.width * 0.39,
       decoration: BoxDecoration(
           color: darkTheme.colorScheme.background,
           borderRadius: const BorderRadius.all(Radius.circular(15)),
           boxShadow: const [
-            BoxShadow(color: Colors.black, blurRadius: 1, offset: Offset(2, 2)),
+            BoxShadow(color: Colors.black, blurRadius: 2, offset: Offset(1, 2)),
           ]),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -66,7 +66,7 @@ class HuntInfoCard extends StatelessWidget {
           ),
           Text(info,
               style: darkTheme.textTheme.headline2!
-                  .copyWith(fontSize: fontSize ?? 18))
+                  .copyWith(fontSize: fontSize ?? 16))
         ],
       ),
     );

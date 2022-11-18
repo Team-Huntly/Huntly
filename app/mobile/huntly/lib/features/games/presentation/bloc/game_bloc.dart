@@ -54,21 +54,23 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         for (var clue in response.data) {
           clues.add(GameClueModel.fromJson(clue));
         }
-        if(_index == clues.length){
+        if (_index == clues.length) {
           emit(GameEnded());
-        }
-        else{
-         emit(CluesLoaded(clues: clues, index: _index, teamId: event.teamId));
+        } else {
+          emit(CluesLoaded(clues: clues, index: _index, teamId: event.teamId));
         }
         print(clues.length);
       } else if (event is VerifyClue) {
         emit(Loading());
-        print("Verifying clue");
-        Position pos = await determinePosition();
+        Position position = await determinePosition();
+        double latitude = position.latitude;
+        double longitude = position.longitude;
         Dio dio = Dio();
-        var params = {"latitude": pos.latitude, "longitude": pos.longitude, "clue": event.clueId};
-        print("${url}/treasure-hunts/teams/${event.teamId}/progress/create/");
-        print(jsonEncode(params));
+        var params = {
+          "latitude": latitude,
+          "longitude": longitude,
+          "clue": event.clueId
+        };
         final prefs = await SharedPreferences.getInstance();
         Response response = await dio.post(
             "${url}treasure-hunts/teams/${event.teamId}/progress/create/",
@@ -84,7 +86,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
             ));
         if (response.statusCode == 201) {
           emit(LocationVerified());
-          
+
           emit(ClueSolved(
               clues: event.clues, index: event.index, teamId: event.teamId));
 

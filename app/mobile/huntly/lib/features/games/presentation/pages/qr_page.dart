@@ -95,7 +95,7 @@ class _QRViewExampleState extends State<QRViewExample> {
                           onPressed: () async {
                             await controller?.pauseCamera();
                           },
-                          child: const Text('pause',
+                          child: const Text('Pause',
                               style: TextStyle(fontSize: 20)),
                         ),
                       ),
@@ -105,7 +105,7 @@ class _QRViewExampleState extends State<QRViewExample> {
                           onPressed: () async {
                             await controller?.resumeCamera();
                           },
-                          child: const Text('resume',
+                          child: const Text('Resume',
                               style: TextStyle(fontSize: 20)),
                         ),
                       )
