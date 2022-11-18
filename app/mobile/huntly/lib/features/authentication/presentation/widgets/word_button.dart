@@ -36,14 +36,24 @@ class _WordButtonState extends State<WordButton> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        print("Hello");
         if (!widget.isSelected) {
+          print("1");
           widget.selectedWords.value.add(widget.word);
+          print(widget.selectedWords.value);
         } else {
-          widget.selectedWords.value.forEach((element) {
-            if (element.interest == widget.word.interest) {
-              widget.selectedWords.value.remove(element);
-            }
-          });
+          // print("2");
+          // widget.selectedWords.value.forEach((element) {
+          //   if (element.interest == widget.word.interest) {
+          //     print("asddfas");
+          //     widget.selectedWords.value.remove(element);
+          //   }
+          // });
+          print(widget.selectedWords.value.length);
+
+          widget.selectedWords.value.removeWhere(
+              (element) => element.interest == widget.word.interest);
+          print(widget.selectedWords.value.length);
         }
         setState(() {
           widget.isSelected = !widget.isSelected;

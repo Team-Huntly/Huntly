@@ -45,6 +45,7 @@ class TreasureHuntBloc extends Bloc<TreasureHuntEvent, TreasureHuntState> {
             emit(Loaded(treasureHunts: treasureHunts));
           });
         } catch (e) {
+          print("The error is ");
           debugPrint(e.toString());
           emit(Failed());
         }

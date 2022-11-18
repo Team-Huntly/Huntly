@@ -85,7 +85,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                     Center(
                       child: Text(
                         state.profileModel.email,
-                        style: darkTheme.textTheme.headline3,
+                        style: darkTheme.textTheme.headline5,
                       ),
                     ),
                     Container(

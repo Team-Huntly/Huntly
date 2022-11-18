@@ -60,10 +60,6 @@ Map<String, List<Interests>> creativity = {
         icon: Noto.woman_dancing_medium_light_skin_tone),
     Interests(category: category1, interest: "Design", icon: IconPark.bydesign),
     Interests(category: category1, interest: "Make up", icon: Noto.lipstick),
-    Interests(
-        category: category1,
-        interest: "Photography",
-        icon: Noto.camera_with_flash),
     Interests(category: category1, interest: "Singing", icon: Noto.microphone),
   ]
 };
@@ -243,9 +239,6 @@ Map<String, List<Interests>> hobbies = {
         icon: Twemoji.house_with_garden),
     Interests(
         category: category10, interest: "Photography", icon: Bi.camera_fill),
-    Interests(
-        category: category10, interest: "Singing", icon: NotoV1.microphone),
-    Interests(category: category10, interest: "Writing", icon: Noto.pencil),
   ]
 };
 List<Interests> allInterests = [
@@ -261,11 +254,6 @@ List<Interests> allInterests = [
       icon: Noto.woman_dancing_medium_light_skin_tone),
   Interests(category: category1, interest: "Design", icon: IconPark.bydesign),
   Interests(category: category1, interest: "Make up", icon: Noto.lipstick),
-  Interests(
-      category: category1,
-      interest: "Photography",
-      icon: Noto.camera_with_flash),
-  Interests(category: category1, interest: "Singing", icon: Noto.microphone),
   Interests(
       category: category2,
       interest: "Swimming",

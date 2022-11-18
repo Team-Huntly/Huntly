@@ -79,29 +79,46 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
             if (state is LeaderboardLoaded) {
               return state.leaderboard.leaders.isEmpty
                   ? Container()
-                  : Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: state.leaderboard.leaders.length,
-                        itemBuilder: (context, index) {
-                          final Duration duration = state
-                              .leaderboard.leaders[index].lastSolved
-                              .difference(widget.treasureHunt.started_at);
-                          return LeaderboardRow(attributes: [
-                            LeaderboardData(text: index.toString()),
-                            LeaderboardData(
-                                text: state.leaderboard.leaders[index].name),
-                            LeaderboardData(
-                                text: state
-                                    .leaderboard.leaders[index].cluesSolved
-                                    .toString()),
-                            LeaderboardData(
-                                text:
-                                    "${duration.inHours}:${duration.inMinutes.remainder(minutesInHours)}")
-                          ]);
-                        },
-                      ),
+                  : Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: Container(
+                            height: MediaQuery.of(context).size.height * 0.5,
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: state.leaderboard.leaders.length,
+                              itemBuilder: (context, index) {
+                                final Duration duration = state
+                                    .leaderboard.leaders[index].lastSolved
+                                    .difference(widget.treasureHunt.started_at);
+                                return LeaderboardRow(attributes: [
+                                  LeaderboardData(text: (index + 1).toString()),
+                                  LeaderboardData(
+                                      text: state
+                                          .leaderboard.leaders[index].name),
+                                  LeaderboardData(
+                                      text: state.leaderboard.leaders[index]
+                                          .cluesSolved
+                                          .toString()),
+                                  LeaderboardData(
+                                      text:
+                                          "${duration.inHours}:${duration.inMinutes.remainder(minutesInHours)}")
+                                ]);
+                              },
+                            ),
+                          ),
+                        ),
+                        Padding(
+                            padding: const EdgeInsets.only(top: 28.0),
+                            child: ActionButton(
+                              onTap: () {
+                                BlocProvider.of<TreasureHuntBloc>(context).add(
+                                    GetLeaderboard(widget.treasureHunt.id));
+                              },
+                              leading: Mi.refresh,
+                            ))
+                      ],
                     );
             } else {
               return Container(

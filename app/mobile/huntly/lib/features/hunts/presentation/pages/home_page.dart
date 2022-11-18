@@ -34,22 +34,16 @@ class _HomePageState extends State<HomePage> {
             } else if (state is Loaded) {
               return Padding(
                 padding: const EdgeInsets.only(top: 15.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    state.treasureHunts.isEmpty
-                        ? BackGroundWidget(
-                            title: "Not registered for any Hunts")
-                        : ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: state.treasureHunts.length,
-                            itemBuilder: (context, index) {
-                              return HuntCard(
-                                  treasureHunt: state.treasureHunts[index]);
-                            },
-                          ),
-                  ],
-                ),
+                child: state.treasureHunts.isEmpty
+                    ? BackGroundWidget(title: "Not registered for any Hunts")
+                    : ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: state.treasureHunts.length,
+                        itemBuilder: (context, index) {
+                          return HuntCard(
+                              treasureHunt: state.treasureHunts[index]);
+                        },
+                      ),
               );
             } else if (state is TreasureHuntInitial) {
               WidgetsBinding.instance.addPostFrameCallback((_) {

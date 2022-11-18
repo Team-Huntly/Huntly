@@ -139,6 +139,8 @@ class _ClueCreatePageState extends State<ClueCreatePage>
                       isQrBased: isQrBased);
 
                   widget.clubs.value.add(club);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Saved the clue')));
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       content: Text('Please fill all the fields')));

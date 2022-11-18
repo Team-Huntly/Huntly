@@ -66,7 +66,7 @@ class _ProfilePageState extends State<ProfilePage> {
               Center(
                 child: Text(
                   user_.email,
-                  style: darkTheme.textTheme.headline3,
+                  style: darkTheme.textTheme.headline5,
                 ),
               ),
               Container(

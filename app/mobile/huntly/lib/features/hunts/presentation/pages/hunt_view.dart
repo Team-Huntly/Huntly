@@ -61,15 +61,8 @@ class _HuntViewState extends State<HuntView> {
                   TeamPage(
                     treasureHuntId: widget.treasureHunt.id,
                   ),
-                  RefreshIndicator(
-                    onRefresh: () {
-                      BlocProvider.of<TreasureHuntBloc>(context)
-                          .add(GetLeaderboard(widget.treasureHunt.id));
-                      return Future.value();
-                    },
-                    child: LeaderboardPage(
-                      treasureHunt: widget.treasureHunt,
-                    ),
+                  LeaderboardPage(
+                    treasureHunt: widget.treasureHunt,
                   ),
                 ],
               ),

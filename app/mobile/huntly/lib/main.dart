@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:huntly/common/constants.dart';
+import 'package:huntly/core/utils/background_widget.dart';
 import 'package:huntly/core/utils/scaffold.dart';
 import 'package:huntly/core/utils/service.dart';
 import 'package:huntly/features/hunts/data/datasources/treasure_hunt_remote_datasource.dart';
@@ -105,7 +106,7 @@ class _WrapperPageState extends State<WrapperPage> {
         future: _googleSignIn.isSignedIn(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return const Text('Error');
+            return BackGroundWidget(title: "Some error occurred");
           } else if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.data == false) {
               return const AuthenticationPage();

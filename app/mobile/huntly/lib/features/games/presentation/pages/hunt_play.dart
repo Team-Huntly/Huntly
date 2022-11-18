@@ -2,6 +2,7 @@ import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:huntly/core/theme/theme.dart';
 import 'package:huntly/core/utils/action_button.dart';
 import 'package:huntly/core/utils/scaffold.dart';
@@ -99,58 +100,72 @@ class _HuntPlayState extends State<HuntPlay> with TickerProviderStateMixin {
               body: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 70),
-                  Text(
-                      'Clue #${state.clues[state.index].stepNo}/${state.clues.length}',
+                  const SizedBox(height: 10),
+                  Text('Clue #${state.index + 1}/${state.clues.length}',
                       style: darkTheme.textTheme.caption),
-                  const SizedBox(height: 50),
-                  Text(state.clues[state.index].description,
-                      style: darkTheme.textTheme.bodyText2),
-                  const SizedBox(height: 15),
+                  const SizedBox(height: 20),
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.white),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    width: MediaQuery.of(context).size.width * 0.99,
+                    height: MediaQuery.of(context).size.height * 0.6,
+                    child: Markdown(
+                      shrinkWrap: true,
+                      data: state.clues[state.index].description,
+                    ),
+                  ),
+                  // const SizedBox(height: 15),
                   !state.clues[state.index].isQrBased
-                      ? ActionButton(
-                          leading: Mdi.map_marker_multiple,
-                          text: 'Verify',
-                          onTap: () {
-                            BlocProvider.of<GameBloc>(context).add(VerifyClue(
-                                treasureHuntId: widget.treasureHuntId,
-                                clueId: state.clues[state.index].id,
-                                clues: state.clues,
-                                teamId: state.teamId,
-                                index: state.index));
-                          },
-                        )
-                      : ActionButton(
-                          leading: Mdi.barcode,
-                          text: 'Scan',
-                          onTap: () async {
-                            String barcodeScanRes =
-                                await FlutterBarcodeScanner.scanBarcode(
-                                    '#ff6666',
-                                    'Cancel',
-                                    true,
-                                    ScanMode.BARCODE);
-                            if (int.parse(barcodeScanRes) ==
-                                state.clues[state.index].id) {
-                              // ignore: use_build_context_synchronously
+                      ? Expanded(
+                          child: ActionButton(
+                            leading: Mdi.map_marker_multiple,
+                            text: 'Verify',
+                            onTap: () {
                               BlocProvider.of<GameBloc>(context).add(VerifyClue(
                                   treasureHuntId: widget.treasureHuntId,
                                   clueId: state.clues[state.index].id,
                                   clues: state.clues,
                                   teamId: state.teamId,
                                   index: state.index));
-                            } else {
-                              // ignore: use_build_context_synchronously
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Incorrect QR Code'),
-                                  backgroundColor: Colors.red,
-                                ),
-                              );
-                            }
-                            print(barcodeScanRes);
-                          },
-                          color: darkTheme.colorScheme.primary),
+                            },
+                          ),
+                        )
+                      : Expanded(
+                          child: ActionButton(
+                              leading: Mdi.barcode,
+                              text: 'Scan',
+                              onTap: () async {
+                                String barcodeScanRes =
+                                    await FlutterBarcodeScanner.scanBarcode(
+                                        '#ff6666',
+                                        'Cancel',
+                                        true,
+                                        ScanMode.BARCODE);
+                                if (int.parse(barcodeScanRes) ==
+                                    state.clues[state.index].id) {
+                                  // ignore: use_build_context_synchronously
+                                  BlocProvider.of<GameBloc>(context).add(
+                                      VerifyClue(
+                                          treasureHuntId: widget.treasureHuntId,
+                                          clueId: state.clues[state.index].id,
+                                          clues: state.clues,
+                                          teamId: state.teamId,
+                                          index: state.index));
+                                } else {
+                                  // ignore: use_build_context_synchronously
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text('Incorrect QR Code'),
+                                      backgroundColor: Colors.red,
+                                    ),
+                                  );
+                                }
+                                print(barcodeScanRes);
+                              },
+                              color: darkTheme.colorScheme.primary),
+                        ),
                 ],
               ));
         } else if (state is Loading) {
@@ -204,32 +219,36 @@ class _HuntPlayState extends State<HuntPlay> with TickerProviderStateMixin {
           return Stack(children: [
             HuntlyScaffold(
                 outerContext: context,
-                body: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                body: ListView(
+                  // crossAxisAli./gnment: CrossAxisAlignment.center,
                   children: [
-                    const SizedBox(height: 70),
-                    Text(
-                        'Clue #${state.clues[state.index].stepNo}/${state.clues.length}',
+                    const SizedBox(height: 10),
+                    Text('Clue #${state.index + 1}/${state.clues.length}',
+                        textAlign: TextAlign.center,
                         style: darkTheme.textTheme.caption),
-                    const SizedBox(height: 50),
-                    Text(state.clues[state.index].description,
-                        style: darkTheme.textTheme.bodyText2),
+                    const SizedBox(height: 20),
+                    ActionButton(
+                        text: 'Success',
+                        leading: Noto.party_popper,
+                        onTap: () {},
+                        color: darkTheme.colorScheme.primary),
+                    const SizedBox(height: 15),
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.white),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      width: MediaQuery.of(context).size.width * 0.99,
+                      height: MediaQuery.of(context).size.height * 0.6,
+                      child: Markdown(
+                        shrinkWrap: true,
+                        data: state.clues[state.index].answerDescription,
+                      ),
+                    ),
                     const SizedBox(height: 15),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ActionButton(
-                            text: 'Success',
-                            leading: Noto.party_popper,
-                            onTap: () {},
-                            color: darkTheme.colorScheme.primary)
-                      ],
-                    ),
-                    Container(
-                      margin: const EdgeInsets.symmetric(vertical: 30),
-                      child: Text(state.clues[state.index].answerDescription,
-                          style: darkTheme.textTheme.bodyText2!.copyWith(
-                              fontSize: 12, color: darkTheme.disabledColor)),
+                      children: [],
                     ),
                     ActionButton(
                       text: 'Go to next clue',

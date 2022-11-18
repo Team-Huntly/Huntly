@@ -71,10 +71,10 @@ class _HuntDetailPageState extends State<HuntDetailPage> {
               ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
                 child: SizedBox(
-                  height: 120,
+                  height: 100,
                   width: 100,
                   child: Image.asset(
-                    'assets/images/0.jpg',
+                    'assets/images/gdsc.jpg',
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -159,7 +159,7 @@ class _HuntDetailPageState extends State<HuntDetailPage> {
               )
             : isAdmin
                 ? Container()
-                : widget.treasureHunt.status != "open"
+                : widget.treasureHunt.status != "Open"
                     ? Container()
                     : isLoading
                         ? CircularProgressIndicator()
