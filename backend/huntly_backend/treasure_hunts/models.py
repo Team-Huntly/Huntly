@@ -31,7 +31,7 @@ class TreasureHunt(models.Model):
     is_locked = models.BooleanField(default=False)
     status = models.CharField(max_length=1, choices = STATUS_CHOICES, default='O', null=False, blank=False)
 
-    def _str_(self):
+    def __str__(self):
         return self.name
 
 class Clue(models.Model):
@@ -44,14 +44,14 @@ class Clue(models.Model):
     answer_longitude = models.CharField(max_length = 30)
     is_qr_based = models.BooleanField()
 
-    def _str_(self):
+    def __str__(self):
         return self.description
 
 class Theme(models.Model):
     name = models.CharField(max_length = 256)
     description = models.TextField(blank=True, null=True)
 
-    def _str_(self):
+    def __str__(self):
         return self.name
 
 class Team(models.Model):
@@ -60,7 +60,7 @@ class Team(models.Model):
     team_members = models.ManyToManyField(User)
     logo = models.ImageField(upload_to='team_logos', blank=True, null=True)
 
-    def _str_(self):
+    def __str__(self):
         return self.name
 
 class TeamProgress(models.Model):
@@ -68,12 +68,12 @@ class TeamProgress(models.Model):
     solved_at = models.DateTimeField(auto_now_add = True)
     team = models.ForeignKey(Team, blank= False, null = False, on_delete=models.CASCADE, related_name='team_progress_team')
 
-    def _str_(self):
-        return self.clue.id + ' ' + self.team.name
+    def __str__(self):
+        return str(self.clue.id) + ' ' + self.team.name
 
 
 class Preset(models.Model):
     treasure_hunt = models.ForeignKey(TreasureHunt, blank=False, null = False, on_delete=models.CASCADE, related_name='presets_treasure_hunt')
 
-    def _str_(self):
+    def __str__(self):
         return self.treasure_hunt.name

@@ -224,6 +224,11 @@ class TeamProgressCreateAPIView(generics.CreateAPIView):
     serializer_class = TeamProgressSerializer
 
     def post(self, request, *args, **kwargs):
+        # check if object already exists
+        team_id = kwargs['team_id']
+        clue_id = request.data['clue']
+        if TeamProgress.objects.filter(team__id=team_id, clue__id=clue_id).exists():
+            return Response(status=status.HTTP_409_CONFLICT)
         serializer = self.get_serializer(data=request.data, context={'request': request, 'team_id': kwargs['team_id']})
         serializer.is_valid(raise_exception=True)
         serializer.save()
