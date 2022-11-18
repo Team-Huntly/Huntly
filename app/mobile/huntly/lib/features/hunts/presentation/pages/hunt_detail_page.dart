@@ -174,6 +174,8 @@ class _HuntDetailPageState extends State<HuntDetailPage> {
                                 setState(() {
                                   isLoading = false;
                                   isParticipant = false;
+                                  widget.treasureHunt.participants.removeWhere(
+                                      (element) => element.id == user_.id);
                                 });
                               } catch (e) {
                                 setState(() {
@@ -196,6 +198,8 @@ class _HuntDetailPageState extends State<HuntDetailPage> {
                                 setState(() {
                                   isParticipant = true;
                                   isLoading = false;
+
+                                  widget.treasureHunt.participants.add(user_);
                                 });
                               } catch (e) {
                                 setState(() {

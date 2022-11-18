@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:huntly/features/hunts/presentation/pages/home_page.dart';
 
 import '../../../../core/theme/theme.dart';
+import '../../../../core/utils/background_widget.dart';
 import '../../../../core/utils/scaffold.dart';
 import '../bloc/treasurehunt_bloc.dart';
 import '../widgets/hunt_card.dart';
@@ -41,20 +42,22 @@ class _RecentsPageState extends State<RecentsPage> {
               if (state is Loading) {
                 return const Center(child: CircularProgressIndicator());
               } else if (state is Loaded) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 30),
-                    ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: state.treasureHunts.length,
-                      itemBuilder: (context, index) {
-                        return HuntCard(
-                            treasureHunt: state.treasureHunts[index]);
-                      },
-                    ),
-                  ],
-                );
+                return state.treasureHunts.isEmpty
+                    ? BackGroundWidget(title: "No Hunts found")
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 30),
+                          ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: state.treasureHunts.length,
+                            itemBuilder: (context, index) {
+                              return HuntCard(
+                                  treasureHunt: state.treasureHunts[index]);
+                            },
+                          ),
+                        ],
+                      );
               } else if (state is TreasureHuntInitial) {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   BlocProvider.of<TreasureHuntBloc>(context)
@@ -62,9 +65,7 @@ class _RecentsPageState extends State<RecentsPage> {
                 });
                 return const Center(child: CircularProgressIndicator());
               } else {
-                return const Center(
-                  child: Text(''),
-                );
+                return BackGroundWidget(title: "No Hunts found");
               }
             },
           )),
