@@ -41,7 +41,6 @@ class _HomePageState extends State<HomePage> {
                     state.treasureHunts.isEmpty
                         ? Image.asset(
                             "assets/images/home-placeholder-map.png",
-                            opacity
                           )
                         : ListView.builder(
                             shrinkWrap: true,
