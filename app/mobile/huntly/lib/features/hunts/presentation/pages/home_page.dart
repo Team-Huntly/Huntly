@@ -39,10 +39,9 @@ class _HomePageState extends State<HomePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     state.treasureHunts.isEmpty
-                        ? Padding(
-                            padding: const EdgeInsets.only(top: 48.0),
-                            child: Lottie.asset(
-                                'assets/images/home-place-holder.json'),
+                        ? Image.asset(
+                            "assets/images/home-placeholder-map.png",
+                            opacity
                           )
                         : ListView.builder(
                             shrinkWrap: true,
@@ -64,9 +63,12 @@ class _HomePageState extends State<HomePage> {
             } else if (state is Failed) {
               return const Center(child: Text("Some error has occured"));
             } else {
-              return const Center(
-                child: Center(child: Text('Not registered for any hunts')),
-              );
+              return Column(children: [
+                Image.asset("assets/images/home-placeholder-map.png"),
+                const Center(
+                  child: Center(child: Text('Not registered for any hunts')),
+                ),
+              ]);
             }
           },
         ));
