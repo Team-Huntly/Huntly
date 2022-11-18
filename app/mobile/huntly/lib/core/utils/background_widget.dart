@@ -12,7 +12,7 @@ class _BackGroundWidgetState extends State<BackGroundWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.16),
+      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.14),
       child: Column(
         children: [
           Opacity(
