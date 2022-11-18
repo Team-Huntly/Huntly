@@ -28,27 +28,21 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         final teamId = team.id;
         final teamName = team.name;
         emit(TeamLoaded(team: team));
-        print("Teams loaded");
       } else if (event is GetClues) {
-        print("Loading clues");
         Dio dio = Dio();
         Response response = await dio.get(
             "${url}treasure-hunts/${event.treasureHuntId}/clues/",
             options: await getHeaders());
-        print(response.data);
         int _index = 0;
         try {
           Response pResponse = await dio.get(
             "${url}treasure-hunts/teams/${event.teamId}/progress/",
             options: await getHeaders(),
           );
-          print(pResponse.data);
           _index = pResponse.data.length;
         } catch (e) {
           _index = 0;
         }
-        print("progress");
-        print(_index);
 
         List<GameClueModel> clues = [];
         for (var clue in response.data) {
@@ -59,7 +53,6 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         } else {
           emit(CluesLoaded(clues: clues, index: _index, teamId: event.teamId));
         }
-        print(clues.length);
       } else if (event is VerifyClue) {
         emit(Loading());
         Position position = await determinePosition();
@@ -92,7 +85,6 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 
           Future.delayed(const Duration(seconds: 1), () {});
 
-          print(response.data['clue']['step_no']);
           if (response.data['clue']['step_no'].toInt() == event.clues.length) {
             emit(GameEnded());
           }
@@ -100,6 +92,10 @@ class GameBloc extends Bloc<GameEvent, GameState> {
           emit(LocationUnverified());
           emit(CluesLoaded(
               clues: event.clues, index: event.index, teamId: event.teamId));
+        }
+        else if (response.statusCode == 409) {
+          emit(CluesLoaded(
+            clues: event.clues, index: event.index + 1, teamId: event.teamId));  
         }
       } else if (event is NextClue) {
         emit(CluesLoaded(
