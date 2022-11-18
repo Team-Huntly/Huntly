@@ -9,6 +9,8 @@ abstract class GameState extends Equatable {
 
 class GameInitial extends GameState {}
 
+class AlreadySolved extends GameState {}
+
 class GameStarted extends GameState {}
 
 class TeamLoaded extends GameState {

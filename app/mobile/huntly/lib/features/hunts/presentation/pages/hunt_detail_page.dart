@@ -158,57 +158,63 @@ class _HuntDetailPageState extends State<HuntDetailPage> {
               )
             : isAdmin
                 ? Container()
-                : isLoading
-                    ? CircularProgressIndicator()
-                    : isParticipant
-                        ? ActionButton(
-                            text: 'Unregister',
-                            onTap: () async {
-                              try {
-                                final thrs = TreasureHuntRemoteDataSourceImpl();
-                                setState(() {
-                                  isLoading = true;
-                                });
-                                await thrs.unregisterUser(
-                                    treasureHuntId: widget.treasureHunt.id);
-                                setState(() {
-                                  isLoading = false;
-                                  isParticipant = false;
-                                  widget.treasureHunt.participants.removeWhere(
-                                      (element) => element.id == user_.id);
-                                });
-                              } catch (e) {
-                                setState(() {
-                                  isLoading = false;
-                                });
-                              }
-                            },
-                            color: darkTheme.colorScheme.secondary,
-                          )
-                        : ActionButton(
-                            text: 'Register',
-                            onTap: () async {
-                              try {
-                                final thrs = TreasureHuntRemoteDataSourceImpl();
-                                setState(() {
-                                  isLoading = true;
-                                });
-                                await thrs.registerUser(
-                                    treasureHuntId: widget.treasureHunt.id);
-                                setState(() {
-                                  isParticipant = true;
-                                  isLoading = false;
+                : widget.treasureHunt.status != "open"
+                    ? Container()
+                    : isLoading
+                        ? CircularProgressIndicator()
+                        : isParticipant
+                            ? ActionButton(
+                                text: 'Unregister',
+                                onTap: () async {
+                                  try {
+                                    final thrs =
+                                        TreasureHuntRemoteDataSourceImpl();
+                                    setState(() {
+                                      isLoading = true;
+                                    });
+                                    await thrs.unregisterUser(
+                                        treasureHuntId: widget.treasureHunt.id);
+                                    setState(() {
+                                      isLoading = false;
+                                      isParticipant = false;
+                                      widget.treasureHunt.participants
+                                          .removeWhere((element) =>
+                                              element.id == user_.id);
+                                    });
+                                  } catch (e) {
+                                    setState(() {
+                                      isLoading = false;
+                                    });
+                                  }
+                                },
+                                color: darkTheme.colorScheme.secondary,
+                              )
+                            : ActionButton(
+                                text: 'Register',
+                                onTap: () async {
+                                  try {
+                                    final thrs =
+                                        TreasureHuntRemoteDataSourceImpl();
+                                    setState(() {
+                                      isLoading = true;
+                                    });
+                                    await thrs.registerUser(
+                                        treasureHuntId: widget.treasureHunt.id);
+                                    setState(() {
+                                      isParticipant = true;
+                                      isLoading = false;
 
-                                  widget.treasureHunt.participants.add(user_);
-                                });
-                              } catch (e) {
-                                setState(() {
-                                  isLoading = false;
-                                });
-                              }
-                            },
-                            color: darkTheme.indicatorColor,
-                          ),
+                                      widget.treasureHunt.participants
+                                          .add(user_);
+                                    });
+                                  } catch (e) {
+                                    setState(() {
+                                      isLoading = false;
+                                    });
+                                  }
+                                },
+                                color: darkTheme.indicatorColor,
+                              ),
         const SizedBox(
           height: 10,
         ),

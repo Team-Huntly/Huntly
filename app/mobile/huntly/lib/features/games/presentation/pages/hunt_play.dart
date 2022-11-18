@@ -57,6 +57,9 @@ class _HuntPlayState extends State<HuntPlay> with TickerProviderStateMixin {
               treasureHuntId: widget.treasureHuntId, teamId: state.team.id));
         } else if (state is CluesLoaded) {
           print(state.clues);
+        } else if (state is AlreadySolved) {
+          BlocProvider.of<GameBloc>(context)
+              .add(SetUpGame(treasureHuntId: widget.treasureHuntId));
         } else if (state is LocationUnverified) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(

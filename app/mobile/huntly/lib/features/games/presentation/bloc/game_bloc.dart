@@ -94,10 +94,11 @@ class GameBloc extends Bloc<GameEvent, GameState> {
           emit(CluesLoaded(
               clues: event.clues, index: event.index, teamId: event.teamId));
         } else if (response.statusCode == 409) {
-          emit(CluesLoaded(
-              clues: event.clues,
-              index: event.index + 1,
-              teamId: event.teamId));
+          emit(AlreadySolved());
+          // emit(CluesLoaded(
+          //     clues: event.clues,
+          //     index: event.index + 1,
+          //     teamId: event.teamId));
         }
       } else if (event is NextClue) {
         emit(CluesLoaded(
