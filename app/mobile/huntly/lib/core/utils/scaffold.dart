@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:huntly/core/utils/service.dart';
 import 'package:huntly/features/authentication/presentation/bloc/authentication_bloc.dart';
@@ -61,13 +62,15 @@ class HuntlyScaffold extends StatelessWidget {
   final FloatingActionButtonLocation? floatingActionButtonLocation;
   final Widget? floatingActionButton;
   bool? showDrawer;
+  final String? title;
   HuntlyScaffold(
       {Key? key,
       required this.body,
       required this.outerContext,
       this.floatingActionButtonLocation,
       this.floatingActionButton,
-      this.showDrawer})
+      this.showDrawer,
+      this.title})
       : super(key: key);
 
   @override
@@ -81,7 +84,17 @@ class HuntlyScaffold extends StatelessWidget {
           foregroundColor: darkTheme.colorScheme.onBackground,
           backgroundColor: darkTheme.colorScheme.background,
           elevation: 0,
-          leadingWidth: 80,
+          leadingWidth: 56,
+          title: title != null
+              ? Text(
+                  title!,
+                  style: GoogleFonts.poppins(
+                    color: Colors.white,
+                    fontSize: 30,
+                    fontWeight: FontWeight.w800,
+                  ),
+                )
+              : null,
         ),
         drawer: showDrawer == false
             ? Container()
@@ -161,31 +174,31 @@ class HuntlyScaffold extends StatelessWidget {
                                   builder: (context) => const MyHuntsPage()));
                         },
                         title: 'My Hunts'),
-                    DrawerListItem(
-                        icon: Ph.currency_circle_dollar,
-                        onTap: () {
-                          Navigator.of(context).pop();
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (context) => const RewardsPage()));
-                        },
-                        title: 'Rewards'),
-                    DrawerListItem(
-                        icon: Bx.photo_album,
-                        onTap: () {
-                          Navigator.of(context).pop();
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const MemoriesMenuPage()));
-                        },
-                        title: 'Memories'),
-                    DrawerListItem(
-                        icon: Ic.round_mail_outline,
-                        onTap: () {
-                          Navigator.of(context).pop();
-                        },
-                        title: 'Invites'),
+                    // DrawerListItem(
+                    //     icon: Ph.currency_circle_dollar,
+                    //     onTap: () {
+                    //       Navigator.of(context).pop();
+                    //       Navigator.of(context).pushReplacement(
+                    //           MaterialPageRoute(
+                    //               builder: (context) => const RewardsPage()));
+                    //     },
+                    //     title: 'Rewards'),
+                    // DrawerListItem(
+                    //     icon: Bx.photo_album,
+                    //     onTap: () {
+                    //       Navigator.of(context).pop();
+                    //       Navigator.of(context).pushReplacement(
+                    //           MaterialPageRoute(
+                    //               builder: (context) =>
+                    //                   const MemoriesMenuPage()));
+                    //     },
+                    //     title: 'Memories'),
+                    // DrawerListItem(
+                    //     icon: Ic.round_mail_outline,
+                    //     onTap: () {
+                    //       Navigator.of(context).pop();
+                    //     },
+                    //     title: 'Invites'),
                     Expanded(
                       child: Align(
                         alignment: Alignment.bottomLeft,

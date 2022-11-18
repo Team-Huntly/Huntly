@@ -33,71 +33,75 @@ class _MyHuntsPageState extends State<MyHuntsPage> {
         return Future.value(true);
       },
       child: HuntlyScaffold(
+        title: "HUNTS",
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         floatingActionButton: DraggableSpeedDialButton(
           outerContext: context,
         ),
-        body: Column(
-          children: [
-            BlocConsumer<TreasureHuntBloc, TreasureHuntState>(
-              listener: (context, state) {},
-              builder: (context, state) {
-                if (state is Loaded) {
-                  return Expanded(
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: state.treasureHunts.length,
-                      itemBuilder: (context, index) {
-                        return HuntCard(
-                            treasureHunt: state.treasureHunts[index]);
-                      },
-                    ),
-                  );
-                } else {
-                  return const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        color: Colors.white,
+        body: Padding(
+          padding: const EdgeInsets.only(top: 8.0),
+          child: Column(
+            children: [
+              BlocConsumer<TreasureHuntBloc, TreasureHuntState>(
+                listener: (context, state) {},
+                builder: (context, state) {
+                  if (state is Loaded) {
+                    return Expanded(
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: state.treasureHunts.length,
+                        itemBuilder: (context, index) {
+                          return HuntCard(
+                              treasureHunt: state.treasureHunts[index]);
+                        },
                       ),
-                    ),
-                  );
-                }
-              },
-            ),
-            const SizedBox(
-              height: 30,
-            ),
+                    );
+                  } else {
+                    return const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                        ),
+                      ),
+                    );
+                  }
+                },
+              ),
+              const SizedBox(
+                height: 30,
+              ),
 
-            // !! Remove the below lines after ..
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-            //   children: [
-            //     ActionButton(
-            //       text: 'Custom',
-            //       onTap: () {
-            //         Navigator.push(
-            //           context,
-            //           MaterialPageRoute(
-            //             builder: (context) => const HuntEditPage(),
-            //           ),
-            //         );
-            //       },
-            //     ),
-            //     ActionButton(
-            //       text: 'Preset',
-            //       onTap: () {
-            //         Navigator.push(
-            //           context,
-            //           MaterialPageRoute(
-            //             builder: (context) => const PresetsPage(),
-            //           ),
-            //         );
-            //       },
-            //     ),
-            //   ],
-            // ),
-          ],
+              // !! Remove the below lines after ..
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //   children: [
+              //     ActionButton(
+              //       text: 'Custom',
+              //       onTap: () {
+              //         Navigator.push(
+              //           context,
+              //           MaterialPageRoute(
+              //             builder: (context) => const HuntEditPage(),
+              //           ),
+              //         );
+              //       },
+              //     ),
+              //     ActionButton(
+              //       text: 'Preset',
+              //       onTap: () {
+              //         Navigator.push(
+              //           context,
+              //           MaterialPageRoute(
+              //             builder: (context) => const PresetsPage(),
+              //           ),
+              //         );
+              //       },
+              //     ),
+              //   ],
+              // ),
+            ],
+          ),
         ),
         outerContext: context,
       ),

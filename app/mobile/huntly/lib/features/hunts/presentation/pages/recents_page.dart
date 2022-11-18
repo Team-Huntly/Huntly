@@ -33,6 +33,7 @@ class _RecentsPageState extends State<RecentsPage> {
         return Future.value(true);
       },
       child: HuntlyScaffold(
+          title: "RECENTS",
           outerContext: context,
           body: BlocConsumer<TreasureHuntBloc, TreasureHuntState>(
             listener: (context, state) {},

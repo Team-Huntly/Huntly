@@ -25,6 +25,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return HuntlyScaffold(
+        title: "HOME",
         outerContext: context,
         body: BlocConsumer<TreasureHuntBloc, TreasureHuntState>(
           listener: (context, state) {},
@@ -32,24 +33,27 @@ class _HomePageState extends State<HomePage> {
             if (state is Loading) {
               return const Center(child: CircularProgressIndicator());
             } else if (state is Loaded) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  state.treasureHunts.length == 0
-                      ? Padding(
-                          padding: const EdgeInsets.only(top: 48.0),
-                          child: Lottie.asset(
-                              'assets/images/home-place-holder.json'),
-                        )
-                      : ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: state.treasureHunts.length,
-                          itemBuilder: (context, index) {
-                            return HuntCard(
-                                treasureHunt: state.treasureHunts[index]);
-                          },
-                        ),
-                ],
+              return Padding(
+                padding: const EdgeInsets.only(top: 15.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    state.treasureHunts.isEmpty
+                        ? Padding(
+                            padding: const EdgeInsets.only(top: 48.0),
+                            child: Lottie.asset(
+                                'assets/images/home-place-holder.json'),
+                          )
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: state.treasureHunts.length,
+                            itemBuilder: (context, index) {
+                              return HuntCard(
+                                  treasureHunt: state.treasureHunts[index]);
+                            },
+                          ),
+                  ],
+                ),
               );
             } else if (state is TreasureHuntInitial) {
               WidgetsBinding.instance.addPostFrameCallback((_) {
