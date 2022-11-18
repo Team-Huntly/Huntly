@@ -30,6 +30,7 @@ class _HuntPlayState extends State<HuntPlay> with TickerProviderStateMixin {
   final controller = ConfettiController();
   @override
   void initState() {
+    print("Hello");
     BlocProvider.of<GameBloc>(context)
         .add(SetUpGame(treasureHuntId: widget.treasureHuntId));
     super.initState();
@@ -58,7 +59,7 @@ class _HuntPlayState extends State<HuntPlay> with TickerProviderStateMixin {
           print(state.clues);
         } else if (state is LocationUnverified) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
+            const SnackBar(
               content: Text('Location not verified'),
               backgroundColor: Colors.red,
             ),
@@ -66,7 +67,7 @@ class _HuntPlayState extends State<HuntPlay> with TickerProviderStateMixin {
         } else if (state is LocationVerified) {
           controller.play();
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
+            const SnackBar(
               content: Text('Location verified'),
               backgroundColor: Colors.green,
             ),
@@ -80,9 +81,15 @@ class _HuntPlayState extends State<HuntPlay> with TickerProviderStateMixin {
           Future.delayed(const Duration(seconds: 2), () {
             controller.stop();
           });
+        } else if (state is GameEnded) {
+          controller.play();
+          Future.delayed(const Duration(seconds: 2), () {
+            controller.stop();
+          });
         }
       },
       builder: (context, state) {
+        print(state);
         if (state is CluesLoaded) {
           return HuntlyScaffold(
               outerContext: context,
@@ -150,23 +157,46 @@ class _HuntPlayState extends State<HuntPlay> with TickerProviderStateMixin {
             showDrawer: false,
           );
         } else if (state is GameEnded) {
-          return HuntlyScaffold(
-            outerContext: context,
-            body: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ActionButton(
-                  text: 'Congratulations!',
-                  leading: Noto.party_popper,
-                  onTap: () {
-                    Navigator.of(context).pop();
-                  },
-                  colorIcon: false,
-                  color: darkTheme.colorScheme.secondary,
-                ),
-              ],
+          return Stack(children: [
+            HuntlyScaffold(
+              outerContext: context,
+              body: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Add a rich text to say congratulations, you have completed the hunt
+                  RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                          style: darkTheme.textTheme.headline5,
+                          children: [
+                            TextSpan(
+                                text: 'Congratulations!',
+                                style: darkTheme.textTheme.headline2!
+                                    .copyWith(color: darkTheme.highlightColor)),
+                            TextSpan(
+                                text: ' You have completed the hunt\n',
+                                style: darkTheme.textTheme.headline5)
+                          ])),
+
+                  ActionButton(
+                    text: 'Go to Home!',
+                    leading: Noto.party_popper,
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    colorIcon: false,
+                    color: Colors.black,
+                  ),
+                ],
+              ),
             ),
-          );
+            Center(
+                child: ConfettiWidget(
+              confettiController: controller,
+              blastDirectionality: BlastDirectionality.explosive,
+              numberOfParticles: 150,
+            ))
+          ]);
         } else if (state is ClueSolved) {
           return Stack(children: [
             HuntlyScaffold(
@@ -217,16 +247,6 @@ class _HuntPlayState extends State<HuntPlay> with TickerProviderStateMixin {
               numberOfParticles: 100,
             ))
           ]);
-        } else if (state is GameEnded) {
-          return Center(
-            child: ActionButton(
-              text: 'Finish',
-              onTap: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => const HomePage()));
-              },
-            ),
-          );
         } else {
           return HuntlyScaffold(
             outerContext: context,

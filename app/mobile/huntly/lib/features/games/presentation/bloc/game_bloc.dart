@@ -21,6 +21,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   GameBloc() : super(GameInitial()) {
     on<GameEvent>((event, emit) async {
       if (event is SetUpGame) {
+        emit(Loading());
         final TreasureHuntRemoteDataSourceImpl THRDS =
             TreasureHuntRemoteDataSourceImpl();
         final TeamModel team =
@@ -92,10 +93,11 @@ class GameBloc extends Bloc<GameEvent, GameState> {
           emit(LocationUnverified());
           emit(CluesLoaded(
               clues: event.clues, index: event.index, teamId: event.teamId));
-        }
-        else if (response.statusCode == 409) {
+        } else if (response.statusCode == 409) {
           emit(CluesLoaded(
-            clues: event.clues, index: event.index + 1, teamId: event.teamId));  
+              clues: event.clues,
+              index: event.index + 1,
+              teamId: event.teamId));
         }
       } else if (event is NextClue) {
         emit(CluesLoaded(
