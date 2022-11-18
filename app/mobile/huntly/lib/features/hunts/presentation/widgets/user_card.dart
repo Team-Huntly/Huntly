@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:huntly/features/authentication/data/models/user_model.dart';
 
+import '../../../../common/constants.dart';
 import '../../../../core/theme/theme.dart';
 
 class UserCard extends StatelessWidget {
@@ -25,8 +26,8 @@ class UserCard extends StatelessWidget {
           child: SizedBox(
             width: 60,
             height: 60,
-            child: Image.asset(
-              'assets/images/1.jpg',
+            child: Image.network(
+              '${url}${user.photoUrl}',
               fit: BoxFit.fill,
             ),
           ),
