@@ -59,6 +59,7 @@ class _HuntDetailPageState extends State<HuntDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.treasureHunt.status);
     return ListView(
       shrinkWrap: true,
       children: [
