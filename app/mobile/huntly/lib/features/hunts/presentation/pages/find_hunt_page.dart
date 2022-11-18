@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:huntly/features/hunts/presentation/pages/home_page.dart';
 
+import '../../../../core/utils/background_widget.dart';
 import '../../../../core/utils/scaffold.dart';
 import '../bloc/treasurehunt_bloc.dart';
 import '../widgets/hunt_card.dart';
@@ -121,9 +122,7 @@ class _FindHuntPageState extends State<FindHuntPage> {
                     });
                     return const Center(child: CircularProgressIndicator());
                   } else {
-                    return const Center(
-                      child: Text('Treasure Hunts not Found'),
-                    );
+                    return BackGroundWidget(title: "Treasure Hunts not Found");
                   }
                 },
               )

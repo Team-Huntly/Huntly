@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'package:huntly/core/utils/background_widget.dart';
 import 'package:huntly/features/hunts/presentation/widgets/hunt_card.dart';
 import 'package:huntly/core/utils/scaffold.dart';
-import 'package:lottie/lottie.dart';
-import '../../../../core/theme/theme.dart';
-import '../../../../core/utils/scaffold.dart';
+import '../../../../core/utils/background_widget.dart';
 import '../bloc/treasurehunt_bloc.dart';
 
 class HomePage extends StatefulWidget {
@@ -39,10 +38,8 @@ class _HomePageState extends State<HomePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     state.treasureHunts.isEmpty
-                        ? Image.asset(
-                            "assets/images/home-placeholder-map.png",
-                            opacity
-                          )
+                        ? BackGroundWidget(
+                            title: "Not registered for any Hunts")
                         : ListView.builder(
                             shrinkWrap: true,
                             itemCount: state.treasureHunts.length,
@@ -61,14 +58,9 @@ class _HomePageState extends State<HomePage> {
               });
               return const Center(child: CircularProgressIndicator());
             } else if (state is Failed) {
-              return const Center(child: Text("Some error has occured"));
+              return BackGroundWidget(title: "Some error Occured");
             } else {
-              return Column(children: [
-                Image.asset("assets/images/home-placeholder-map.png"),
-                const Center(
-                  child: Center(child: Text('Not registered for any hunts')),
-                ),
-              ]);
+              return BackGroundWidget(title: "Not registered for any Hunts");
             }
           },
         ));
