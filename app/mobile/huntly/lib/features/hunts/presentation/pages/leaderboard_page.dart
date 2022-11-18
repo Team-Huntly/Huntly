@@ -80,10 +80,17 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
             color: darkTheme.colorScheme.secondary,
             thickness: 2,
           ),
-          BlocBuilder<TreasureHuntBloc, TreasureHuntState>(
+          BlocConsumer<TreasureHuntBloc, TreasureHuntState>(
+            listener: (context, state) {
+              if (state is TeamLoaded) {
+                BlocProvider.of<TreasureHuntBloc>(context)
+                    .add(GetLeaderboard(widget.treasureHunt.id));
+              }
+            },
             builder: (context, state) {
+              print(state);
               if (state is LeaderboardLoaded) {
-                return state.leaderboard.leaders.length == 0
+                return state.leaderboard.leaders.isEmpty
                     ? Container()
                     : Padding(
                         padding: const EdgeInsets.only(top: 8.0),
