@@ -46,9 +46,19 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         }
 
         List<GameClueModel> clues = [];
-        for (var clue in response.data) {
+        for (final clue in response.data) {
           clues.add(GameClueModel.fromJson(clue));
         }
+        final GameClueModel lastClue = clues.last;
+        clues.removeLast();
+        int shifts = event.teamId % clues.length;
+        clues = clues.sublist(shifts) + clues.sublist(0, shifts);
+        for (int i = 0; i + 3 < clues.length; i += 4) {
+          final tmp = clues[i + event.teamId % 2];
+          clues[i + event.teamId % 2] = clues[i + event.teamId % 2 + 2];
+          clues[i + event.teamId % 2 + 2] = tmp;
+        }
+        clues.add(lastClue);
         if (_index == clues.length) {
           emit(GameEnded());
         } else {

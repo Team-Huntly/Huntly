@@ -59,6 +59,7 @@ class _HuntDetailPageState extends State<HuntDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.treasureHunt.status);
     return ListView(
       shrinkWrap: true,
       children: [
@@ -95,7 +96,7 @@ class _HuntDetailPageState extends State<HuntDetailPage> {
           height: 25,
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 5),
+          padding: const EdgeInsets.symmetric(horizontal: 5),  
           child: GridView.count(
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
@@ -159,7 +160,7 @@ class _HuntDetailPageState extends State<HuntDetailPage> {
             : isAdmin
                 ? Container()
                 : isLoading
-                    ? CircularProgressIndicator()
+                    ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(color: Colors.white))
                     : isParticipant
                         ? ActionButton(
                             text: 'Unregister',
@@ -174,8 +175,6 @@ class _HuntDetailPageState extends State<HuntDetailPage> {
                                 setState(() {
                                   isLoading = false;
                                   isParticipant = false;
-                                  widget.treasureHunt.participants.removeWhere(
-                                      (element) => element.id == user_.id);
                                 });
                               } catch (e) {
                                 setState(() {
@@ -198,8 +197,6 @@ class _HuntDetailPageState extends State<HuntDetailPage> {
                                 setState(() {
                                   isParticipant = true;
                                   isLoading = false;
-
-                                  widget.treasureHunt.participants.add(user_);
                                 });
                               } catch (e) {
                                 setState(() {
